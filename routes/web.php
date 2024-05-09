@@ -25,4 +25,13 @@ Route::prefix('items')->group(function () {
     Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'add']);
     Route::post('/add', [App\Http\Controllers\ItemController::class, 'add']);
+    Route::get('/add/{draft}', [App\Http\Controllers\ItemController::class, 'add']);
+    Route::post('/add/{draft}', [App\Http\Controllers\ItemController::class, 'add']);
+    Route::get('/show/{id}', [App\Http\Controllers\ItemController::class, 'show']);
+    Route::get('/edit/{id}', [App\Http\Controllers\ItemController::class, 'edit']);
+    Route::post('/edit/{id}', [App\Http\Controllers\ItemController::class, 'edit']);
+    Route::delete('/delete/{id}', [App\Http\Controllers\ItemController::class, 'destroy']);
+    Route::get('/editTag', [App\Http\Controllers\TagController::class, 'editTag']);
+    Route::post('/editTag', [App\Http\Controllers\TagController::class, 'editTag']);
+    Route::post('/search', [App\Http\Controllers\ItemController::class, 'search']);
 });
