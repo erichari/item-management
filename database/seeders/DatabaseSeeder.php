@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -14,9 +16,24 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
+        \App\Models\User::insert([
+            [
+                'name' => 'Admin',
+                'email' => 'admin@techis.com',
+                'password' => Hash::make('admin'),
+                'role' => 1,
+            ],
+            [
+                'name' => 'Test User',
+                'email' => 'test@techis.com',
+                'password' => Hash::make('password'),
+                'role' => 2,
+            ],
+        ]);
+
+        $this->call([
+            TagSeeder::class,
+            ItemSeeder::class,
+        ]);
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->unsigned()->index();
+            $table->foreignId('user_id')->constrained();
             $table->string('title', 20)->index();
             $table->string('serving', 20)->nullable();
             $table->integer('score')->nullable();

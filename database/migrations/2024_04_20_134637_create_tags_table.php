@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('user_id')->index();
+            $table->foreignId('user_id')->constrained();
             $table->smallInteger('number');
             $table->string('tag', 20);
             $table->string('icon', 200)->nullable()->default(null);

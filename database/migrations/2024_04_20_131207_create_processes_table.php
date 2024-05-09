@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('processes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('item_id')->index();
+            $table->foreignId('item_id')->constrained();
             $table->string('process', 200);
             $table->longText('process_image')->nullable();
             $table->timestamps();
