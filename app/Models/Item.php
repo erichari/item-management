@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Item extends Model
 {
@@ -13,9 +14,12 @@ class Item extends Model
      */
     protected $fillable = [
         'user_id',
-        'name',
-        'type',
-        'detail',
+        'title',
+        'serving',
+        'score',
+        'memo',
+        'image',
+        'draft',
     ];
 
     /**
@@ -33,4 +37,34 @@ class Item extends Model
      */
     protected $casts = [
     ];
+
+    protected static function boot(){
+        parent::boot();
+
+        static::addGlobalScope('my_item', function ($query) {
+            $query->where('items.user_id', Auth::user()->id,);
+        });
+        static::addGlobalScope('draft', function ($query) {
+            $query->where('draft', NULL);
+        });
+    }
+
+    public function ingredients(){
+        //itemsの保持する全材料
+        return $this->hasMany(Ingredient::class);
+    }
+
+    public function processes(){
+        //itemsの保持する全工程
+        return $this->hasMany(Process::class);
+    }
+
+    public function tags(){
+        //itemsの保持する全タグ
+        return $this->belongsToMany(Tag::class, 'item_tags');
+    }
+
+    
 }
+http://localhost/phpmyadmin/index.php?route=/sql&db=item_management&table=recipes&pos=0
+

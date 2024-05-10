@@ -42,4 +42,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    public function tags(){
+        //ユーザーの保持する全タグ
+        return $this->hasMany(Tag::class);
+    }
 }
