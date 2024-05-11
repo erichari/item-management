@@ -23,8 +23,8 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 
 Route::prefix('items')->group(function () {
     Route::get('/', [App\Http\Controllers\ItemController::class, 'index'])->name('index');
-    Route::get('/add', [App\Http\Controllers\ItemController::class, 'add']);
-    Route::post('/add', [App\Http\Controllers\ItemController::class, 'add']);
+    Route::get('/add', [App\Http\Controllers\ItemController::class, 'addView']);
+    Route::post('/add', [App\Http\Controllers\ItemController::class, 'add'])->name('add');
     Route::get('/add/{draft}', [App\Http\Controllers\ItemController::class, 'add']);
     Route::post('/add/{draft}', [App\Http\Controllers\ItemController::class, 'add']);
     Route::get('/show/{id}', [App\Http\Controllers\ItemController::class, 'show']);
