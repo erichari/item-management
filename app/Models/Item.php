@@ -44,9 +44,7 @@ class Item extends Model
         static::addGlobalScope('my_item', function ($query) {
             $query->where('items.user_id', Auth::user()->id,);
         });
-        static::addGlobalScope('draft', function ($query) {
-            $query->where('draft', NULL);
-        });
+
     }
 
     public function ingredients(){
@@ -61,7 +59,8 @@ class Item extends Model
 
     public function tags(){
         //itemsの保持する全タグ
-        return $this->belongsToMany(Tag::class, 'item_tags');
+        return $this->belongsToMany(Tag::class, 'item_tags')
+            ->withTimestamps();
     }
 
     
