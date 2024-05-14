@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('serving', 20)->nullable();
             $table->integer('score')->nullable();
             $table->string('memo', 200)->nullable();
-            $table->longText('image')->nullable();
+            $table->longText('image')->default('/img/no_image.jpg');
             $table->string('draft', 20)->nullable();
             $table->timestamps();
         });
