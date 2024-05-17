@@ -1,21 +1,16 @@
-@extends('layouts.app')
+@if(auth()->user()->role == 2)
+    @extends('adminlte::page')
+@endif
+
+@section('title', 'ホーム画面')
+
+
+@section('content_header')
+    <h1>レシピ一覧</h1>
+@stop
 
 @section('content')
-    @include('layouts.sidebar')
-    <div class="row main g-4 main">
-    @if(!isset($items[0]))
-        @section('title', 'ホーム画面')
-        <h1>レシピがありません</h1>
-    @else
-        @if($items[0]->draft == 'draft')
-            @section('title', '下書き一覧')
-            <h1>下書き一覧</h1>
-        @else
-            @section('title', 'ホーム画面')
-            <h1>レシピ一覧</h1>
-        @endif
-    @endif
-
+    <div class="row main g-4">
         @foreach ($items as $item)
             <div class="card-box col-12 col-md-6 col-lg-4">
                 <div class="card text-bg-light">
@@ -24,31 +19,26 @@
                         @if($item->draft == 'draft')
                             <a href="/items/edit/{{$item->id}}" class="stretched-link"></a>
                         @else
-                            <a href="/items/show/{{$item->id}}" class="stretched-link"></a>
+                            <a href="items/show/{{$item->id}}" class="stretched-link"></a>
                         @endif
                         <h5 class="card-title">{{ $item->title }}</h5>
                         <div class="icon-list">
                             @foreach($item_tags as $tag)
                                 @if($tag->id !== $item->id)
                                     @continue
-                                @elseif($tag->type == 1)
+                                @endif
+                                @if($tag->type == 1)
                                     <span class="genre-icon icon">{{$tag->icon}}</span>
-                                @elseif($tag->type == 2)
+                                @endif
+                                @if($tag->type == 2)
                                     <span class="category-icon icon">{{$tag->icon}}</span>
-                                @elseif($tag->type == 3)
+                                @endif
+                                @if($tag->type == 3)
                                     <span class="tag-icon icon">{{$tag->icon}}</span>
                                 @endif
                             @endforeach
                         </div>
-
-                        @foreach($ingredients as $ingredient)
-                            @if($ingredient->item_id == $item->id)
-                                <p class="card-text text-nowrap">{{$ingredient->ingredients_text}}</p>
-                            @else
-                                @continue
-                            @endif
-                        @endforeach
-
+                        <p class="card-text text-nowrap">{{ $item->ingredients_text }}</p>
                         <p class="score">{{ $item->score }}</p>
                         @if($item->draft == 'draft')
                             <p class="draft">下書き</p>
@@ -58,14 +48,6 @@
             </div>
         @endforeach
         </div>
-
-        <p class="pagination">
-            @if(isset($search_parameters))
-                {{ $items->appends(request()->query())->links() }}
-            @else
-                {{ $items->links() }}
-            @endif
-        </p>
     </div>
 @stop
 

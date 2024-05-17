@@ -34,5 +34,5 @@ Route::prefix('items')->group(function () {
     Route::delete('/destroy/{id}', [App\Http\Controllers\ItemController::class, 'destroy']);
     Route::get('/editTag', [App\Http\Controllers\TagController::class, 'editTag']);
     Route::post('/editTag', [App\Http\Controllers\TagController::class, 'editTag']);
-    Route::post('/search', [App\Http\Controllers\ItemController::class, 'search']);
+    Route::get('/search', [App\Http\Controllers\ItemController::class, 'search']);
 });

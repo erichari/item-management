@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ItemRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Item;
+use App\Models\Ingredient;
+use App\Models\Process;
+use App\Models\Tag;
+use App\Models\Item_tag;
+use DB;
 
 class ItemController extends Controller
 {
@@ -23,35 +29,349 @@ class ItemController extends Controller
      */
     public function index()
     {
-        // 商品一覧取得
-        $items = Item::all();
+        $items = Item::where('draft', null)
+            ->select('id', 'title', 'score', 'image', 'draft')
+            ->orderby('created_at', 'desc')
+            ->paginate(20);
 
-        return view('item.index', compact('items'));
+        $ingredients = Item::where('draft', null)
+            ->join('ingredients', 'ingredients.item_id', 'items.id')
+            ->select('item_id', DB::raw("GROUP_CONCAT(ingredient SEPARATOR '、') AS ingredients_text"))
+            ->groupBy('item_id')
+            ->get();
+
+        $item_tags = Tag::join('item_tags', 'item_tags.tag_id', 'tags.id')
+            ->join('items', 'item_tags.item_id', 'items.id')
+            ->select('icon', 'type', 'items.id')
+            ->orderBy('tags.id', 'asc')
+            ->get();
+
+        return view('item.index', compact('items', 'ingredients', 'item_tags'));
+    }
+
+    /**
+     * 下書き一覧
+     */
+    public function drafts()
+    {
+        $items = Item::where('draft', 'draft')
+            ->select('id', 'title', 'score', 'image', 'draft')
+            ->orderby('created_at', 'desc')
+            ->paginate(20);
+
+        $ingredients = Item::where('draft', 'draft')
+            ->join('ingredients', 'ingredients.item_id', 'items.id')
+            ->select('item_id', DB::raw("GROUP_CONCAT(ingredient SEPARATOR '、') AS ingredients_text"))
+            ->groupBy('item_id')
+            ->get();
+
+        $item_tags = Tag::join('item_tags', 'item_tags.tag_id', 'tags.id')
+            ->join('items', 'item_tags.item_id', 'items.id')
+            ->select('icon', 'type', 'items.id')
+            ->orderBy('tags.id', 'asc')
+            ->get();
+
+
+        return view('item.index', compact('items', 'ingredients', 'item_tags'));
+    }
+
+
+    /**
+     * 商品登録画面を表示
+     */
+    public function addView(Request $request){
+        return view('item.add');
     }
 
     /**
      * 商品登録
      */
-    public function add(Request $request)
+    public function add(ItemRequest $request)
     {
-        // POSTリクエストのとき
-        if ($request->isMethod('post')) {
-            // バリデーション
-            $this->validate($request, [
-                'name' => 'required|max:100',
-            ]);
+        $item = new Item();
 
-            // 商品登録
-            Item::create([
-                'user_id' => Auth::user()->id,
-                'name' => $request->name,
-                'type' => $request->type,
-                'detail' => $request->detail,
-            ]);
-
-            return redirect('/items');
+        // 画像がアップロードされてる場合
+        if ($request->hasFile('image')) {
+            $base64Image = base64_encode(file_get_contents($request->image->getRealPath()));
+            $mimeType = $request->image->getMimeType();
+            $item->image = 'data:' . $mimeType . ';base64,' . $base64Image;
         }
 
-        return view('item.add');
+        //下書きボタンが押された場合 
+        if($request->route()->getName() == 'addDraft' || $request->route()->getName() == 'returnDraft'){
+            $item->draft = 'draft';
+        }
+
+
+        $item->user_id = Auth::user()->id;
+        $item->title = $request->title;
+        $item->serving = $request->serving;
+        $item->score = $request->score;
+        $item->memo = $request->memo;
+        $item->save(); 
+        
+        $item_id = Item::withoutGlobalScope('draft')->latest('id')->first()->id;
+        
+
+        //材料を登録
+        $ingredients = [];
+        foreach($request->ingredients as $ingredient){
+            if($ingredient['name'] == null && $ingredient['quantity'] == null){
+                continue;
+            }
+
+            $ingredients[] = [
+                'item_id' => $item_id,
+                'ingredient' => $ingredient['name'],
+                'quantity' => $ingredient['quantity'],
+            ];
+        }
+        Ingredient::insert($ingredients);
+    
+
+        //作り方を登録
+        $processes = [];
+        foreach($request->processes as $process){
+            if($process['name'] == null && !array_key_exists('image', $process)){
+                continue;
+            }
+
+            if (array_key_exists('image', $process)) {
+                $image = $process['image'];
+                $base64Image = base64_encode(file_get_contents($image->getRealPath()));
+                $mimeType = $image->getMimeType();
+                $process_image = 'data:' . $mimeType . ';base64,' . $base64Image;
+            }else{
+                $process_image = null;
+            }
+
+            $processes[] = [
+                'item_id' => $item_id,
+                'process' => $process['name'],
+                'process_image' => $process_image,
+            ];
+        }
+        Process::insert($processes);
+
+        //item_tagsテーブル更新
+        if(isset($request->add_tag)){
+            foreach($request->add_tag as $tag){
+                $tags[] = [
+                    'item_id' => $item_id,
+                    'tag_id' => $tag,
+                ];
+            }
+            Item_tag::insert($tags);
+        }
+
+        return redirect('/items');
     }
+
+
+    /**
+     * 商品一覧
+     */
+    public function show(Request $request)
+    {
+        $item = Item::find($request->id);
+        $ingredients = $item->ingredients()->get();
+        $processes = $item->processes()->get();
+        $item_tags = $item->tags()->orderby('id', 'asc')->get();
+
+        return view('item.show', compact('item', 'ingredients', 'processes', 'item_tags'));
+    }
+
+    /**
+     * 商品編集画面を表示
+     */
+    public function editView(Request $request)
+    {
+        $item = Item::find($request->id);
+        $ingredients = $item->ingredients()->get();
+        $processes = $item->processes()->get();
+        $item_tags = $item->tags()->get();
+
+        return view('item.edit', compact('item', 'ingredients', 'processes', 'item_tags'));
+    }
+
+    /**
+     * 商品編集
+     */
+    public function edit(ItemRequest $request)
+    {
+        $item = Item::find($request->id);
+
+        //下書きボタンが押された場合 
+        if($request->route()->getName() == 'returnDraft'){
+            $item->draft = 'draft';
+        }
+
+        //画像がアップロードされてる場合
+        if ($request->hasFile('image')) {
+            $base64Image = base64_encode(file_get_contents($request->image->getRealPath()));
+            $mimeType = $request->image->getMimeType();
+            $item->image = 'data:' . $mimeType . ';base64,' . $base64Image;
+        }
+
+        $item->user_id = Auth::user()->id;
+        $item->title = $request->title;
+        $item->serving = $request->serving;
+        $item->score = $request->score;
+        $item->memo = $request->memo;
+        $item->save(); 
+
+
+        //材料を登録
+        $ingredients = [];
+        foreach($request->ingredients as $ingredient){
+            if($ingredient['id'] && $ingredient['name'] == null && $ingredient['quantity'] == null){
+                Ingredient::find($ingredient['id'])->delete();
+            }
+            if($ingredient['name'] == null && $ingredient['quantity'] == null){
+                continue;
+            }
+
+            $ingredients[] = [
+                'id' => $ingredient['id'],
+                'item_id' => $item->id,
+                'ingredient' => $ingredient['name'],
+                'quantity' => $ingredient['quantity'],
+            ];
+        }
+        Ingredient::upsert($ingredients, ['id']);
+
+        //作り方を登録
+        $processes = [];
+        foreach($request->processes as $process){
+            if($process['id'] && Process::find($process['id'])->process_image == null && $process['name'] == null && !array_key_exists('image', $process)){
+                Process::find($process['id'])->delete();
+            }
+            if($process['name'] == null && !array_key_exists('image', $process) && Process::find($process['id'])->process_image == null){
+// すでに画像があるが、何も選択されてない＆＆nameが空の場合の処理
+            }elseif($process['name'] == null && !array_key_exists('image', $process)){
+                continue;
+            }
+
+            if (array_key_exists('image', $process)) {
+                $image = $process['image'];
+                $base64Image = base64_encode(file_get_contents($image->getRealPath()));
+                $mimeType = $image->getMimeType();
+                $process_image = 'data:' . $mimeType . ';base64,' . $base64Image;
+            }else{
+                if(Process::where('id', $process['id'])->exists()){
+                    $process_image = Process::find($process['id'])->process_image;
+                }else{
+                    $process_image = null;
+                }
+            }
+            
+            $processes[] = [
+                'id' => $process['id'],
+                'item_id' => $item->id,
+                'process' => $process['name'],
+                'process_image' => $process_image,
+            ];
+        }
+        Process::upsert($processes, ['id']);
+
+        //item_tagsテーブル更新
+        $item->tags()->sync($request->add_tag);
+
+
+        if($request->route()->getName() == 'returnDraft'){
+            return redirect('items/drafts');
+        }
+        return redirect('items/show/'.$item->id);
+    }
+
+    /**
+     * 商品削除
+     */
+    public function destroy($id){
+        Item::find($id)->delete();
+
+        return redirect()->route('index');
+    }
+
+
+    /**
+     * 検索
+     */
+    public function search(Request $request){
+        $keyword = $request->keyword;
+        $escape_keyword = addcslashes($keyword, '\\_%');
+        $tags = $request->tag;
+        $min_score = $request->min_score;
+        $max_score = $request->max_score;
+        $sort = $request->sort;
+
+        $query = Item::query()->where('draft', null);
+
+        if(!empty($keyword)) {
+            $query->where('title', 'LIKE', '%'.$escape_keyword.'%')
+                ->orWhere('memo', 'LIKE', '%'.$escape_keyword.'%')
+                ->orwhereHas('ingredients', function ($query) use ($escape_keyword) {
+                    $query->where('ingredient', 'LIKE', '%'.$escape_keyword.'%');
+                })
+                ->orwhereHas('processes', function ($query) use ($escape_keyword) {
+                    $query->where('process', 'LIKE', '%'.$escape_keyword.'%');
+                });
+        }
+
+        
+        if(!empty($tags)) {
+            foreach($tags as $tag){
+                $query->whereHas('tags', function ($query) use ($tag){
+                        $query->where('tags.id', $tag);
+                });
+            }
+        }
+
+        if ($min_score) {
+            $query->where('score', '>=', $min_score);
+        }
+
+        if ($max_score) {
+            $query->where('score', '<=', $max_score);
+        }
+
+        if ($sort == '新しい順') {
+            $query->orderby('created_at', 'desc');
+        }elseif($sort == '古い順'){
+            $query->orderby('created_at', 'asc');
+        }elseif($sort == '点数順'){
+            $query->orderby('score', 'desc');
+        }
+        
+        $items = $query->paginate(20);
+
+        $ingredients = Item::where('draft', null)
+            ->join('ingredients', 'ingredients.item_id', 'items.id')
+            ->select('item_id', DB::raw("GROUP_CONCAT(ingredient SEPARATOR '、') AS ingredients_text"))
+            ->groupBy('item_id')
+            ->get();
+
+        $item_tags = Tag::join('item_tags', 'item_tags.tag_id', 'tags.id')
+        ->join('items', 'item_tags.item_id', 'items.id')
+        ->select('icon', 'type', 'items.id')
+        ->orderBy('tags.id', 'asc')
+        ->get();
+
+        $search_parameters = ['keyword' => $keyword,
+                                'tags' => $tags,
+                                'min_score' => $min_score,
+                                'max_score' => $max_score,
+                                'sort' => $sort,
+                            ];
+        
+        return view('item.index', compact('items', 'ingredients', 'item_tags', 'search_parameters'));
+        
+        // return redirect()->route('index')->with([
+        //     'items' => $items,
+        //     'ingredients' => $ingredients,
+        //     'item_tags' => $item_tags,
+        // ]);;
+    }
+
+
 }

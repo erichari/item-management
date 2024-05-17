@@ -1,0 +1,236 @@
+main {
+    display: flex;
+    justify-content: center;
+}
+.main {
+    width: calc(100% - 120px);
+}
+
+/*
+ヘッダー
+*************************/
+nav {
+    position: fixed;
+    top: 0;
+}
+
+.header{    position: fixed;
+    top: 0;
+}
+
+/*
+サイドバー
+*************************/
+.side {
+    width: 200px;
+}
+
+.side .side-inner {
+    position: sticky;
+    height: 100vh;
+    top: 0px;
+    padding-top: 20px;
+}
+
+input[type=checkbox] {
+    display: none;
+}
+
+.checkbox-label {
+    padding: 5px;
+    margin: 5px;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    position: relative;
+    cursor: pointer;
+}
+
+.genre {
+    border: 1px solid #f99;
+    color: #f99;
+}
+
+.category {
+    border: 1px solid #1f1;
+    color: #1f1;
+}
+
+.tag {
+    border: 1px solid #1ff;
+    color: #1ff;
+}
+
+.genre:checked + label {
+    background: #f99;
+    color: #ffffff;
+}
+
+.category:checked + label {
+    background: #1f1;
+    color: #ffffff;
+}
+
+.tag:checked + label {
+    background: #1ff;
+    color: #ffffff;
+}
+
+.tooltip {
+    opacity: 0;
+    visibility: hidden;
+    position: absolute;
+    left: 50%; /* 親に対して中央配置 */
+    transform: translateX(50%);
+    bottom: -30px; /* 親要素下からの位置 */
+    display: inline-block;
+    padding: 5px;
+    white-space: nowrap; /* テキストを折り返さない */
+    font-size: 0.8rem;
+    line-height: 1.3; /* 行間 */
+    background: #eef;
+    color: #114;
+    border-radius: 3px;
+    transition: 0.1s ease-in;
+}
+
+.checkbox-label:hover .tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+/*
+トップページ
+*************************/
+.card-box {
+    width: 200px;
+    height: 400px;
+}
+
+.card-box .card {
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    background-color: #fff;
+    cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.3s;
+    position: relative;
+}
+
+.card-box .card:hover {
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
+    transform: translate(0, -2px);
+}
+
+.card img {
+    height: 130px;
+    object-fit: contain;
+}
+
+.card-text{
+    font-size: 14.5px;
+    color: gray;
+}
+.card .score {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: rgb(223 244 243 / 70%);
+    border-radius: 5px;
+    padding: 2px 5px;
+}
+
+.card .draft {
+    position: absolute;
+    top: 40px;
+    right: 10px;
+    color: red;
+    background-color: rgb(235 200 200 / 70%);
+    border-radius: 5px;
+    padding: 2px 5px;
+}
+
+.icon {
+    padding: 5px;
+    margin: 1px;
+    border-radius: 5px;
+    width: 30px;
+    height: 30px;
+    font-weight: bold;
+}
+
+.genre-icon {
+    background: #f99;
+    color: #ffffff;
+}
+
+.category-icon {
+    background: #1f1;
+    color: #ffffff;
+}
+
+.tag-icon {
+    background: #1ff;
+    color: #ffffff;
+}
+
+/*
+詳細ページ
+*************************/
+.show-image img{}
+.show-header{
+    width: 60%;
+    display: flex;
+    justify-content: space-between;
+}
+.icon-list .checkbox-label{
+    cursor: auto;
+}
+.ingredients-container {
+}
+
+.ingredients-list {
+    width: 40%;
+    display: flex;
+    border-bottom: 1.5px dashed #dde;
+}
+
+.ingredient {
+    width: 70%;
+}
+.quantity{
+    white-space: nowrap;
+}
+
+.processes-list {
+    width: 70%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1.5px dashed #dde
+}
+
+.process {
+    height: 110px;
+    width: 70%;
+}
+
+.process-image img {
+    width: 100px;
+}
+
+/*
+登録ページ
+*************************/
+.alert-message{
+    color: red;
+}
+.imageUpload{
+display: none;
+}
+
+.preview{
+cursor: pointer;
+    transition: 0.3s;
+}
+.preview:hover{
+filter: brightness(0.8);
+}

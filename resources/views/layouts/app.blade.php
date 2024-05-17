@@ -17,17 +17,20 @@
     <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0-beta3/css/all.min.css">
 
     <!-- Scripts -->
     <script src="https://kit.fontawesome.com/9322fd0ab2.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="{{asset('js/custom.js')}}"></script>
+    <script src="{{asset('js/fontawesome6-icon-picker.js')}}"></script>
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm header">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -61,15 +64,6 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item">
-                                <form action="/sort" method="get" id="sort-form">
-                                <select name="languages" id="sort-item">
-                                    <option value="新しい順">新しい順</option>
-                                    <option value="古い順">古い順</option>
-                                    <option value="点数順">点数順</option>
-                                </select>
-                                </form>
-                            </li>
 
                             <li>
                                 <a href="{{ url('items/add') }}" class="btn btn-default">新規登録</a>
@@ -108,8 +102,8 @@
             </div>
         </nav>
 
+        
         <main class="py-4">
-            @yield('content_header')
             @yield('content')
         </main>
     </div>
