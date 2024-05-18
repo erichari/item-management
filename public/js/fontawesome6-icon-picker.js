@@ -1,30 +1,28 @@
 
 $(function(){
-    let drawDiv = $("<div>", {
-        class: 'drawDiv',
-    });
-
     //表示したいアイコン
     const icons = ['fa-bowl-food', 'fa-mug-hot', 'fa-fish', 'fa-pepper-hot', 'fa-martini-glass', 'fa-ice-cream', 'fa-egg', 'fa-seedling', 'fa-shrimp', 'fa-pizza-slice', 'fa-cookie', 'fa-cheese', 'fa-carrot', 'fa-cake-candles', 'fa-candy-cane', 'fa-burger', 'fa-bone', 'fa-blender', 'fa-apple-whole', 'fa-face-laugh', 'fa-face-laugh-beam', 'fa-dizzy', 'fa-face-tired', 'fa-face-grin-hearts', 'fa-clock-four', 'fa-car-side', 'fa-cannabis', 'fa-snowflake', 'fa-capsules', 'fa-campground', 'fa-baby-carriage', 'fa-fire', 'fa-gift', 'fa-heart', 'fa-heart-broken', 'fa-hourglass-2', 'fa-moon', 'fa-music', 'fa-paperclip', 'fa-paw', 'fa-poo', 'fa-star', 'fa-thumbs-up', 'fa-thumbs-down', 'fa-users', 'fa-cutlery', 'fa-weight-scale', 'fa-tablets', 'fa-crown', 'fa-bolt',];
     
-    $.each(icons, function(index, value) {
-        drawDiv.append(`
-            <button class="btn btn-outline-info mb-1 me-1 mr-1" style="width: 3em; height: 3em;" data-bs-name="${value}">
-                <i class='fa-solid ${value}'></i>
-            </button>
-        `);
-    });
-
     //クリックでポップオーバー表示
     $('.icon-btn').popover({placement:'right',
         html:true,
-        content: drawDiv,
+        content: function(){
+            
+            let drawDiv = $("<div>", {
+                class: 'drawDiv',
+            });
+            var btn_id = $(this).data('btn-id');
+            $.each(icons, function(index, value) {
+                drawDiv.append(`
+                    <button class="btn btn-outline-info mb-1 me-1 mr-1" style="width: 3em; height: 3em;" data-bs-name="${value}" onclick="addEventListener('click', iconToInput(${btn_id}))">
+                        <i class='fa-solid ${value}'></i>
+                    </button>
+                `);
+            });
+            return drawDiv;
+        },
         trigger: 'focus',
-        
-    })
-    $('.icon-btn').click(function(){
-        var btn_id = $(this).data('btn-id');
-        $('.drawDiv button').attr('onclick', `addEventListener('click', iconToInput(${btn_id}))`)
+
     })
     
 
