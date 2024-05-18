@@ -32,7 +32,7 @@ Route::prefix('items')->group(function () {
     Route::post('/edit/{id}', [App\Http\Controllers\ItemController::class, 'edit'])->name('edit');
     Route::post('/edit/draft/{id}', [App\Http\Controllers\ItemController::class, 'edit'])->name('returnDraft');
     Route::delete('/destroy/{id}', [App\Http\Controllers\ItemController::class, 'destroy']);
-    Route::get('/editTag', [App\Http\Controllers\TagController::class, 'editTag']);
+    Route::get('/editTag', [App\Http\Controllers\TagController::class, 'editTagView']);
     Route::post('/editTag', [App\Http\Controllers\TagController::class, 'editTag']);
     Route::get('/search', [App\Http\Controllers\ItemController::class, 'search']);
 });

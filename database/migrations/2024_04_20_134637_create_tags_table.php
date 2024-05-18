@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->smallInteger('number');
             $table->string('tag', 20);
             $table->string('icon', 200)->nullable()->default(null);
             $table->smallInteger('type')->default(3);

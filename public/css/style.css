@@ -234,3 +234,10 @@ cursor: pointer;
 .preview:hover{
 filter: brightness(0.8);
 }
+
+/*
+タグ編集ページ
+*************************/
+
+.drawDiv{height = "600px";
+overflowY = 'scroll';}

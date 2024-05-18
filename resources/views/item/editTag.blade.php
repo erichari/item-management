@@ -8,35 +8,26 @@
 <div class="row main">
     <h1>タグ編集</h1>
     <div class="col-md-10">
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 
         <div class="card card-primary">
             <form method="POST">
                 @csrf
                 <div class="card-body">
                     <div class="form-group">
-                        @for($i=1; $i<=4; $i++)
-                            <input type="text" class="form-control mb-2" name="tags[]" placeholder="タグ名{{$i}}" value="{{ old('tags', $tags[$i-1]->tag ?? '') }}">
-                            <input type="text" class="form-control mb-2" name="icons[]" placeholder="アイコン{{$i}}" value="{{ old('icons', $tags[$i-1]->icon ?? '') }}">
-                            <input type="search" name="icon_input[]" class="form-control" data-bs-original-title="" title="">
-                        <div class="col-12">
-                            <p class="icon tag-icon btn-secondary" id="select_btn"> <i id="view_icon"></i> </p>
-                        </div>
-
+                        @for($i=0; $i<=3; $i++)
+                            <input type="text" class="form-control" name="tags[{{$i}}][id]" value="{{$tags[$i]->id ?? ''}}" hidden>
+                            <input type="text" class="form-control mb-2 @if($errors->has('tags.'.$i.'.name')) is-invalid @endif" name="tags[{{$i}}][name]" placeholder="タグ名{{$i+1}}" value="{{ old('tags.'.$i.'.name', $tags[$i]->tag ?? '') }}">
+                            <span tabindex="0" class="icon-btn tag-icon icon @if($errors->has('tags.'.$i.'.icon')) is-invalid @endif" data-btn-id="{{$i}}" data-toggle="popover" title="タグ名{{$i+1}}のアイコンを選択">
+                                <input type="text" class="form-control mb-2 icon-input" id="input-id{{$i}}" name="tags[{{$i}}][icon]" value="{{ old('tags.'.$i.'.icon', $tags[$i]->icon ?? '') }}" hidden>
+                                <i class="view_icon fa-solid">{{ old('tags.'.$i.'.icon', $tags[$i]->icon ?? "　") }}</i>
+                            </span>
+                            @foreach($errors->get('tags.'.$i.'.*') as $messages)
+                                @foreach ($messages as $message)
+                                    <p class="alert-message">{{ $message }}</p>
+                                @endforeach
+                            @endforeach
                         @endfor
                         <p>*アイコンを設定しない場合、タグ名の頭文字がアイコンになります</p>
-
-                        @if($errors->has('tags.*'))
-                            <p class="alert">{{ $errors->first('tags.*') }}</p>
-                        @endif 
                     </div>
                 </div>
 
@@ -47,13 +38,35 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    //選択されたアイコンを<input>に入力
+    function iconToInput(btn_id) {
+        name = event.currentTarget.getAttribute('data-bs-name');
+        targetInput = document.getElementById('input-id'+btn_id);
+        targetViewIcon = document.getElementById('view_icon'+btn_id);
+        targetInput.value = '<i class="fa-solid '+name+'"></i>';
+        targetViewIcon.textContent = '';
+        targetViewIcon.classList.add(name);
+    }
+
+
+</script>
+
+
+
+
+<script>
+
+</script>
 @stop
 
 
-<script type="text/javascript">
+<!-- <script type="text/javascript">
     document.addEventListener('DOMContentLoaded', init);
     function init(){
         iconPicker = new Fa6IconPicker({
         });
     }
-</script>
+</script> -->

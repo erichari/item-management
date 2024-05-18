@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TagRequest;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,44 +19,36 @@ class TagController extends Controller
         $this->middleware('auth');
     }
     
+    public function editTagView(Request $request)
+    {
+        return view('item.editTag');
+    }
+
     /**
      * タグ編集
      */
-    public function editTag(Request $request)
+    public function editTag(TagRequest $request)
     {
-        // POSTリクエストのとき
-        if ($request->isMethod('post')) {
-            // バリデーション
-            $this->validate($request, [
-                'tags' => 'required|array|min:1',
-                'tags.*' => 'max:20|required_with:icons.*',
-                'tags.0' => 'required',
-            ]);
-            // タグ編集
-            $i = 1;
-            
-            foreach(array_map(null, $request->tags, $request->icons) as [$tag, $icon]){
-                if($tag == null){
-                    continue;
-                }
-                if($icon == null){
-                    $tag_icon = mb_substr($tag, 0, 1);
-                }else{
-                    $tag_icon = $icon;
-                }
-
-                $tags[] = [
-                    'user_id' => Auth::user()->id,
-                    'number' => $i,
-                    'tag' => $tag,
-                    'icon' => $tag_icon,
-                ];
-                $i++;
+        // タグ編集
+        foreach($request->tags as $tag){
+            if($tag['name'] == null){
+                continue;
             }
-            Tag::insert($tags);
-            return redirect('/items');
-        }
+            if($tag['icon'] == null){
+                $tag_icon = mb_substr($tag['name'], 0, 1);
+            }else{
+                $tag_icon = $tag['icon'];
+            }
 
-        return view('item.editTag');
+            $tags[] = [
+                'id' => $tag['id'],
+                'user_id' => Auth::user()->id,
+                'tag' => $tag['name'],
+                'icon' => $tag_icon,
+            ];
+        }
+        Tag::upsert($tags, ['id']);
+        return redirect('/items');
+    
     }
 }

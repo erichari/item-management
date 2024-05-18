@@ -107,5 +107,14 @@
             @yield('content')
         </main>
     </div>
+
+    <script>
+        //タグアイコンをhtmlテキストとして表示
+            view_icon = document.getElementsByClassName('view_icon');
+        for(i=0; i<=3; i++){
+            icon_text = view_icon[i].textContent;
+            view_icon[i].innerHTML = icon_text;
+        }
+    </script>
 </body>
 </html>

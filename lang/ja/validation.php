@@ -275,5 +275,7 @@ return [
                     'processes.*.name' => '作り方',
                     'processes.*.image' => '工程写真',
                     'memo' => 'メモ',
+                    'tags.*.name' => 'タグ名',
+                    'tags.*.icon' => 'アイコン'
 ],
 ];

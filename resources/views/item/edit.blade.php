@@ -58,7 +58,7 @@
                                     <a href="{{url('items/editTag')}}">タグを追加する</a>
                                 @else
                                     @foreach($tags as $tag)
-                                        <input type="checkbox" name="add_tag[]" value="{{$tag->id}}" id="add-tag{{$tag->id}}" class="tag" {{ !empty(old("add_tag")) && in_array((string)$tag->id, old("add_tag"), true) || $item_tags->contains('id', $tag->id) && empty(old("add_tag")) ? 'checked' : ''}}><label for="add-tag{{$tag->id}}" class="tag checkbox-label">{{$tag->icon}}<span class="tooltip">{{$tag->tag}}</span></label>
+                                        <input type="checkbox" name="add_tag[]" value="{{$tag->id}}" id="add-tag{{$tag->id}}" class="tag" {{ !empty(old("add_tag")) && in_array((string)$tag->id, old("add_tag"), true) || $item_tags->contains('id', $tag->id) && empty(old("add_tag")) ? 'checked' : ''}}><label for="add-tag{{$tag->id}}" class="tag checkbox-label"><i class="view_icon">{{$tag->icon}}</i><span class="tooltip">{{$tag->tag}}</span></label>
                                     @endforeach
                                 @endif
                             </div>
@@ -86,8 +86,8 @@
                                 @for($i=0; $i < count($ingredients); $i++)
                                     <div class="unit mb-2 d-flex">
                                         <input type="text" class="form-control ingredient-id" name="ingredients[{{$i}}][id]" value="{{$ingredients[$i]->id}}" hidden>
-                                        <input type="text" class="form-control ingredient @if($errors->has('ingredients.'.$i.'.name')) is-invalid @endif" name="ingredients[{{$i}}][name]" placeholder="材料" value="{{ old('ingredients.$i.name', $ingredients[$i]->ingredient) }}">：
-                                        <input type="text" class="form-control quantity @if($errors->has('ingredients.'.$i.'.quantity')) is-invalid @endif" name="ingredients[{{$i}}][quantity]" placeholder="分量" value="{{ old('ingredients.$i.quantity', $ingredients[$i]->quantity) }}">
+                                        <input type="text" class="form-control ingredient @if($errors->has('ingredients.'.$i.'.name')) is-invalid @endif" name="ingredients[{{$i}}][name]" placeholder="材料" value="{{ old('ingredients.'.$i.'.name', $ingredients[$i]->ingredient) }}">：
+                                        <input type="text" class="form-control quantity @if($errors->has('ingredients.'.$i.'.quantity')) is-invalid @endif" name="ingredients[{{$i}}][quantity]" placeholder="分量" value="{{ old('ingredients.'.$i.'.quantity', $ingredients[$i]->quantity) }}">
                                         <div class="remove-button input-group-append" style="display:none">
                                             <span class="btn btn-danger">-</span>
                                         </div>

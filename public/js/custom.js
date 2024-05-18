@@ -76,4 +76,5 @@ $(function(){
             $(elem).next(".preview").attr('src', `${fileReader.result}`)             //画像をプレビュー
         });
     })
+
 });
