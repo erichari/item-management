@@ -19,7 +19,7 @@
                             <input type="text" class="form-control mb-2 @if($errors->has('tags.'.$i.'.name')) is-invalid @endif" name="tags[{{$i}}][name]" placeholder="タグ名{{$i+1}}" value="{{ old('tags.'.$i.'.name', $tags[$i]->tag ?? '') }}">
                             <span tabindex="0" class="icon-btn tag-icon icon @if($errors->has('tags.'.$i.'.icon')) is-invalid @endif" data-btn-id="{{$i}}" data-toggle="popover" title="タグ名{{$i+1}}のアイコンを選択">
                                 <input type="text" class="form-control mb-2 icon-input" id="input-id{{$i}}" name="tags[{{$i}}][icon]" value="{{ old('tags.'.$i.'.icon', $tags[$i]->icon ?? '') }}" hidden>
-                                <i class="view_icon fa-solid">{{ old('tags.'.$i.'.icon', $tags[$i]->icon ?? "　") }}</i>
+                                <i id="view_icon{{$i}}" class="view_icon fa-solid">{{ old('tags.'.$i.'.icon', $tags[$i]->icon ?? "　") }}</i>
                             </span>
                             @foreach($errors->get('tags.'.$i.'.*') as $messages)
                                 @foreach ($messages as $message)
