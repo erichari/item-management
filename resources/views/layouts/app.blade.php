@@ -110,9 +110,10 @@
 
     <script>
         //タグアイコンをhtmlテキストとして表示
-            view_icon = document.getElementsByClassName('view_icon');
-        for(i=0; i<=3; i++){
-            icon_text = view_icon[i].textContent;
+        view_icon = document.getElementsByClassName('view_icon');
+        console.log(view_icon);
+        for(i=0; i<view_icon.length ; i++){
+            icon_text = view_icon[i].innerText;
             view_icon[i].innerHTML = icon_text;
         }
     </script>
