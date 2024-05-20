@@ -98,7 +98,9 @@
                                 <textarea class="form-control process @if($errors->has('processes.'.$i.'.name')) is-invalid @endif" name="processes[{{$i}}][name]" placeholder="手順">{{ old("processes.$i.name") }}</textarea>
                                 <label for="imageUpload{{$i}}">
                                     <input type="file" class="imageUpload process_image" id="imageUpload{{$i}}" name="processes[{{$i}}][image]" value="{{ old("processes.$i.image") }}">
-                                    <img class="preview @if($errors->has('processes'.$i.'.image')) is-invalid @endif" src="{{ asset('/img/no_image.jpg') }}">
+                                    <div class="process-image">
+                                        <img class="preview @if($errors->has('processes'.$i.'.image')) is-invalid @endif" src="{{ asset('/img/no_image.jpg') }}">
+                                    </div>
                                 </label>
                                 <div class="remove-button input-group-append" style="display:none">
                                     <span class="btn btn-danger">-</span>

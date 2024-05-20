@@ -1,3 +1,9 @@
+:root {
+  --genre-color: #f88;
+  --category-color: #2c2;
+  --tag-color: #0dcaf0;
+}
+
 main {
     display: flex;
     justify-content: center;
@@ -47,33 +53,33 @@ input[type=checkbox] {
 }
 
 .genre {
-    border: 1px solid #f99;
-    color: #f99;
+    border: 1px solid var(--genre-color);
+    color: var(--genre-color);
 }
 
 .category {
-    border: 1px solid #1f1;
-    color: #1f1;
+    border: 1px solid var(--category-color);
+    color: var(--category-color);
 }
 
 .tag {
-    border: 1px solid #1ff;
-    color: #1ff;
+    border: 1px solid var(--tag-color);
+    color: var(--tag-color);
 }
 
 .genre:checked + label {
-    background: #f99;
-    color: #ffffff;
+    background: var(--genre-color);
+    color: #fff;
 }
 
 .category:checked + label {
-    background: #1f1;
-    color: #ffffff;
+    background: var(--category-color);
+    color: #fff;
 }
 
 .tag:checked + label {
-    background: #1ff;
-    color: #ffffff;
+    background: var(--tag-color);
+    color: #fff;
 }
 
 .tooltip {
@@ -102,12 +108,7 @@ input[type=checkbox] {
 /*
 トップページ
 *************************/
-.card-box {
-    width: 200px;
-    height: 400px;
-}
-
-.card-box .card {
+.card {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     padding: 10px;
     background-color: #fff;
@@ -116,7 +117,7 @@ input[type=checkbox] {
     position: relative;
 }
 
-.card-box .card:hover {
+.card:hover {
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
     transform: translate(0, -2px);
 }
@@ -129,6 +130,10 @@ input[type=checkbox] {
 .card-text{
     font-size: 14.5px;
     color: gray;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
 }
 .card .score {
     position: absolute;
@@ -159,24 +164,28 @@ input[type=checkbox] {
 }
 
 .genre-icon {
-    background: #f99;
-    color: #ffffff;
+    background: var(--genre-color);
+    color: #fff;
 }
 
 .category-icon {
-    background: #1f1;
-    color: #ffffff;
+    background: var(--category-color);
+    color: #fff;
 }
 
 .tag-icon {
-    background: #1ff;
-    color: #ffffff;
+    background: var(--tag-color);
+    color: #fff;
 }
 
 /*
 詳細ページ
 *************************/
-.show-image img{}
+.show-image img{
+    width: 70%;
+    height:350px;
+    object-fit: cover;
+}
 .show-header{
     width: 60%;
     display: flex;
@@ -211,10 +220,13 @@ input[type=checkbox] {
 .process {
     height: 110px;
     width: 70%;
+    resize:none;
 }
 
 .process-image img {
-    width: 100px;
+    width: 140px;
+    height: 110px;
+    object-fit:cover;
 }
 
 /*
@@ -227,10 +239,7 @@ input[type=checkbox] {
 display: none;
 }
 
-.preview{
-cursor: pointer;
-    transition: 0.3s;
-}
+.preview{cursor: pointer;transition: 0.3s;}
 .preview:hover{
 filter: brightness(0.8);
 }
@@ -239,5 +248,5 @@ filter: brightness(0.8);
 タグ編集ページ
 *************************/
 
-.drawDiv{height = "600px";
-overflowY = 'scroll';}
+.drawDiv{height : 200px;
+        overflow-Y : scroll;}

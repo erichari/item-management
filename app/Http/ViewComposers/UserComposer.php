@@ -23,8 +23,9 @@ class UserComposer
         $view->with([
             'user' => Auth::user(),
             'tags' => Auth::user()->tags()->get(),
+            'genre_tags' => Tag::where('type', 1)->get(),
+            'category_tags' => Tag::where('type', 2)->get(),
             'i' => 0,
-            // ... ここに続けて共通で返したいデータを定義
         ]);
     }
 }

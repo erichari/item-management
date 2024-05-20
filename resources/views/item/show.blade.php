@@ -6,8 +6,16 @@
     @include('layouts.sidebar')
     <div class="row main g-4">
         <h1>{{$item->title}}</h1>
-        <div class="show-image">
+        <div class="show-image" data-bs-toggle="modal" data-bs-target="#js-modal-top-image">
             <img src="{{ $item->image }}" alt="{{ $item->title }}">
+        </div>
+
+        <div class="modal fade" id="js-modal-top-image" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <img src="{{ $item->image }}">
+                </div>
+            </div>
         </div>
 
         <div class="show-header">
@@ -51,10 +59,17 @@
                         <div class="process">
                             {{$process->process}}
                         </div>
-                        <div class="process-image">
+                        <div class="process-image" data-bs-toggle="modal" data-bs-target="#js-modal-image{{ $process->id }}">
                             @if($process->process_image)
                                 <img src="{{ $process->process_image }}" class="process-image" alt="工程写真">
                             @endif
+                        </div>
+                        <div class="modal fade" id="js-modal-image{{ $process->id }}" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <img src="{{ $process->process_image }}">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 @endforeach

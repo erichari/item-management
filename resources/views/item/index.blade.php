@@ -17,8 +17,8 @@
     @endif
 
         @foreach ($items as $item)
-            <div class="card-box col-12 col-md-6 col-lg-4">
-                <div class="card text-bg-light">
+            <div class="col-12 col-md-4 col-lg-3">
+                <div class="card text-bg-light h-100">
                     <img src="{{ $item->image }}" class="card-img-top" alt="{{ $item->title }}">
                     <div class="card-body">
                         @if($item->draft == 'draft')
@@ -43,7 +43,7 @@
 
                         @foreach($ingredients as $ingredient)
                             @if($ingredient->item_id == $item->id)
-                                <p class="card-text text-nowrap">{{$ingredient->ingredients_text}}</p>
+                                <p class="card-text">{{$ingredient->ingredients_text}}</p>
                             @else
                                 @continue
                             @endif
@@ -57,7 +57,6 @@
                 </div>
             </div>
         @endforeach
-        </div>
 
         <p class="pagination">
             @if(isset($search_parameters))

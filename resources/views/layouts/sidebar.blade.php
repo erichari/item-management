@@ -9,19 +9,18 @@
             <div class="form-group">
                 <label>ジャンル</label>
                 <div>
-                    <input type="checkbox" name="tag[]" value="1" id="jap" class="genre" {{ !empty($search_parameters['tags']) && in_array((string)1, $search_parameters['tags'], true) ? 'checked' : ''}}><label for="jap" class="genre checkbox-label">和</label>
-                    <input type="checkbox" name="tag[]" value="2" id="wes" class="genre" {{ !empty($search_parameters['tags']) && in_array((string)2, $search_parameters['tags'], true) ? 'checked' : ''}}><label for="wes" class="genre checkbox-label">洋</label>
-                    <input type="checkbox" name="tag[]" value="3" id="chi" class="genre" {{ !empty($search_parameters['tags']) && in_array((string)3, $search_parameters['tags'], true) ? 'checked' : ''}}><label for="chi" class="genre checkbox-label">中</label>
+                    @foreach($genre_tags as $tag)
+                        <input type="checkbox" name="tag[]" value="{{$tag->id}}" id="default-{{$tag->id}}" class="genre" {{ !empty($search_parameters['tags']) && in_array((string)$tag->id, $search_parameters['tags'], true) ? 'checked' : ''}}><label for="default-{{$tag->id}}" class="genre checkbox-label">{{$tag->icon}}<span class="tooltip">{{$tag->tag}}</span></label>
+                    @endforeach
                 </div>
             </div>
 
             <div class="form-group">
                 <label>カテゴリ</label>
                 <div>
-                    <input type="checkbox" name="tag[]" value="4" id="main" class="category" {{ !empty($search_parameters['tags']) && in_array((string)4, $search_parameters['tags'], true) ? 'checked' : ''}}><label for="main" class="category checkbox-label">主<span class="tooltip">主菜</span></label>
-                    <input type="checkbox" name="tag[]" value="5" id="side" class="category" {{ !empty($search_parameters['tags']) && in_array((string)5, $search_parameters['tags'], true) ? 'checked' : ''}}><label for="side" class="category checkbox-label">副<span class="tooltip">副菜</span></label>
-                    <input type="checkbox" name="tag[]" value="6" id="soup" class="category" {{ !empty($search_parameters['tags']) && in_array((string)6, $search_parameters['tags'], true) ? 'checked' : ''}}><label for="soup" class="category checkbox-label">汁<span class="tooltip">汁物</span></label>
-                    <input type="checkbox" name="tag[]" value="7" id="sweets" class="category" {{ !empty($search_parameters['tags']) && in_array((string)7, $search_parameters['tags'], true) ? 'checked' : ''}}><label for="sweets" class="category checkbox-label">菓<span class="tooltip">お菓子</span></label>
+                    @foreach($category_tags as $tag)
+                        <input type="checkbox" name="tag[]" value="{{$tag->id}}" id="default-{{$tag->id}}" class="category" {{ !empty($search_parameters['tags']) && in_array((string)$tag->id, $search_parameters['tags'], true) ? 'checked' : ''}}><label for="default-{{$tag->id}}" class="category checkbox-label">{{$tag->icon}}<span class="tooltip">{{$tag->tag}}</span></label>
+                    @endforeach
                 </div>
             </div>
             
