@@ -98,10 +98,9 @@ class ItemController extends Controller
         }
 
         //下書きボタンが押された場合 
-        if($request->route()->getName() == 'addDraft' || $request->route()->getName() == 'returnDraft'){
+        if($request->route()->getName() == 'addDraft'){
             $item->draft = 'draft';
         }
-
 
         $item->user_id = Auth::user()->id;
         $item->title = $request->title;
@@ -204,6 +203,8 @@ class ItemController extends Controller
         //下書きボタンが押された場合 
         if($request->route()->getName() == 'returnDraft'){
             $item->draft = 'draft';
+        }else{
+            $item->draft = null;
         }
 
         //画像がアップロードされてる場合
