@@ -59,7 +59,7 @@
                         <div class="process">
                             {{$process->process}}
                         </div>
-                        <div class="process-image" data-bs-toggle="modal" data-bs-target="#js-modal-image{{ $process->id }}">
+                        <div data-bs-toggle="modal" data-bs-target="#js-modal-image{{ $process->id }}">
                             @if($process->process_image)
                                 <img src="{{ $process->process_image }}" class="process-image" alt="工程写真">
                             @endif

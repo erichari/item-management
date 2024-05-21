@@ -18,7 +18,7 @@
 
         @foreach ($items as $item)
             <div class="col-12 col-md-4 col-lg-3">
-                <div class="card text-bg-light h-100">
+                <div class="card index-card text-bg-light h-100">
                     <img src="{{ $item->image }}" class="card-img-top" alt="{{ $item->title }}">
                     <div class="card-body">
                         @if($item->draft == 'draft')

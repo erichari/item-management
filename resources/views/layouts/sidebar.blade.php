@@ -2,11 +2,11 @@
     <div class="side-inner">
         <form action="/items/search" method="get">
             @csrf
-            <div class="form-group">
-                <input type="text" name="keyword" placeholder="フリーワード" value="@if(isset($search_parameters['keyword'])) {{$search_parameters['keyword']}} @endif">
+            <div class="form-group mb-3">
+                <input type="search" name="keyword" placeholder="&#xf002; キーワード" value="@if(isset($search_parameters['keyword'])) {{$search_parameters['keyword']}} @endif" class="keyword">
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-1">
                 <label>ジャンル</label>
                 <div>
                     @foreach($genre_tags as $tag)
@@ -15,7 +15,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-1">
                 <label>カテゴリ</label>
                 <div>
                     @foreach($category_tags as $tag)
@@ -24,7 +24,7 @@
                 </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label>タグ</label>
                 <div>
                     @if(count($tags) == 0)
@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label>点数</label>
                 <div>
                     <select name="min_score">
@@ -52,14 +52,14 @@
                         @endfor
                     </select>
                 </div>
-
-                <div class="form-group" id="sort-form">
-                    <select name="sort" id="sort-item">
-                        <option value="新しい順" {{ !empty($search_parameters['sort']) && '新しい順' == $search_parameters['sort'] ? 'selected' : ''}}>新しい順</option>
-                        <option value="古い順" {{ !empty($search_parameters['sort']) && '古い順' == $search_parameters['sort'] ? 'selected' : ''}}>古い順</option>
-                        <option value="点数順" {{ !empty($search_parameters['sort']) && '点数順' == $search_parameters['sort'] ? 'selected' : ''}}>点数順</option>
-                    </select>
-                </div>
+            </div>
+            
+            <div class="form-group mb-3" id="sort-form">
+                <select name="sort" id="sort-item">
+                    <option value="新しい順" {{ !empty($search_parameters['sort']) && '新しい順' == $search_parameters['sort'] ? 'selected' : ''}}>新しい順</option>
+                    <option value="古い順" {{ !empty($search_parameters['sort']) && '古い順' == $search_parameters['sort'] ? 'selected' : ''}}>古い順</option>
+                    <option value="点数順" {{ !empty($search_parameters['sort']) && '点数順' == $search_parameters['sort'] ? 'selected' : ''}}>点数順</option>
+                </select>
             </div>
 
             <input type="submit" value="検索">

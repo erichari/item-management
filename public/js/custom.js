@@ -68,7 +68,7 @@ $(function(){
     
 
     //画像のプレビュー表示
-    $(document).on("change",".imageUpload",function(){
+    $(document).on("change", ".imageUpload", function(){
         let elem = this                                             //操作された要素を取得
         let fileReader = new FileReader();                          //ファイルを読み取るオブジェクトを生成
         fileReader.readAsDataURL(elem.files[0]);                    //ファイルを読み取る

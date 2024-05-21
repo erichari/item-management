@@ -9,7 +9,8 @@ main {
     justify-content: center;
 }
 .main {
-    width: calc(100% - 120px);
+    width: calc(100% - 180px);
+    padding: 20px;
 }
 
 /*
@@ -28,7 +29,8 @@ nav {
 サイドバー
 *************************/
 .side {
-    width: 200px;
+    width: 180px;
+    border-right: 1px solid #eef;
 }
 
 .side .side-inner {
@@ -36,6 +38,11 @@ nav {
     height: 100vh;
     top: 0px;
     padding-top: 20px;
+}
+
+.keyword{
+    font-family: FontAwesome;
+    width: 90%;
 }
 
 input[type=checkbox] {
@@ -108,7 +115,7 @@ input[type=checkbox] {
 /*
 トップページ
 *************************/
-.card {
+.index-card {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     padding: 10px;
     background-color: #fff;
@@ -117,14 +124,14 @@ input[type=checkbox] {
     position: relative;
 }
 
-.card:hover {
+.index-card:hover {
     box-shadow: 0 6px 14px rgba(0, 0, 0, 0.24);
     transform: translate(0, -2px);
 }
 
 .card img {
     height: 130px;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .card-text{
@@ -208,6 +215,7 @@ input[type=checkbox] {
 }
 .quantity{
     white-space: nowrap;
+    width: 20%;
 }
 
 .processes-list {
@@ -218,15 +226,19 @@ input[type=checkbox] {
 }
 
 .process {
-    height: 110px;
+    height: 130px;
     width: 70%;
     resize:none;
 }
 
-.process-image img {
+.process-image {
     width: 140px;
     height: 110px;
     object-fit:cover;
+}
+
+.memo{
+    resize:none;
 }
 
 /*
@@ -234,6 +246,9 @@ input[type=checkbox] {
 *************************/
 .alert-message{
     color: red;
+}
+.ingredient-forms{
+    width: 90%;
 }
 .imageUpload{
 display: none;
