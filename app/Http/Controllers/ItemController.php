@@ -80,7 +80,12 @@ class ItemController extends Controller
      * 商品登録画面を表示
      */
     public function addView(Request $request){
-        return view('item.add');
+        $item = new Item();
+        $ingredients = $item->ingredients()->get();
+        $processes = $item->processes()->get();
+        $item_tags = $item->tags()->get();
+        
+        return view('item.add', compact('item', 'ingredients', 'processes', 'item_tags'));
     }
 
     /**
@@ -190,7 +195,7 @@ class ItemController extends Controller
         $processes = $item->processes()->get();
         $item_tags = $item->tags()->get();
 
-        return view('item.edit', compact('item', 'ingredients', 'processes', 'item_tags'));
+        return view('item.add', compact('item', 'ingredients', 'processes', 'item_tags'));
     }
 
     /**
@@ -366,12 +371,6 @@ class ItemController extends Controller
                             ];
         
         return view('item.index', compact('items', 'ingredients', 'item_tags', 'search_parameters'));
-        
-        // return redirect()->route('index')->with([
-        //     'items' => $items,
-        //     'ingredients' => $ingredients,
-        //     'item_tags' => $item_tags,
-        // ]);;
     }
 
 
