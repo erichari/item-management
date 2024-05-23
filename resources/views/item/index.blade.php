@@ -27,7 +27,7 @@
                             <a href="/items/show/{{$item->id}}" class="stretched-link"></a>
                         @endif
                         <h5 class="card-title">{{ $item->title }}</h5>
-                        <div class="icon-list">
+                        <div class="icon-list mb-2">
                             @foreach($item_tags as $tag)
                                 @if($tag->id !== $item->id)
                                     @continue

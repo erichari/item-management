@@ -11,21 +11,31 @@
     @include('layouts.sidebar')
     <div class="row main">
         @if($item->title)
-            <h1>レシピ編集</h1>
+            <div class="edit-title">
+                <h1>レシピ編集</h1>
+                <form action="/items/destroy/{{$item->id}}" method="post" class="col-3">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger" id="delete-btn" data-item-title="{{$item->title}}" data-item-id="{{$item->id}}">削除</button>
+                </form>
+            </div>
         @else
             <h1>レシピ新規登録</h1>
         @endif
+        
         <div class="col-md-10">
             <div class="card card-primary">
                 <form method="POST" enctype="multipart/form-data" action="?">
                     @csrf
                     <div class="card-body">
                         <div class="form-group mb-4">
-                            <label for="imageUpload">
-                                <div>写真</div>
-                                <input type="file" class="imageUpload" id="imageUpload" name="image" value="{{ old('image') }}">
-                                <img class="preview @if($errors->has('image')) is-invalid @endif" src="@if($item->title) {{$item->image}} @else {{asset('/img/no_image.jpg')}} @endif">
-                            </label>
+                            <div class="img-container">
+                                <label for="imageUpload" class="col-10">
+                                    <input type="file" class="imageUpload" id="imageUpload" name="image" value="{{ old('image') }}">
+                                    <img class="preview top-image @if($errors->has('image')) is-invalid @endif" src="@if($item->title) {{$item->image}} @else {{asset('/img/no_image.jpg')}} @endif">
+                                </label>
+                                <p class="clear-image" style="display:none">×画像をクリア</p>
+                            </div>
 
                             @foreach($errors->get('image') as $message)
                                 <p class="alert-message">{{$message}}</p>
@@ -33,7 +43,7 @@
                         </div>
 
                         <div class="form-group mb-4">
-                            <label for="title">タイトル</label>
+                            <label for="title"><h4>タイトル</h4></label>
                             <input type="text" class="form-control @if($errors->has('title')) is-invalid @endif" id="title" name="title" placeholder="タイトル" value="{{ old('title', $item->title) }}">
                             
                             @foreach($errors->get('title') as $message)
@@ -82,21 +92,22 @@
                         </div>
 
                         <div class="form-group mb-4 input-list">
-                            <label>材料</label>
-                            <label>分量</label>
-                            <div>
+                            <h4>材料・分量</h4>
+                            <div class="col-3">
                                 <input type="text" class="form-control mb-3 @if($errors->has('serving')) is-invalid @endif" id="serving" name="serving" placeholder="〇人分" value="{{ old('serving', $item->serving) }}">
                             </div>
 
                             @if(count($ingredients) == 0)
                                 @for($i=0; $i<=2; $i++)
                                 <div class="unit mb-2 d-flex">
-                                    <div class="ingredient-forms d-flex">
-                                        <input type="text" class="form-control ingredient-id" name="ingredients[{{$i}}][id]" hidden>
-                                        <input type="text" class="form-control ingredient @if($errors->has('ingredients.'.$i.'.name')) is-invalid @endif" name="ingredients[{{$i}}][name]" placeholder="材料" value='{{ old("ingredients.$i.name") }}'>：
-                                        <input type="text" class="form-control quantity @if($errors->has('ingredients.'.$i.'.quantity')) is-invalid @endif" name="ingredients[{{$i}}][quantity]" placeholder="分量" value='{{ old("ingredients.$i.quantity") }}'>
+                                    <div class="col-6">
+                                        <input type="text" class="form-control @if($errors->has('ingredients.'.$i.'.name')) is-invalid @endif" name="ingredients[{{$i}}][name]" placeholder="材料" value="{{ old('ingredients.'.$i.'.name') }}">
                                     </div>
-                                    <div class="remove-button input-group-append" style="display:none">
+                                    <div class="col-1">　：　</div>
+                                    <div class="col-4">
+                                        <input type="text" class="form-control @if($errors->has('ingredients.'.$i.'.quantity')) is-invalid @endif" name="ingredients[{{$i}}][quantity]" placeholder="分量" value="{{ old('ingredients.'.$i.'.quantity') }}">
+                                    </div>
+                                    <div class="remove-button input-group-append col-1" style="display:none">
                                         <span class="btn btn-danger">-</span>
                                     </div>
                                 </div>
@@ -104,12 +115,15 @@
                             @else
                                 @for($i=0; $i < count($ingredients); $i++)
                                     <div class="unit mb-2 d-flex">
-                                        <div class="ingredient-forms d-flex">
-                                            <input type="text" class="form-control ingredient-id" name="ingredients[{{$i}}][id]" value="{{$ingredients[$i]->id}}" hidden>
-                                            <input type="text" class="form-control ingredient @if($errors->has('ingredients.'.$i.'.name')) is-invalid @endif" name="ingredients[{{$i}}][name]" placeholder="材料" value="{{ old('ingredients.'.$i.'.name', $ingredients[$i]->ingredient) }}">：
-                                            <input type="text" class="form-control quantity @if($errors->has('ingredients.'.$i.'.quantity')) is-invalid @endif" name="ingredients[{{$i}}][quantity]" placeholder="分量" value="{{ old('ingredients.'.$i.'.quantity', $ingredients[$i]->quantity) }}">
+                                        <input type="text" class="form-control ingredient-id" name="ingredients[{{$i}}][id]" value="{{$ingredients[$i]->id}}" hidden>
+                                        <div class="col-6">
+                                            <input type="text" class="form-control @if($errors->has('ingredients.'.$i.'.name')) is-invalid @endif" name="ingredients[{{$i}}][name]" placeholder="材料" value="{{ old('ingredients.'.$i.'.name', $ingredients[$i]->ingredient) }}">
                                         </div>
-                                            <div class="remove-button input-group-append" style="display:none">
+                                        <div class="col-1">　：　</div>
+                                        <div class="col-4">
+                                            <input type="text" class="form-control @if($errors->has('ingredients.'.$i.'.quantity')) is-invalid @endif" name="ingredients[{{$i}}][quantity]" placeholder="分量" value="{{ old('ingredients.'.$i.'.quantity', $ingredients[$i]->quantity) }}">
+                                        </div>
+                                        <div class="remove-button input-group-append col-1" style="display:none">
                                             <span class="btn btn-danger">-</span>
                                         </div>
                                     </div>
@@ -125,20 +139,22 @@
                         </div>
 
                         <div class="form-group mb-4 input-list">
-                            <label>作り方</label>
+                            <h4>作り方</h4>
 
                             @if(count($processes) == 0)
                                 @for($i=0; $i<=2; $i++)
                                 <div class="unit mb-2 d-flex">
-                                    <div class="ingredient-forms d-flex">
-                                        <input type="text" class="form-control process-id" name="processes[{{$i}}][id]" hidden>
+                                    <div class="col-8">
                                         <textarea class="form-control process @if($errors->has('processes.'.$i.'.name')) is-invalid @endif" name="processes[{{$i}}][name]" placeholder="手順">{{ old("processes.$i.name") }}</textarea>
-                                        <label for="imageUpload{{$i}}">
-                                            <input type="file" class="imageUpload process_image" id="imageUpload{{$i}}" name="processes[{{$i}}][image]" value="{{ old("processes.$i.image") }}">
+                                    </div>
+                                    <div class="image-container col-3">
+                                        <label class="col-12">
+                                            <input type="file" class="imageUpload" name="processes[{{$i}}][image]" value="{{ old("processes.$i.image") }}">
                                             <img class="preview process-image @if($errors->has('processes'.$i.'.image')) is-invalid @endif" src="{{ asset('/img/no_image.jpg') }}">
                                         </label>
+                                        <p class="clear-image" style="display:none">×画像をクリア</p>
                                     </div>
-                                    <div class="remove-button input-group-append" style="display:none">
+                                    <div class="remove-button input-group-append col-1" style="display:none">
                                         <span class="btn btn-danger">-</span>
                                     </div>
                                 </div>
@@ -146,13 +162,16 @@
                             @else
                                 @for($i=0; $i < count($processes); $i++)
                                 <div class="unit mb-2 d-flex">
-                                    <div class="ingredient-forms d-flex">
-                                        <input type="text" class="form-control process-id" name="processes[{{$i}}][id]" value="{{$processes[$i]->id}}" hidden>
+                                    <input type="text" class="form-control process-id" name="processes[{{$i}}][id]" value="{{$processes[$i]->id}}" hidden>
+                                    <div class="col-8">
                                         <textarea class="form-control process @if($errors->has('processes.'.$i.'.name')) is-invalid @endif" name="processes[{{$i}}][name]" placeholder="手順">{{ old("processes.$i.name", $processes[$i]->process) }}</textarea>
-                                        <label for="imageUpload{{$i}}">
+                                    </div>
+                                    <div class="image-container col-3">
+                                        <label class="col-12">
                                             <input type="file" class="imageUpload process_image" id="imageUpload{{$i}}" name="processes[{{$i}}][image]" value="{{ old('processes.$i.image') }}">
-                                                <img class="preview process-image @if($errors->has('processes.'.$i.'.image')) is-invalid @endif" src="@if($processes[$i]->process_image == null ) {{ asset('/img/no_image.jpg') }} @else {{$processes[$i]->process_image}} @endif">
+                                            <img class="preview process-image @if($errors->has('processes.'.$i.'.image')) is-invalid @endif" src="@if($processes[$i]->process_image == null ) {{ asset('/img/no_image.jpg') }} @else {{$processes[$i]->process_image}} @endif">
                                         </label>
+                                        <p class="clear-image" @if($processes[$i]->process_image == null) style="display:none" @endif>×画像をクリア</p>
                                     </div>
                                     <div class="remove-button input-group-append" style="display:none">
                                         <span class="btn btn-danger">-</span>
@@ -170,13 +189,13 @@
                         </div>
 
                         <div class="form-group mb-4">
-                            <label for="score">点数</label>
+                            <h4 for="score">点数</h4>
                             <input type="range" class="form-control" id="score" name="score" value="{{ old('score', $item->score) }}">
                             <p><span id="current-value"></span>点</p>
                         </div>
 
                         <div class="form-group mb-4">
-                            <label for="memo">メモ</label>
+                            <label for="memo"><h4>メモ</h4></label>
                             <textarea class="form-control memo @if($errors->has('memo')) is-invalid @endif" id="memo" name="memo" placeholder="メモ">{{ old('memo', $item->memo) }}</textarea>
                             
                             @foreach($errors->get('memo') as $message)
@@ -195,13 +214,6 @@
                     @endif
                     </div>
                 </form>
-                @if($item->title)
-                    <form action="/items/destroy/{{$item->id}}" method="post">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger" id="delete-btn" data-item-title="{{$item->title}}" data-item-id="{{$item->id}}">削除</button>
-                    </form>
-                @endif
             </div>
         </div>
     </div>

@@ -18,10 +18,9 @@ $(function(){
             element.find('.process-id').attr('name', 'processes[' + id + '][id]');
             element.find('.process').attr('name', 'processes[' + id + '][name]');
             element.find('.process_image').attr('name', 'processes[' + id + '][image]');
-            element.find('label').attr('for', 'imageUpload' + id);
             element.find('.imageUpload').attr('type', 'text').attr('type', 'file');
-            element.find('.imageUpload').attr('id','imageUpload' + id);
             element.find('img').attr('src', '/img/no_image.jpg');
+            element.find('.clear-image').hide();
             element.find('textarea').val('');
             var inputList = element[0].querySelectorAll('input[type="text"]');
             for (var i = 0; i < inputList.length; i++) {
@@ -75,6 +74,27 @@ $(function(){
         fileReader.onload = (function () {                          //ファイル読み取りが完了したら
             $(elem).next(".preview").attr('src', `${fileReader.result}`)             //画像をプレビュー
         });
+
+        // クリアするボタンを表示
+        $(this).parent().parent().find('.clear-image').show();
     })
+
+    // ファイル参照をクリア
+    $('.clear-image').click(function() {
+        $(this).parent().find('.imageUpload').attr('type', 'text').attr('type', 'file');
+        $(this).parent().find('img').attr('src', '/img/no_image.jpg');
+        $(this).hide();
+    });
+
+    $('.icon-input').change(function() {
+        $(this).parent().parent().parent().find('.clear-icon').show();
+    });
+    // アイコン選択をクリア
+    $('.clear-icon').click(function() {
+        $(this).parent().find('.icon-input').val('');
+        $(this).parent().find('.view_icon').html('');
+        $(this).hide();
+    })
+
 
 });

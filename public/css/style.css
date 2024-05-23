@@ -1,13 +1,14 @@
 :root {
-  --genre-color: #f88;
-  --category-color: #2c2;
-  --tag-color: #0dcaf0;
+    --genre-color: #f88;
+    --category-color: #2c2;
+    --tag-color: #0dcaf0;
 }
 
 main {
     display: flex;
     justify-content: center;
 }
+
 .main {
     width: calc(100% - 180px);
     padding: 20px;
@@ -21,7 +22,8 @@ nav {
     top: 0;
 }
 
-.header{    position: fixed;
+.header {
+    position: fixed;
     top: 0;
 }
 
@@ -40,7 +42,7 @@ nav {
     padding-top: 20px;
 }
 
-.keyword{
+.keyword {
     font-family: FontAwesome;
     width: 90%;
 }
@@ -93,14 +95,18 @@ input[type=checkbox] {
     opacity: 0;
     visibility: hidden;
     position: absolute;
-    left: 50%; /* 親に対して中央配置 */
+    left: 50%;
+    /* 親に対して中央配置 */
     transform: translateX(50%);
-    bottom: -30px; /* 親要素下からの位置 */
+    bottom: -30px;
+    /* 親要素下からの位置 */
     display: inline-block;
     padding: 5px;
-    white-space: nowrap; /* テキストを折り返さない */
+    white-space: nowrap;
+    /* テキストを折り返さない */
     font-size: 0.8rem;
-    line-height: 1.3; /* 行間 */
+    line-height: 1.3;
+    /* 行間 */
     background: #eef;
     color: #114;
     border-radius: 3px;
@@ -129,12 +135,12 @@ input[type=checkbox] {
     transform: translate(0, -2px);
 }
 
-.card img {
+.card .card-img-top {
     height: 130px;
     object-fit: cover;
 }
 
-.card-text{
+.card-text {
     font-size: 14.5px;
     color: gray;
     display: -webkit-box;
@@ -142,6 +148,7 @@ input[type=checkbox] {
     -webkit-line-clamp: 2;
     overflow: hidden;
 }
+
 .card .score {
     position: absolute;
     top: 10px;
@@ -188,19 +195,21 @@ input[type=checkbox] {
 /*
 詳細ページ
 *************************/
-.show-image img{
-    width: 70%;
-    height:350px;
+.show-image img {
+    width: 100%;
+    height: 350px;
     object-fit: cover;
 }
-.show-header{
-    width: 60%;
+
+.show-header {
     display: flex;
     justify-content: space-between;
 }
-.icon-list .checkbox-label{
+
+.icon-list .checkbox-label {
     cursor: auto;
 }
+
 .ingredients-container {
 }
 
@@ -213,55 +222,73 @@ input[type=checkbox] {
 .ingredient {
     width: 70%;
 }
-.quantity{
+
+.quantity {
     white-space: nowrap;
     width: 20%;
 }
 
 .processes-list {
-    width: 70%;
     display: flex;
     justify-content: space-between;
     border-bottom: 1.5px dashed #dde
 }
 
 .process {
-    height: 130px;
-    width: 70%;
-    resize:none;
-}
-
-.process-image {
-    width: 140px;
     height: 110px;
-    object-fit:cover;
+    width: 70%;
+    resize: none;
 }
 
-.memo{
-    resize:none;
+.card .process-image {
+    width: 100%;
+    height: 110px;
+    object-fit: cover;
+}
+
+.memo {
+    resize: none;
 }
 
 /*
-登録ページ
+登録・編集ページ
 *************************/
-.alert-message{
-    color: red;
-}
-.ingredient-forms{
-    width: 90%;
-}
-.imageUpload{
-display: none;
+.edit-title {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
 }
 
-.preview{cursor: pointer;transition: 0.3s;}
-.preview:hover{
-filter: brightness(0.8);
+.alert-message {
+    color: red;
+}
+
+.imageUpload {
+    display: none;
+}
+
+.preview {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.preview:hover {
+    filter: brightness(0.8);
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
 }
 
 /*
 タグ編集ページ
 *************************/
+.drawDiv {
+    height : 200px;
+    overflow-Y : scroll;
+}
 
-.drawDiv{height : 200px;
-        overflow-Y : scroll;}
+.view_icon {
+    width: 20px;
+}
