@@ -77,7 +77,7 @@
                                 <a href="{{ url('items/editTag') }}" class="btn btn-default">タグ編集</a>
                             </li>
 
-                            <li class="nav-item">きょうのごはん</li>
+                            <li class="nav-item" data-bs-toggle="modal" data-bs-target="#js-modal-today">きょうのごはん</li>
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -102,6 +102,41 @@
             </div>
         </nav>
 
+        @auth
+        <!-- きょうのごはんアニメーション -->
+        <div class="modal fade" id="js-modal-today" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    @if(isset($today_side[0]))
+                    <a class="today-side side1" href="/items/show/{{ $today_side[0]->id }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ $today_side[0]->image }}" alt="">
+                        <p class="today-label">{{ $today_side[0]->title }}</p>
+                    </a>
+                    @endif
+                    @if(isset($today_side[1]))
+                    <a class="today-side side2" href="/items/show/{{ $today_side[1]->id }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ $today_side[1]->image }}" alt="">
+                        <p class="today-label">{{ $today_side[1]->title }}</p>
+                    </a>
+                    @endif
+                    @if(isset($today_soup))
+                    <a class="today-side side3" href="/items/show/{{ $today_soup->id }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ $today_soup->image }}" alt="">
+                        <p class="today-label">{{ $today_soup->title }}</p>
+                    </a>
+                    @endif
+                    @if(isset($today_main))
+                    <a class="today-main" href="/items/show/{{ $today_main->id }}" target="_blank" rel="noopener noreferrer">
+                        <img src="{{ $today_main->image }}" alt="">
+                        <p class="today-label">{{ $today_main->title }}</p>
+                    </a>
+                    @endif
+                    <img class="nabe-close" src="{{ asset('img/nabe-close.png') }}">
+                    <img class="nabe-open" src="{{ asset('img/nabe-open.png') }}">
+                </div>
+            </div>
+        </div>
+        @endauth
         
         <main class="py-4">
             @yield('content')

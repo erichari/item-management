@@ -26,6 +26,15 @@ class UserComposer
             'genre_tags' => Tag::where('type', 1)->get(),
             'category_tags' => Tag::where('type', 2)->get(),
             'i' => 0,
+            'today_main' => Auth::user()->items()->where('draft', null)->whereHas('tags', function ($query) {
+                $query->where('tags.id', 4);
+            })->inRandomOrder()->first(),
+            'today_side' => Auth::user()->items()->where('draft', null)->whereHas('tags', function ($query) {
+                $query->where('tags.id', 5);
+            })->inRandomOrder()->limit(2)->get(),
+            'today_soup' => Auth::user()->items()->where('draft', null)->whereHas('tags', function ($query) {
+                $query->where('tags.id', 6);
+            })->inRandomOrder()->first(),
         ]);
     }
 }

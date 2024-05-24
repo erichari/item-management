@@ -201,11 +201,6 @@ input[type=checkbox] {
     object-fit: cover;
 }
 
-.show-header {
-    display: flex;
-    justify-content: space-between;
-}
-
 .icon-list .checkbox-label {
     cursor: auto;
 }
@@ -263,6 +258,12 @@ input[type=checkbox] {
     color: red;
 }
 
+.top-image {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
 .imageUpload {
     display: none;
 }
@@ -274,6 +275,10 @@ input[type=checkbox] {
 
 .preview:hover {
     filter: brightness(0.8);
+}
+
+.clear-image {
+    cursor: pointer;
 }
 
 .card-footer {
@@ -291,4 +296,163 @@ input[type=checkbox] {
 
 .view_icon {
     width: 20px;
+}
+
+.clear-icon {
+    cursor: pointer;
+}
+
+/*
+きょうのごはん
+*************************/
+#js-modal-today {
+    position: relative;
+    height: 100vh;
+}
+
+
+#js-modal-today .nabe-close {
+    position: absolute;
+    top: 60vh;
+    left: 40%;
+    width: 200px;
+    animation: gutugutu 1s 1s ease-out 2, fadeOut 1s 3s forwards;
+}
+
+#js-modal-today .nabe-open {
+    position: absolute;
+    top: 60vh;
+    left: 40%;
+    width: 200px;
+    opacity: 0;
+    animation: fadeIn 2s 3s forwards;
+}
+
+@keyframes gutugutu {
+    0% {
+        transform: translate(0px, 0px) rotateZ(0deg)
+    }
+
+    15% {
+        transform: translate(3px, 3px) rotateZ(1deg)
+    }
+
+    30% {
+        transform: translate(0px, 3px) rotateZ(0deg)
+    }
+
+    45% {
+        transform: translate(3px, 0px) rotateZ(-1deg)
+    }
+
+    60% {
+        transform: translate(0px, 0px) rotateZ(0deg)
+    }
+
+    100% {
+        transform: translate(0px, 0px) rotateZ(0deg)
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+
+#js-modal-today img {
+    position: absolute;
+}
+
+#js-modal-today .today-side{
+    position: absolute;
+    opacity:0;
+    top: 70vh;
+    left: 50%;
+}
+#js-modal-today .today-side img{
+    
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+#js-modal-today .side1{
+        animation:tobidasu1 1s 4s forwards;
+}
+#js-modal-today .side2{
+        animation:tobidasu2 1s 4.5s forwards;
+}
+#js-modal-today .side3{
+        animation:tobidasu3 1s 5s forwards;
+}
+
+#js-modal-today .today-main img {
+    opacity:0;
+    top: 70vh;
+    left: 50%;
+    width: 140px;
+    height: 110px;
+    border-radius: 50%;
+    object-fit: cover;
+    animation:tobidasu4 1s 3.5s forwards;
+}
+@keyframes tobidasu1 {
+    0% {
+        transform: translate(0px, 0px) rotateZ(0deg)
+    }
+    60% {opacity:1;
+        transform: translate(-100px, -350px) rotateZ(0deg)
+    }
+    100% {opacity:1;
+        transform: translate(-200px, -200px) rotateZ(0deg)
+    }
+}
+@keyframes tobidasu2 {
+    0% {
+        transform: translate(0px, 0px) rotateZ(0deg)
+    }
+    80% {opacity:1;
+        transform: translate(-150px, -450px) rotateZ(0deg)
+    }
+    100% {opacity:1;
+        transform: translate(-200px, -350px) rotateZ(0deg)
+    }
+}
+@keyframes tobidasu3 {
+    0% {
+        transform: translate(0px, 0px) rotateZ(0deg)
+    }
+    60% {opacity:1;
+        transform: translate(150px, -350px) rotateZ(0deg)
+    }
+    100% {opacity:1;
+        transform: translate(200px, -200px) rotateZ(0deg)
+    }
+}
+@keyframes tobidasu4 {
+    0% {
+        transform: translate(0px, 0px) rotateZ(0deg)
+    }
+    60% {opacity:1;
+        transform: translate(4px, -350px) rotateZ(0deg)
+    }
+    100% {opacity:1;
+        transform: translate(0px, -250px) rotateZ(0deg)
+    }
 }

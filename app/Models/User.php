@@ -48,4 +48,8 @@ class User extends Authenticatable
         //ユーザーの保持する全タグ
         return $this->hasMany(Tag::class);
     }
+    public function items(){
+        //ユーザーの保持する全タグ
+        return $this->hasMany(Item::class);
+    }
 }

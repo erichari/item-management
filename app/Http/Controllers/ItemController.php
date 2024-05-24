@@ -46,6 +46,11 @@ class ItemController extends Controller
             ->orderBy('tags.id', 'asc')
             ->get();
 
+            // $today_main = Auth::user()->items()->whereHas('tags', function ($query) {
+            //     $query->where('tags.id', 4);
+            // })->get();
+            // dd($today_main);
+
         return view('item.index', compact('items', 'ingredients', 'item_tags'));
     }
 
@@ -84,7 +89,7 @@ class ItemController extends Controller
         $ingredients = $item->ingredients()->get();
         $processes = $item->processes()->get();
         $item_tags = $item->tags()->get();
-        
+
         return view('item.add', compact('item', 'ingredients', 'processes', 'item_tags'));
     }
 

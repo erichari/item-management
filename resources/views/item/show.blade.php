@@ -7,7 +7,7 @@
     <div class="row main g-4">
         <div class="col-12">
             <div class="card card-primary">
-                <h1 class="mb-2">{{$item->title}}</h1>
+                <h1 class="mb-2 p-3">{{$item->title}}</h1>
                 <div class="score">{{$item->score}}点</div>
                 <div class="show-image mb-2 col-12" data-bs-toggle="modal" data-bs-target="#js-modal-top-image">
                     <img src="{{ $item->image }}" alt="{{ $item->title }}">
@@ -57,12 +57,12 @@
                         <div class="ingredients-container col-11">
                             @foreach($processes as $process)
                                 <div class="processes-list">
-                                    <div class="process">
+                                    <div class="process col-8">
                                         {{$process->process}}
                                     </div>
-                                    <div data-bs-toggle="modal" data-bs-target="#js-modal-image{{ $process->id }}">
+                                    <div class="col-3" data-bs-toggle="modal" data-bs-target="#js-modal-image{{ $process->id }}">
                                         @if($process->process_image)
-                                            <img src="{{ $process->process_image }}" class="process-image" alt="工程写真">
+                                            <img src="{{ $process->process_image }}" class="process-image p-1" alt="工程写真">
                                         @endif
                                     </div>
                                     <div class="modal fade" id="js-modal-image{{ $process->id }}" tabindex="-1" aria-hidden="true">
