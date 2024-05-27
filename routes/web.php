@@ -19,7 +19,14 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\ItemController::class, 'index'])->name('home');
+
+Route::prefix('admin')->group(function () {
+    Route::group(['middleware' => ['auth', 'can:admin']], function () {
+        Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('admin.index');
+    });
+});
+
 
 Route::prefix('items')->group(function () {
     Route::get('/', [App\Http\Controllers\ItemController::class, 'index'])->name('index');
