@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('tag', 20);
-            $table->string('icon', 200)->nullable()->default(null);
+            $table->string('icon', 200);
             $table->smallInteger('type')->default(3);
             $table->timestamps();
         });

@@ -24,6 +24,8 @@ Route::get('/', [App\Http\Controllers\ItemController::class, 'index'])->name('ho
 Route::prefix('admin')->group(function () {
     Route::group(['middleware' => ['auth', 'can:admin']], function () {
         Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('admin.index');
+        Route::get('/users', [App\Http\Controllers\UserController::class, 'users']);
+        Route::delete('/users/destroy{id}',[App\Http\Controllers\UserController::class, 'destroy'])->name('destroy'); 
     });
 });
 
