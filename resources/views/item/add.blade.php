@@ -27,10 +27,24 @@
             <div class="card card-primary">
                 
                 @if(\Request::is('items/add'))
-                    <form method="post" action="scrape">
+                    <form method="post" action="?">
                         @csrf
-                        <input type="text" name="url" placeholder="URL">
-                        <button type="submit">読み込む</button>
+                        <div class="form-group m-2">
+                            <p>レシピサイトから読み込む</p>
+                            <div class="d-flex">
+                                <input type="radio" id="cookpad" class="scrape-radio" name="scrape" hidden>
+                                <label for="cookpad" class="scrape-logo">
+                                    <img id="cookpad_logo" src="{{ asset('/img/cookpad_logo.jpg') }}" alt="クックパッド">
+                                </label>
+                                <input type="radio" id="rakuten" class="scrape-radio" name="scrape" hidden>
+                                <label for="rakuten" class="scrape-logo">
+                                    <img id="rakuten_logo" src="{{ asset('/img/rakuten_logo.gif') }}" alt="楽天レシピ">
+                                </label>
+                            </div>
+                            
+                            <input type="text" id="scrape_input" class="form-control col-10 mt-2" name="url" placeholder="URL" hidden>
+                            <button type="submit" id="scrape_link" formaction="" hidden>読み込む</button>
+                        </div>
                     </form>
                 @endif
 

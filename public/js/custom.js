@@ -109,4 +109,19 @@ $(function(){
     })
 
 
+    // スクレイピングするサイトを選択
+    $('[name="scrape"]:radio').change( function() {
+        // クックパッドの場合
+        if($('[id=cookpad]').prop('checked')){
+            $('#scrape_link').attr('formaction', '/items/scrape/cookpad');
+
+        // 楽天レシピの場合
+        }else if($('[id=rakuten]').prop('checked')){
+            $('#scrape_link').attr('formaction', '/items/scrape/rakuten');
+        }
+
+        $('#scrape_input').prop('hidden', false);
+        $('#scrape_link').prop('hidden', false);
+    })
+
 });
