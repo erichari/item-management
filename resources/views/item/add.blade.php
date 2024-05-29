@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@if($item->title)
+@if(\Request::is('items/edit/*'))
     @section('title', 'レシピ編集')
 @else
     @section('title', 'レシピ新規登録')
@@ -10,7 +10,7 @@
 
     @include('layouts.sidebar')
     <div class="row main">
-        @if($item->title)
+        @if(\Request::is('items/edit/*'))
             <div class="edit-title">
                 <h1>レシピ編集</h1>
                 <form action="/items/destroy/{{$item->id}}" method="post" class="col-3">
@@ -25,6 +25,15 @@
         
         <div class="col-md-10">
             <div class="card card-primary">
+                
+                @if(\Request::is('items/add'))
+                    <form method="post" action="scrape">
+                        @csrf
+                        <input type="text" name="url" placeholder="URL">
+                        <button type="submit">読み込む</button>
+                    </form>
+                @endif
+
                 <form method="POST" enctype="multipart/form-data" action="?">
                     @csrf
                     <div class="card-body">
@@ -33,6 +42,9 @@
                                 <label for="imageUpload" class="col-10">
                                     <input type="file" class="imageUpload" id="imageUpload" name="image" value="{{ old('image') }}">
                                     <img class="preview top-image @if($errors->has('image')) is-invalid @endif" src="@if($item->title) {{$item->image}} @else {{asset('/img/no_image.jpg')}} @endif">
+                                    @if(\Request::is('items/scrape'))
+                                        <input type="text" class="scraped_image" name="scraped_image" hidden>
+                                    @endif
                                 </label>
                                 <p class="clear-image" style="display:none">×画像をクリア</p>
                             </div>
@@ -115,8 +127,10 @@
                             @else
                                 @for($i=0; $i < count($ingredients); $i++)
                                     <div class="unit mb-2 d-flex">
-                                        <input type="text" class="form-control ingredient-id" name="ingredients[{{$i}}][id]" value="{{$ingredients[$i]->id}}" hidden>
-                                        <div class="col-6">
+                                        @if($ingredients[$i]->id)
+                                            <input type="text" class="form-control ingredient-id" name="ingredients[{{$i}}][id]" value="{{$ingredients[$i]->id}}" hidden>
+                                        @endif
+                                            <div class="col-6">
                                             <input type="text" class="form-control @if($errors->has('ingredients.'.$i.'.name')) is-invalid @endif" name="ingredients[{{$i}}][name]" placeholder="材料" value="{{ old('ingredients.'.$i.'.name', $ingredients[$i]->ingredient) }}">
                                         </div>
                                         <div class="col-1">　：　</div>
@@ -170,6 +184,9 @@
                                         <label class="col-12">
                                             <input type="file" class="imageUpload process_image" id="imageUpload{{$i}}" name="processes[{{$i}}][image]" value="{{ old('processes.$i.image') }}">
                                             <img class="preview process-image @if($errors->has('processes.'.$i.'.image')) is-invalid @endif" src="@if($processes[$i]->process_image == null ) {{ asset('/img/no_image.jpg') }} @else {{$processes[$i]->process_image}} @endif">
+                                            @if(\Request::is('items/scrape'))
+                                                <input type="text" class="scraped_image" name="processes[{{$i}}][scraped_image]" hidden>
+                                            @endif
                                         </label>
                                         <p class="clear-image" @if($processes[$i]->process_image == null) style="display:none" @endif>×画像をクリア</p>
                                     </div>
@@ -205,12 +222,12 @@
                     </div>
 
                     <div class="card-footer">
-                    @if($item->title)
+                    @if(\Request::is('items/edit/*'))
                         <button type="submit" class="btn btn-secondary" id="draft-button" formaction="{{ route('returnDraft', ['id' => $item->id]) }}">下書きに戻す</button>
                         <button type="submit" class="btn btn-primary" id="register-button" formaction="{{ route('edit', ['id' => $item->id]) }}">登録</button>
                     @else
                         <button type="submit" class="btn btn-secondary" id="draft-button" formaction="{{ route('addDraft') }}">下書き</button>
-                        <button type="submit" class="btn btn-primary" id="register-button">登録</button>
+                        <button type="submit" class="btn btn-primary" id="register-button" formaction="{{ route('add') }}">登録</button>
                     @endif
                     </div>
                 </form>

@@ -72,20 +72,32 @@ $(function(){
         let fileReader = new FileReader();                          //ファイルを読み取るオブジェクトを生成
         fileReader.readAsDataURL(elem.files[0]);                    //ファイルを読み取る
         fileReader.onload = (function () {                          //ファイル読み取りが完了したら
-            $(elem).next(".preview").attr('src', `${fileReader.result}`)             //画像をプレビュー
+            $(elem).next(".preview").attr('src', `${fileReader.result}`)     //画像をプレビュー
+            $(elem).parent().find('.scraped_image').val('');        
+            // クリアするボタンを表示
+            $(elem).parent().parent().find('.clear-image').show();
         });
-
-        // クリアするボタンを表示
-        $(this).parent().parent().find('.clear-image').show();
     })
 
     // ファイル参照をクリア
     $('.clear-image').click(function() {
         $(this).parent().find('.imageUpload').attr('type', 'text').attr('type', 'file');
         $(this).parent().find('img').attr('src', '/img/no_image.jpg');
+        $(this).parent().find('.scraped_image').val('');
         $(this).hide();
     });
 
+    //スクレイピング時の画像の処理
+    if($('.scraped_image').length){
+        $('.scraped_image').each(function() {
+            let image_text = $(this).parent().find('.preview').attr('src');
+            if(image_text !== ' http://127.0.0.1:8000/img/no_image.jpg '){
+                $(this).val(image_text);
+            }
+        });
+    }
+
+    // アイコンクリアするボタンを表示
     $('.icon-input').change(function() {
         $(this).parent().parent().parent().find('.clear-icon').show();
     });

@@ -46,11 +46,6 @@ class ItemController extends Controller
             ->orderBy('tags.id', 'asc')
             ->get();
 
-            // $today_main = Auth::user()->items()->whereHas('tags', function ($query) {
-            //     $query->where('tags.id', 4);
-            // })->get();
-            // dd($today_main);
-
         return view('item.index', compact('items', 'ingredients', 'item_tags'));
     }
 
@@ -76,7 +71,6 @@ class ItemController extends Controller
             ->orderBy('tags.id', 'asc')
             ->get();
 
-
         return view('item.index', compact('items', 'ingredients', 'item_tags'));
     }
 
@@ -100,8 +94,12 @@ class ItemController extends Controller
     {
         $item = new Item();
 
+        // スクレイピングした画像がある場合
+        if($request->scraped_image){
+            $item->image = $request->scraped_image;
+
         // 画像がアップロードされてる場合
-        if ($request->hasFile('image')) {
+        }elseif ($request->hasFile('image')) {
             $base64Image = base64_encode(file_get_contents($request->image->getRealPath()));
             $mimeType = $request->image->getMimeType();
             $item->image = 'data:' . $mimeType . ';base64,' . $base64Image;
@@ -136,7 +134,6 @@ class ItemController extends Controller
             ];
         }
         Ingredient::insert($ingredients);
-    
 
         //作り方を登録
         $processes = [];
@@ -145,13 +142,23 @@ class ItemController extends Controller
                 continue;
             }
 
-            if (array_key_exists('image', $process)) {
-                $image = $process['image'];
-                $base64Image = base64_encode(file_get_contents($image->getRealPath()));
-                $mimeType = $image->getMimeType();
-                $process_image = 'data:' . $mimeType . ';base64,' . $base64Image;
-            }else{
-                $process_image = null;
+            // アップロードされた画像 または スクレイピングされた画像がある場合
+            if (array_key_exists('image', $process) || array_key_exists('scraped_image', $process)){
+                //スクレイピングされた画像がある場合
+                if(array_key_exists('scraped_image', $process) && $process['scraped_image']){
+                    $process_image = $process['scraped_image'];
+
+                //アップロードされた画像がある場合
+                }elseif(array_key_exists('image', $process) && $process['image']){
+                    $image = $process['image'];
+                    $base64Image = base64_encode(file_get_contents($image->getRealPath()));
+                    $mimeType = $image->getMimeType();
+                    $process_image = 'data:' . $mimeType . ';base64,' . $base64Image;
+
+                //画像がない場合
+                }else{
+                    $process_image = null;
+                }
             }
 
             $processes[] = [

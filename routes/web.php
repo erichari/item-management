@@ -36,6 +36,8 @@ Route::prefix('items')->group(function () {
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'addView']);
     Route::post('/add', [App\Http\Controllers\ItemController::class, 'add'])->name('add');
     Route::post('/add/draft', [App\Http\Controllers\ItemController::class, 'add'])->name('addDraft');
+    Route::get('/scrape', [App\Http\Controllers\ItemController::class, 'addView']);
+    Route::post('/scrape', [App\Http\Controllers\ScrapingController::class, 'cookpadScrape']);
     Route::get('/show/{id}', [App\Http\Controllers\ItemController::class, 'show']);
     Route::get('/edit/{id}', [App\Http\Controllers\ItemController::class, 'editView']);
     Route::post('/edit/{id}', [App\Http\Controllers\ItemController::class, 'edit'])->name('edit');
