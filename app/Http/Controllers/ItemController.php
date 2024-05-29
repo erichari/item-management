@@ -159,6 +159,8 @@ class ItemController extends Controller
                 }else{
                     $process_image = null;
                 }
+            }else{
+                $process_image = null;
             }
 
             $processes[] = [
@@ -265,7 +267,7 @@ class ItemController extends Controller
                 Process::find($process['id'])->delete();
             }
             if($process['name'] == null && !array_key_exists('image', $process) && Process::find($process['id'])->process_image == null){
-// すでに画像があるが、何も選択されてない＆＆nameが空の場合の処理
+// todo:すでに画像があるが、何も選択されてない＆＆nameが空の場合の処理
             }elseif($process['name'] == null && !array_key_exists('image', $process)){
                 continue;
             }
