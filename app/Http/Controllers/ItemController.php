@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ItemRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use App\Models\Item;
 use App\Models\Ingredient;
 use App\Models\Process;
@@ -117,19 +118,46 @@ class ItemController extends Controller
         $item->memo = $request->memo;
         $item->save(); 
         
-        $item_id = Item::withoutGlobalScope('draft')->latest('id')->first()->id;
+        $item_id = Item::latest('id')->first()->id;
         
-
         //材料を登録
         $ingredients = [];
+        $langpair = 'ja-Hira|ja';
         foreach($request->ingredients as $ingredient){
             if($ingredient['name'] == null && $ingredient['quantity'] == null){
                 continue;
             }
+            
+
+// ※漢字→カタカナ、カタカナ→漢字は非対応
+            
+            // 材料名の漢字を取得
+            $text = urlencode($ingredient['name']);
+            $kanji_candidates = json_decode(Http::get('http://www.google.com/transliterate?langpair=' . $langpair . '&text=' . $text));
+            $kanji = [];
+            $furigana = [];
+            foreach($kanji_candidates as $kanji_candidate){
+                $kanji[] = implode($kanji_candidate[1]); 
+            }
+
+            // 材料名のひらがなを取得
+            $furigana_candidates = hurigana($ingredient['name']);
+            foreach($furigana_candidates as $furigana_candidate){
+                if(array_key_exists('furigana', $furigana_candidate)){
+                    $furigana[] = $furigana_candidate['furigana'];
+                }else{
+                    $furigana[] = $furigana_candidate['surface'];
+                }
+            }
+
+            $ruby = array_merge($kanji, $furigana);
+            $ruby = implode($ruby);
+
 
             $ingredients[] = [
                 'item_id' => $item_id,
                 'ingredient' => $ingredient['name'],
+                'ruby' => $ruby,
                 'quantity' => $ingredient['quantity'],
             ];
         }
@@ -388,4 +416,36 @@ class ItemController extends Controller
     }
 
 
+}
+
+function hurigana(string $text)    
+{
+    $url = 'https://jlp.yahooapis.jp/FuriganaService/V2/furigana';
+    $appid = 'dj00aiZpPUs1MDQ3dVZ0OUZQUyZzPWNvbnN1bWVyc2VjcmV0Jng9NDE-';
+
+    $param_array = array(
+        'id' => '1234-1',
+        'jsonrpc' => '2.0',
+        'method' => 'jlp.furiganaservice.furigana',
+        'params' => array(
+            'q' => $text,
+            'grade' => 1
+        )
+    );
+    $params = json_encode($param_array); 
+
+    $ch = curl_init($url); //curl_init() cURL セッションを初期化する
+    curl_setopt_array($ch, array(
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POSTFIELDS => $params,
+            CURLOPT_USERAGENT      => "Yahoo AppID: ".$appid,
+    )); //CURL 転送用の複数のオプションを設定する
+
+    $result = curl_exec($ch);
+    $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    $array = json_decode($result ,true);
+    return $array['result']['word'];
 }

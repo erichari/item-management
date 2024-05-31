@@ -3,18 +3,16 @@
 @section('content')
     @include('layouts.sidebar')
     <div class="row main g-4 main">
-    @if(!isset($items[0]))
-        @section('title', 'ホーム画面')
-        <h1>レシピがありません</h1>
-    @else
-        @if($items[0]->draft == 'draft')
+        @if(!isset($items[0]))
+            @section('title', 'ホーム画面')
+            <h1>レシピがありません</h1>
+        @elseif(\Request::is('items/drafts'))
             @section('title', '下書き一覧')
             <h1>下書き一覧</h1>
         @else
             @section('title', 'ホーム画面')
             <h1>レシピ一覧</h1>
         @endif
-    @endif
 
         @foreach ($items as $item)
             <div class="col-12 col-md-4 col-lg-3">
@@ -57,15 +55,15 @@
                 </div>
             </div>
         @endforeach
-
-        <p class="pagination">
-            @if(isset($search_parameters))
-                {{ $items->appends(request()->query())->links() }}
-            @else
-                {{ $items->links() }}
-            @endif
-        </p>
     </div>
+    
+    <p class="pagination">
+        @if(isset($search_parameters))
+            {{ $items->appends(request()->query())->links() }}
+        @else
+            {{ $items->links() }}
+        @endif
+    </p>
 @stop
 
 @section('css')
