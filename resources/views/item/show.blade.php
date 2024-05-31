@@ -24,9 +24,6 @@
                 <div class="card-body">
                     <div class="icon-list mb-4">
                         @foreach($item_tags as $tag)
-                            @if($tag->id == $item->id)
-                                @continue
-                            @endif
                             @if($tag->type == 1)
                                 <span class="genre-icon icon checkbox-label">{{$tag->icon}}<span class="tooltip">{{$tag->tag}}</span></span>
                             @endif
