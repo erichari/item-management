@@ -11,15 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('items', function (Blueprint $table) {
+        Schema::create('inquiries', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('title', 20);
-            $table->string('serving', 20)->nullable();
-            $table->integer('score')->nullable();
-            $table->string('memo', 200)->nullable();
-            $table->longText('image')->default('/img/no_image.jpg');
-            $table->string('draft', 20)->nullable();
+            $table->string('content', 200);
+            $table->biginteger('reply_id')->index()->nullable();
+            $table->string('status', 20)->default('unread');
             $table->timestamps();
         });
     }
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('inquiries');
     }
 };

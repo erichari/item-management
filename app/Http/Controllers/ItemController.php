@@ -122,25 +122,22 @@ class ItemController extends Controller
         
         //材料を登録
         $ingredients = [];
-        $langpair = 'ja-Hira|ja';
         foreach($request->ingredients as $ingredient){
             if($ingredient['name'] == null && $ingredient['quantity'] == null){
                 continue;
             }
             
-
-// ※漢字→カタカナ、カタカナ→漢字は非対応
-            
+            // ※漢字→カタカナ、カタカナ→漢字は非対応
             // 材料名の漢字を取得
             $text = urlencode($ingredient['name']);
-            $kanji_candidates = json_decode(Http::get('http://www.google.com/transliterate?langpair=' . $langpair . '&text=' . $text));
+            $kanji_candidates = json_decode(Http::get('http://www.google.com/transliterate?langpair=ja-Hira|ja' . '&text=' . $text));
             $kanji = [];
-            $furigana = [];
             foreach($kanji_candidates as $kanji_candidate){
                 $kanji[] = implode($kanji_candidate[1]); 
             }
 
             // 材料名のひらがなを取得
+            $furigana = [];
             $furigana_candidates = hurigana($ingredient['name']);
             foreach($furigana_candidates as $furigana_candidate){
                 if(array_key_exists('furigana', $furigana_candidate)){
@@ -279,10 +276,34 @@ class ItemController extends Controller
                 continue;
             }
 
+            // 材料名の漢字を取得
+            $text = urlencode($ingredient['name']);
+            $kanji_candidates = json_decode(Http::get('http://www.google.com/transliterate?langpair=ja-Hira|ja' . '&text=' . $text));
+            $kanji = [];
+            foreach($kanji_candidates as $kanji_candidate){
+                $kanji[] = implode($kanji_candidate[1]); 
+            }
+
+            // 材料名のひらがなを取得
+            $furigana = [];
+            $furigana_candidates = hurigana($ingredient['name']);
+            foreach($furigana_candidates as $furigana_candidate){
+                if(array_key_exists('furigana', $furigana_candidate)){
+                    $furigana[] = $furigana_candidate['furigana'];
+                }else{
+                    $furigana[] = $furigana_candidate['surface'];
+                }
+            }
+
+            $ruby = array_merge($kanji, $furigana);
+            $ruby = implode($ruby);
+
+
             $ingredients[] = [
                 'id' => $ingredient['id'],
                 'item_id' => $item->id,
                 'ingredient' => $ingredient['name'],
+                'ruby' => $ruby,
                 'quantity' => $ingredient['quantity'],
             ];
         }
@@ -359,7 +380,8 @@ class ItemController extends Controller
             $query->where('title', 'LIKE', '%'.$escape_keyword.'%')
                 ->orWhere('memo', 'LIKE', '%'.$escape_keyword.'%')
                 ->orwhereHas('ingredients', function ($query) use ($escape_keyword) {
-                    $query->where('ingredient', 'LIKE', '%'.$escape_keyword.'%');
+                    $query->where('ingredient', 'LIKE', '%'.$escape_keyword.'%')
+                        ->orwhere('ruby', 'LIKE', '%'.$escape_keyword.'%');
                 })
                 ->orwhereHas('processes', function ($query) use ($escape_keyword) {
                     $query->where('process', 'LIKE', '%'.$escape_keyword.'%');

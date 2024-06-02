@@ -65,5 +65,5 @@ class Item extends Model
 
     
 }
-http://localhost/phpmyadmin/index.php?route=/sql&db=item_management&table=recipes&pos=0
+http://localhost/phpmyadmin/index.php?route=/sql&db=item_management&table=items&pos=0
 

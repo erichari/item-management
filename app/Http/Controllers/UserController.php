@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Inquiry;
 use DB;
 
 class UserController extends Controller
@@ -20,11 +22,39 @@ class UserController extends Controller
     }
 
     /**
-     * 商品一覧
+     * トップページ（問い合わせ一覧）
      */
     public function index()
     {
-        return view('admin.index');
+        $inquiries = Inquiry::orderby('updated_at', 'desc')->paginate(10);
+        return view('admin.index', compact('inquiries'));
+    }
+    /**
+     *
+     */
+    public function inquiry(Request $request)
+    {        
+        // GETの場合
+        if($request->isMethod("GET")){
+            $inquiry = Inquiry::find($request->id);
+            return view('admin.inquiry_show', compact('inquiry'));
+        }
+
+        // POSTの場合
+        if($request->isMethod("POST")){
+            $this->validate($request, [
+                'title' => 'required|max:20',
+                'content' => 'required|max:200',
+            ]);
+
+            Inquiry::create([
+                'user_id' => Auth::user()->id,
+                'title' => $request->title,
+                'content' => $request->content,
+            ]);
+
+            return redirect('/admin');
+        }
     }
 
     /**

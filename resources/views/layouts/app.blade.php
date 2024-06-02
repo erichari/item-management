@@ -91,6 +91,8 @@
                                         {{ __('Logout') }}
                                     </a>
 
+                                    <a href="/inquiry">ご要望・お問い合わせ</a>
+
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>

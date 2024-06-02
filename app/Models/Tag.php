@@ -11,10 +11,8 @@ class Tag extends Model
 
     protected $fillable = [
         'user_id',
-        'number',
         'tag',
         'icon',
-        'type',
     ];
 
     public function user(){ 

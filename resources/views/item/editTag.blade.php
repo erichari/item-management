@@ -1,4 +1,3 @@
-
 @extends('layouts.app')
 
 @section('title', 'タグ編集')
@@ -57,23 +56,5 @@
         clearBtn = document.getElementById('clear-icon'+btn_id);
         clearBtn.style.display = '';
     }
-
-
-</script>
-
-
-
-
-<script>
-
 </script>
 @stop
-
-
-<!-- <script type="text/javascript">
-    document.addEventListener('DOMContentLoaded', init);
-    function init(){
-        iconPicker = new Fa6IconPicker({
-        });
-    }
-</script> -->

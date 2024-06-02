@@ -21,11 +21,14 @@ Auth::routes();
 
 Route::get('/', [App\Http\Controllers\ItemController::class, 'index'])->name('home');
 
+//管理者用ページ
 Route::prefix('admin')->group(function () {
     Route::group(['middleware' => ['auth', 'can:admin']], function () {
         Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('admin.index');
         Route::get('/users', [App\Http\Controllers\UserController::class, 'users']);
-        Route::delete('/users/destroy{id}',[App\Http\Controllers\UserController::class, 'destroy'])->name('destroy'); 
+        Route::delete('/users/destroy{id}',[App\Http\Controllers\UserController::class, 'destroy'])->name('destroy');
+        Route::get('/inquiry/{id}', [App\Http\Controllers\UserController::class, 'inquiry']);
+        Route::post('/inquiry', [App\Http\Controllers\UserController::class, 'inquiry']);
     });
 });
 
@@ -43,8 +46,11 @@ Route::prefix('items')->group(function () {
     Route::get('/edit/{id}', [App\Http\Controllers\ItemController::class, 'editView']);
     Route::post('/edit/{id}', [App\Http\Controllers\ItemController::class, 'edit'])->name('edit');
     Route::post('/edit/draft/{id}', [App\Http\Controllers\ItemController::class, 'edit'])->name('returnDraft');
-    Route::delete('/destroy/{id}', [App\Http\Controllers\ItemController::class, 'destroy']);
+    Route::delete('/destroy/{id}', [App\Http\Controllers\ItemController::class, 'destroy']); //getの場合エラーでる
     Route::get('/editTag', [App\Http\Controllers\TagController::class, 'editTagView']);
     Route::post('/editTag', [App\Http\Controllers\TagController::class, 'editTag']);
     Route::get('/search', [App\Http\Controllers\ItemController::class, 'search']);
 });
+
+Route::get('/inquiry', [App\Http\Controllers\InquiryController::class, 'inquiry']);
+Route::post('/inquiry', [App\Http\Controllers\InquiryController::class, 'inquiry']);
