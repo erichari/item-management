@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => '/',
+    'dashboard_url' => '/admin',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -291,9 +291,19 @@ return [
 
     'menu' => [
         [
+            'text' => 'お問い合わせ一覧',
+            'url'  => 'admin',
+            'icon' => 'fas fa-envelope',
+        ],
+        [
             'text' => 'ユーザー一覧',
             'url'  => 'admin/users',
             'icon' => 'fas fa-user',
+        ],
+        [
+            'text' => 'お知らせ配信',
+            'url'  => 'admin/info',
+            'icon' => 'fas fa-circle-info',
         ],
 
         // AdminLTEデフォルト

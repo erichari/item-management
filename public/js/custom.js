@@ -1,10 +1,4 @@
 $(function(){
-
-    // //並び替えフォーム自動送信
-    // $('#sort-item').change(function(){
-    //     $("#sort-form").submit();
-    // })
-
     
     var id = 10;
     $('.add-button').on('click', function(){
@@ -55,7 +49,6 @@ $(function(){
     //レシピ削除時のアラート
     $('#delete-btn').click(function(){
         var title = $(this).data('item-title');
-        var id = $(this).data('item-id');
 
         if(!confirm("「" + title + "」を削除してよろしいですか？")){
             /* キャンセルの時の処理 */
@@ -123,5 +116,4 @@ $(function(){
         $('#scrape_input').prop('hidden', false);
         $('#scrape_link').prop('hidden', false);
     })
-
 });

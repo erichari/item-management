@@ -26,18 +26,32 @@ class UserController extends Controller
      */
     public function index()
     {
-        $inquiries = Inquiry::orderby('updated_at', 'desc')->paginate(10);
+        $inquiries = Inquiry::where('user_id', '!=', '1')
+            ->orderby('created_at', 'desc')
+            ->paginate(10);
         return view('admin.index', compact('inquiries'));
     }
+
     /**
-     *
+     * 問い合わせ
      */
     public function inquiry(Request $request)
     {        
         // GETの場合
         if($request->isMethod("GET")){
-            $inquiry = Inquiry::find($request->id);
-            return view('admin.inquiry_show', compact('inquiry'));
+            $inquiry = Inquiry::join('users', 'users.id', 'inquiries.user_id')
+                ->select('inquiries.*', 'users.name')
+                ->find($request->id);
+
+            if($inquiry->status == 'unread'){
+                $inquiry->update([
+                    'status' => 'read'
+                ]);
+            }
+            
+            $replies = Inquiry::where('reply_id', $request->id)->get();
+
+            return view('admin.inquiry_show', compact('inquiry', 'replies'));
         }
 
         // POSTの場合
@@ -51,6 +65,20 @@ class UserController extends Controller
                 'user_id' => Auth::user()->id,
                 'title' => $request->title,
                 'content' => $request->content,
+                'reply_id' => $request->id,
+            ]);
+
+            Inquiry::find($request->id)->update([
+                'status' => 'replied'
+            ]);
+
+            return redirect('/admin');
+        }
+
+        // PATCHの場合
+        if($request->isMethod("PATCH")){
+            Inquiry::find($request->id)->update([
+                'status' => 'replied'
             ]);
 
             return redirect('/admin');
@@ -78,4 +106,33 @@ class UserController extends Controller
         return redirect('admin/users');
         
     }
+
+        /**
+     * 問い合わせ
+     */
+    public function info(Request $request)
+    {        
+        // GETの場合
+        if($request->isMethod("GET")){
+            return view('admin.info');
+            // return view('admin.info', compact('info'));
+        }
+
+        // POSTの場合
+        if($request->isMethod("POST")){
+            $this->validate($request, [
+                'title' => 'required|max:40',
+                'content' => 'required|max:400',
+            ]);
+
+            Inquiry::create([
+                'user_id' => Auth::user()->id,
+                'title' => $request->title,
+                'content' => $request->content,
+            ]);
+            
+            return redirect('/admin/info');
+        }
+    }
+    
 }

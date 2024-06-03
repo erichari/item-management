@@ -16,7 +16,7 @@
                 <form action="/items/destroy/{{$item->id}}" method="post" class="col-3">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger" id="delete-btn" data-item-title="{{$item->title}}" data-item-id="{{$item->id}}">削除</button>
+                    <button type="submit" class="btn btn-danger" id="delete-btn" data-item-title="{{$item->title}}">削除</button>
                 </form>
             </div>
         @else

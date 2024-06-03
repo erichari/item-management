@@ -1,3 +1,8 @@
+textarea{
+    resize:none;
+   height: 200px;
+}
 table{
     border: 1px solid #dde;
 }
+
