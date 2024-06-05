@@ -91,7 +91,9 @@
                                         {{ __('Logout') }}
                                     </a>
 
-                                    <a href="/inquiry">ご要望・お問い合わせ</a>
+                                    <a href="/notice">お知らせ</a>
+
+                                    <li class="nav-item" data-bs-toggle="modal" data-bs-target="#js-modal-inquiry">お問い合わせ</li>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
@@ -135,6 +137,27 @@
                     @endif
                     <img class="nabe-close" src="{{ asset('img/nabe-close.png') }}">
                     <img class="nabe-open" src="{{ asset('img/nabe-open.png') }}">
+                </div>
+            </div>
+        </div>
+        @endauth
+
+        @auth
+        <div class="modal fade" id="js-modal-inquiry" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <span>新規送信</span>
+                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form method="POST" action="/inquiry">
+                            @csrf
+                            <input class="form-control" type="text" name="title" placeholder="タイトル">
+                            <textarea class="form-control" name="content" placeholder="内容"></textarea>
+                            <button type="submit" class="btn btn-primary">送信</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

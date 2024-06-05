@@ -2,11 +2,10 @@
 
 @extends('adminlte::page')
 
-@section('title', '管理者用ページ')
+@section('title', 'お知らせ配信')
 
 @section('content_header')
-    <h1>管理者用ページ</h1>
-    <h2>お問い合わせ</h2>
+    <h2>お知らせ配信</h2>
 @stop
 
 @section('content')
@@ -17,20 +16,10 @@
                 @foreach($inquiries as $inquiry)
                 <tr id="inquiry-row" class="@if($inquiry->status == 'unread') table-danger @elseif($inquiry->status == 'read') table-warning @endif">
                     <th scope="row"><a href="/admin/inquiry/{{ $inquiry->id }}">{{ $inquiry->title }}</a></th>
-                    <td style="border-right:none">
-                        @if(Carbon::parse($inquiry->created_at)->isToday())
+                    <td>@if(Carbon::parse($inquiry->created_at)->isToday())
                             {{ Carbon::parse($inquiry->created_at)->format("H時i分") }}
                         @else
                             {{ Carbon::parse($inquiry->created_at)->format("Y年m月d日") }}
-                        @endif
-                    </td>
-                    <td style="border-left:none">
-                        @if($inquiry->status == 'unread')
-                            <i class="fa-solid fa-circle-exclamation" style="color:red"></i>
-                        @elseif($inquiry->status == 'read')
-                            <i class="fa-solid fa-circle-exclamation" style="color:orange"></i>
-                        @else
-                            <i class="fa-solid fa-check"></i>
                         @endif
                     </td>
                 </tr>
@@ -41,7 +30,6 @@
     <p class="pagination">
         {{ $inquiries->links() }}
     </p>
-    </div>
 @stop
 
 @section('css')

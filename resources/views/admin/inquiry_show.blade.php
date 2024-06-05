@@ -13,7 +13,7 @@
         <p>{{ Carbon::parse($inquiry->created_at)->format("Y年m月d日H時i分") }}受信</p>
         <p>ID:{{ $inquiry->user_id }} {{ $inquiry->name }}様より</p>
         <h7>タイトル：{{ $inquiry->title }}</h7>
-        <p>内容：{{ $inquiry->content }}</p>
+        <p class="inquiry-content">内容：{{ $inquiry->content }}</p>
     </div>
     
     @if($inquiry->status == 'read')
@@ -42,7 +42,7 @@
         <div>
             <p>{{ Carbon::parse($reply->created_at)->format("Y年m月d日H時i分") }}送信</p>
             <h5>タイトル：{{ $reply->title }}</h5>
-            <p>内容：{{ $reply->content }}</p>
+            <p class="inquiry-content">内容：{{ $reply->content }}</p>
         </div>
         @endforeach
     @endif

@@ -5,4 +5,10 @@ textarea{
 table{
     border: 1px solid #dde;
 }
+.status{
+color: white;
+padding: 5px;
+border-radius: 10px;}
 
+.inquiriy-content{
+    white-space: pre-wrap;}

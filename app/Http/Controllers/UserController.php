@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $inquiries = Inquiry::where('user_id', '!=', '1')
+        $inquiries = Inquiry::where('user_id', '!=', Auth::user()->id)
             ->orderby('created_at', 'desc')
             ->paginate(10);
         return view('admin.index', compact('inquiries'));
@@ -134,5 +134,5 @@ class UserController extends Controller
             return redirect('/admin/info');
         }
     }
-    
+
 }

@@ -28,7 +28,10 @@ Route::prefix('admin')->group(function () {
         Route::get('/users', [App\Http\Controllers\UserController::class, 'users']);
         Route::delete('/users/destroy{id}',[App\Http\Controllers\UserController::class, 'destroy'])->name('destroy');
         Route::get('/inquiry/{id}', [App\Http\Controllers\UserController::class, 'inquiry']);
-        Route::post('/inquiry', [App\Http\Controllers\UserController::class, 'inquiry']);
+        Route::post('/inquiry/{id}', [App\Http\Controllers\UserController::class, 'inquiry']);
+        Route::patch('/inquiry/{id}', [App\Http\Controllers\UserController::class, 'inquiry']);
+        Route::get('/info', [App\Http\Controllers\UserController::class, 'info']);
+        Route::post('/info', [App\Http\Controllers\UserController::class, 'info']);
     });
 });
 
@@ -52,5 +55,6 @@ Route::prefix('items')->group(function () {
     Route::get('/search', [App\Http\Controllers\ItemController::class, 'search']);
 });
 
-Route::get('/inquiry', [App\Http\Controllers\InquiryController::class, 'inquiry']);
+Route::get('/notice', [App\Http\Controllers\InquiryController::class, 'notice']);
 Route::post('/inquiry', [App\Http\Controllers\InquiryController::class, 'inquiry']);
+Route::get('/notice/{id}', [App\Http\Controllers\InquiryController::class, 'notice_show']);
