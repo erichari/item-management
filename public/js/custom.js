@@ -140,4 +140,33 @@ $(function(){
             /*　OKの時の処理 */            
         }
     })
+
+    // お知らせ未読から既読に変更
+    $('.change-status').click(function(){
+        const notice_id = $(this).data('notice-id');
+        const status = $(this).data('status');
+        cache: false
+        if(status == 'unread'){
+            $.ajax({
+                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                url: '/status',
+                type: 'POST',
+                data: {
+                    'notice_id': notice_id
+                },
+                timeout: 10000
+            })
+                //成功
+                .done(() => {
+                    // !アイコン削除
+                    $(document).find('.exclamation-' + notice_id).hide();
+                })
+                //失敗
+                .fail((data) => {
+                    alert('処理中にエラーが発生しました。');
+                    console.log(data);
+                });
+        }
+    })
+
 });

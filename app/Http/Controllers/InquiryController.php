@@ -68,16 +68,18 @@ class InquiryController extends Controller
     /**
      * お知らせ詳細
      */
-    public function notice_show(Request $request)
+    public function change_status(Request $request)
     {
-        $notice = Inquiry::find($request->id);
+        $notice_id = $request->notice_id;
 
-        if($notice->status == 'unread'){
-            $notice->update([
-                'status' => 'read'
-            ]);
-        }
+        Inquiry::find($notice_id)->update([
+            'status' => 'read',
+        ]);
 
-        return view('item.notice_show', compact('notice'));
+        $param = [
+            'notice_id' => $notice_id,
+        ];
+        
+        return response()->json($param);
     }
 }

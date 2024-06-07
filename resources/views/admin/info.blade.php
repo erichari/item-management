@@ -59,8 +59,8 @@
                                             <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <p>{{ $info->content }}</p>
-                                            <p style="color:gray">{{ Carbon::parse($info->created_at)->format("Y年m月d日") }}配信</p>
+                                            <p class="notice-content">{{ $info->content }}</p>
+                                            <p style="color:gray">{{ Carbon::parse($info->created_at)->format("Y年m月d日 H時i分") }}配信</p>
                                         </div>
                                     </div>
                                 </div>

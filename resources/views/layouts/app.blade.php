@@ -33,7 +33,7 @@
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    ホーム
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -43,7 +43,6 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
                         @auth
-                            <li><a href="{{ route('index') }}">ホーム</a></li>
                             <li><a href="/fav">お気に入り</a></li>
                         @endauth
                     </ul>
@@ -90,17 +89,6 @@
 
                                     <ul class="menuSub">
                                         <li>
-                                            <a href="{{ route('logout') }}"
-                                            onclick="event.preventDefault();
-                                                            document.getElementById('logout-form').submit();">
-                                                {{ __('Logout') }}
-                                            </a>
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                                @csrf
-                                            </form>
-                                        </li>
-
-                                        <li>
                                             <a href="/notice" class="dropdown-item">
                                                 お知らせ
                                                 @if(isset($unread_notice[0]))
@@ -113,6 +101,16 @@
                                             <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#js-modal-inquiry">お問い合わせ</a>
                                         </li>
 
+                                        <li>
+                                            <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </li>
                                     </ul>
                                 </li>
                             </ul>

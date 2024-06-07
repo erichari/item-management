@@ -6,8 +6,7 @@
 @include('layouts.sidebar')
 <div class="row main">
     <h1>タグ編集</h1>
-    <div class="col-md-10">
-
+    <div class="col-11">
         <div class="card card-primary">
             <form method="POST">
                 @csrf

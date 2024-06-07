@@ -57,4 +57,4 @@ Route::prefix('items')->group(function () {
 
 Route::get('/notice', [App\Http\Controllers\InquiryController::class, 'notice']);
 Route::post('/inquiry', [App\Http\Controllers\InquiryController::class, 'inquiry']);
-Route::get('/notice/{id}', [App\Http\Controllers\InquiryController::class, 'notice_show']);
+Route::post('/status', [App\Http\Controllers\InquiryController::class, 'change_status']);
