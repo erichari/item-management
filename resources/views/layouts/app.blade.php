@@ -30,7 +30,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm header">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -65,41 +65,58 @@
                             @endif
                         @else
 
-                            <li>
+                            <li class="header-menu">
                                 <a href="{{ url('items/add') }}" class="btn btn-default">新規登録</a>
                             </li>
 
-                            <li>
+                            <li class="header-menu">
                                 <a href="{{ url('items/drafts') }}" class="btn btn-default">下書き一覧</a>
                             </li>
 
-                            <li>
+                            <li class="header-menu">
                                 <a href="{{ url('items/editTag') }}" class="btn btn-default">タグ編集</a>
                             </li>
 
-                            <li class="nav-item" data-bs-toggle="modal" data-bs-target="#js-modal-today">きょうのごはん</li>
-
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <!-- <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown"> -->
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <a href="/notice">お知らせ</a>
-
-                                    <li class="nav-item" data-bs-toggle="modal" data-bs-target="#js-modal-inquiry">お問い合わせ</li>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                <!-- </div> -->
+                            <li class="header-menu">
+                                <a class="btn btn-default" data-bs-toggle="modal" data-bs-target="#js-modal-today">きょうのごはん</a>
                             </li>
+
+                            <ul class="menu">
+                                <li>
+                                    {{ Auth::user()->name }}
+                                    @if(isset($unread_notice[0]))
+                                        <i class="fa-solid fa-circle-exclamation" style="color:red"></i>
+                                    @endif
+
+                                    <ul class="menuSub">
+                                        <li>
+                                            <a href="{{ route('logout') }}"
+                                            onclick="event.preventDefault();
+                                                            document.getElementById('logout-form').submit();">
+                                                {{ __('Logout') }}
+                                            </a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
+                                        </li>
+
+                                        <li>
+                                            <a href="/notice" class="dropdown-item">
+                                                お知らせ
+                                                @if(isset($unread_notice[0]))
+                                                    <i class="fa-solid fa-circle-exclamation" style="color:red"></i>
+                                                @endif
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#js-modal-inquiry">お問い合わせ</a>
+                                        </li>
+
+                                    </ul>
+                                </li>
+                            </ul>
+
                         @endguest
                     </ul>
                 </div>

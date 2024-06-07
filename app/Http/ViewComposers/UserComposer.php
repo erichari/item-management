@@ -5,6 +5,7 @@ namespace App\Http\ViewComposers;
 use Auth;
 use Illuminate\View\View;
 use App\Models\Tag;
+use App\Models\Inquiry;
 
 /**
  * Class UserComposer
@@ -35,6 +36,11 @@ class UserComposer
             'today_soup' => Auth::user()->items()->where('draft', null)->whereHas('tags', function ($query) {
                 $query->where('tags.id', 6);
             })->inRandomOrder()->first(),
+            'unread_notice' => Inquiry::leftjoin('inquiries as replied_inquiry', 'replied_inquiry.id', 'inquiries.reply_id')
+                ->where('replied_inquiry.user_id', Auth::user()->id)
+                ->where('inquiries.status', 'unread')
+                ->select('inquiries.*')
+                ->get(),
         ]);
     }
 }

@@ -117,6 +117,16 @@ $(function(){
         $('#scrape_link').prop('hidden', false);
     })
 
+    // ヘッダーのプルダウンメニュー
+    $("ul.menu li").hover(
+        function() {
+            $(".menuSub:not(:animated)", this).slideDown();
+        },
+        function() {
+            $(".menuSub", this).slideUp();
+        }
+    );
+
     //問い合わせ送信時のアラート
     $('.info-btn').click(function(){
         var title = $(this).parent().find('input:text[name="title"]').val();

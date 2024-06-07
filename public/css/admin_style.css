@@ -10,5 +10,20 @@ color: white;
 padding: 5px;
 border-radius: 10px;}
 
-.inquiriy-content{
+.inquiry-content{
     white-space: pre-wrap;}
+
+.info-button{
+background-color:#0dcaf0;
+    color:white;
+    border-radius: 10px;
+    padding:5px;
+    margin: 10px;
+    border: 1px solid #09a8d0;
+    font-weight: bold;
+    
+    transition: 0.1s ease-in;
+}
+.info-button:hover{
+filter: brightness(1.1);
+}
