@@ -303,7 +303,7 @@ return [
         [
             'text' => 'お知らせ配信',
             'url'  => 'admin/info',
-            'icon' => 'fas fa-circle-info',
+            'icon' => 'fas fa-bullhorn',
         ],
 
         // AdminLTEデフォルト

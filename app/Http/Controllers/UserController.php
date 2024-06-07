@@ -37,7 +37,7 @@ class UserController extends Controller
      */
     public function inquiry(Request $request)
     {        
-        // GETの場合
+        // GETの場合 問い合わせ詳細画面
         if($request->isMethod("GET")){
             $inquiry = Inquiry::join('users', 'users.id', 'inquiries.user_id')
                 ->select('inquiries.*', 'users.name')
@@ -54,7 +54,7 @@ class UserController extends Controller
             return view('admin.inquiry_show', compact('inquiry', 'replies'));
         }
 
-        // POSTの場合
+        // POSTの場合 問い合わせに返信
         if($request->isMethod("POST")){
             $this->validate($request, [
                 'title' => 'required|max:20',
@@ -75,7 +75,7 @@ class UserController extends Controller
             return redirect('/admin');
         }
 
-        // PATCHの場合
+        // PATCHの場合 返信せず対応済みに変更
         if($request->isMethod("PATCH")){
             Inquiry::find($request->id)->update([
                 'status' => 'replied'
@@ -107,18 +107,20 @@ class UserController extends Controller
         
     }
 
-        /**
-     * 問い合わせ
+    /**
+     * お知らせ
      */
     public function info(Request $request)
     {        
-        // GETの場合
+        // GETの場合 お知らせ一覧画面
         if($request->isMethod("GET")){
-            return view('admin.info');
-            // return view('admin.info', compact('info'));
+            $allInfo = Inquiry::where('reply_id', 0)
+                ->orderby('created_at', 'desc')
+                ->paginate(10);
+            return view('admin.info', compact('allInfo'));
         }
 
-        // POSTの場合
+        // POSTの場合 お知らせ配信
         if($request->isMethod("POST")){
             $this->validate($request, [
                 'title' => 'required|max:40',
@@ -129,6 +131,7 @@ class UserController extends Controller
                 'user_id' => Auth::user()->id,
                 'title' => $request->title,
                 'content' => $request->content,
+                'reply_id' => 0,
             ]);
             
             return redirect('/admin/info');

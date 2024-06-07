@@ -29,14 +29,12 @@ class InquiryController extends Controller
         //     ->paginate(10);
 
         //運営からのお知らせ(reply_id == 0)と自分宛てのお知らせ取得
-        $notices = Inquiry::join('inquiries as replied_inquiry', 'replied_inquiry.id', 'inquiries.reply_id')
-            ->join('users', 'users.id', 'replied_inquiry.user_id')
+        $notices = Inquiry::leftjoin('inquiries as replied_inquiry', 'replied_inquiry.id', 'inquiries.reply_id')
             ->where('inquiries.reply_id', 0)
-            ->orWhere('users.id', Auth::user()->id)
+            ->orWhere('replied_inquiry.user_id', Auth::user()->id)
             ->select('inquiries.*')
             ->orderby('created_at', 'desc')
             ->paginate(10);
-
 
         return view('item.notice', compact('notices'));
     }

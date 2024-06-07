@@ -47,8 +47,13 @@
                                     @endif
                                 </td>
                                 <td style="border-left:none">
+                                    <!-- 返信が未読ならアイコン表示 -->
                                     @if($notice->reply_id !== 0 && $notice->status == 'unread')
                                         <i class="fa-solid fa-circle-exclamation" style="color:red"></i>
+                                    @endif
+                                    <!-- お知らせが配信されて６日以内ならアイコン表示 -->
+                                    @if($notice->reply_id == 0 && Carbon::parse($notice->created_at)->diffInDays(today()) < 6)
+                                        <i style="color:#0dcaf0">new</i>
                                     @endif
                                 </td>
                             </tr>

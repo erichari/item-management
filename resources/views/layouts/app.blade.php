@@ -155,7 +155,7 @@
                             @csrf
                             <input class="form-control" type="text" name="title" placeholder="タイトル">
                             <textarea class="form-control" name="content" placeholder="内容"></textarea>
-                            <button type="submit" class="btn btn-primary">送信</button>
+                            <button type="submit" class="btn btn-primary info-btn">送信</button>
                         </form>
                     </div>
                 </div>

@@ -116,4 +116,18 @@ $(function(){
         $('#scrape_input').prop('hidden', false);
         $('#scrape_link').prop('hidden', false);
     })
+
+    //問い合わせ送信時のアラート
+    $('.info-btn').click(function(){
+        var title = $(this).parent().find('input:text[name="title"]').val();
+        var content = $(this).parent().find('textarea').val();
+        console.log(title);
+
+        if(!confirm("タイトル：" + title + "\n内容：" + content + "\nを送信してよろしいですか？")){
+            /* キャンセルの時の処理 */
+            return false;
+        }else{
+            /*　OKの時の処理 */            
+        }
+    })
 });
