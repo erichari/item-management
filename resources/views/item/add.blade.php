@@ -56,7 +56,7 @@
                                 <label for="imageUpload" class="col-10">
                                     <input type="file" class="imageUpload" id="imageUpload" name="image" value="{{ old('image') }}">
                                     <img class="preview top-image @if($errors->has('image')) is-invalid @endif" src="@if($item->title) {{$item->image}} @else {{asset('/img/no_image.jpg')}} @endif">
-                                    @if(\Request::is('items/scrape/*'))
+                                    @if(\Request::is('items/add/scrape/*'))
                                         <input type="text" class="scraped_image" name="scraped_image" hidden>
                                     @endif
                                 </label>
@@ -198,7 +198,7 @@
                                         <label class="col-12">
                                             <input type="file" class="imageUpload process_image" id="imageUpload{{$i}}" name="processes[{{$i}}][image]" value="{{ old('processes.$i.image') }}">
                                             <img class="preview process-image @if($errors->has('processes.'.$i.'.image')) is-invalid @endif" src="@if($processes[$i]->process_image == null ) {{ asset('/img/no_image.jpg') }} @else {{$processes[$i]->process_image}} @endif">
-                                            @if(\Request::is('items/scrape/*'))
+                                            @if(\Request::is('items/add/scrape/*'))
                                                 <input type="text" class="scraped_image" name="processes[{{$i}}][scraped_image]" hidden>
                                             @endif
                                         </label>

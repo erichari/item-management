@@ -22,6 +22,7 @@ nav {
     top: 0;
 }
 
+
 .header-menu:hover {
     background: var(--tag-color);
     color: #fff;
@@ -60,10 +61,19 @@ nav {
     margin-bottom: -5px;
     display: block;
     min-width: 100px;
+    color: black;
     text-decoration: none;
+    transition: 0.1s;
 }
 
 .menuSub li a:hover {
+    background: var(--tag-color);
+    color: #fff;
+}
+
+
+.header-selected{
+    
     background: var(--tag-color);
     color: #fff;
 }

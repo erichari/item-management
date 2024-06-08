@@ -64,15 +64,15 @@
                             @endif
                         @else
 
-                            <li class="header-menu">
+                            <li class="header-menu @if(\Request::is('items/add/*') || \Request::is('items/add')) header-selected @endif">
                                 <a href="{{ url('items/add') }}" class="btn btn-default">新規登録</a>
                             </li>
 
-                            <li class="header-menu">
+                            <li class="header-menu @if(\Request::is('items/drafts')) header-selected @endif">
                                 <a href="{{ url('items/drafts') }}" class="btn btn-default">下書き一覧</a>
                             </li>
 
-                            <li class="header-menu">
+                            <li class="header-menu @if(\Request::is('items/editTag')) header-selected @endif">
                                 <a href="{{ url('items/editTag') }}" class="btn btn-default">タグ編集</a>
                             </li>
 
@@ -82,14 +82,14 @@
 
                             <ul class="menu">
                                 <li>
-                                    {{ Auth::user()->name }}
+                                    ▼ {{ Auth::user()->name }}
                                     @if(isset($unread_notice[0]))
                                         <i class="fa-solid fa-circle-exclamation" style="color:red"></i>
                                     @endif
 
                                     <ul class="menuSub">
                                         <li>
-                                            <a href="/notice" class="dropdown-item">
+                                            <a href="/notice">
                                                 お知らせ
                                                 @if(isset($unread_notice[0]))
                                                     <i class="fa-solid fa-circle-exclamation" style="color:red"></i>
@@ -98,7 +98,7 @@
                                         </li>
 
                                         <li>
-                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#js-modal-inquiry">お問い合わせ</a>
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#js-modal-inquiry">お問い合わせ</a>
                                         </li>
 
                                         <li>
