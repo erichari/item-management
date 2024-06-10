@@ -35,13 +35,13 @@ class UserController extends Controller
     /**
      * 問い合わせ
      */
-    public function inquiry(Request $request)
+    public function inquiry(Request $request, Inquiry $inquiry)
     {        
         // GETの場合 問い合わせ詳細画面
         if($request->isMethod("GET")){
             $inquiry = Inquiry::join('users', 'users.id', 'inquiries.user_id')
                 ->select('inquiries.*', 'users.name')
-                ->find($request->id);
+                ->find($inquiry->id);
 
             if($inquiry->status == 'unread'){
                 $inquiry->update([
@@ -49,7 +49,9 @@ class UserController extends Controller
                 ]);
             }
             
-            $replies = Inquiry::where('reply_id', $request->id)->get();
+            $replies = Inquiry::where('reply_id', $inquiry->id)
+                ->orderby('created_at', 'desc')
+                ->get();
 
             return view('admin.inquiry_show', compact('inquiry', 'replies'));
         }
@@ -57,18 +59,18 @@ class UserController extends Controller
         // POSTの場合 問い合わせに返信
         if($request->isMethod("POST")){
             $this->validate($request, [
-                'title' => 'required|max:20',
-                'content' => 'required|max:200',
+                'title' => 'required|max:40',
+                'content' => 'required|max:400',
             ]);
 
             Inquiry::create([
                 'user_id' => Auth::user()->id,
                 'title' => $request->title,
                 'content' => $request->content,
-                'reply_id' => $request->id,
+                'reply_id' => $inquiry->id,
             ]);
 
-            Inquiry::find($request->id)->update([
+            $inquiry->update([
                 'status' => 'replied'
             ]);
 
@@ -76,8 +78,8 @@ class UserController extends Controller
         }
 
         // PATCHの場合 返信せず対応済みに変更
-        if($request->isMethod("PATCH")){
-            Inquiry::find($request->id)->update([
+        elseif($request->isMethod("PATCH")){
+            $inquiry->update([
                 'status' => 'replied'
             ]);
 

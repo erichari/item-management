@@ -42,7 +42,7 @@
                                 </label>
                             </div>
                             
-                            <input type="text" id="scrape_input" class="form-control col-10 mt-2" name="url" placeholder="URL" hidden>
+                            <input type="text" id="scrape_input" class="form-control col-10 mt-2" name="url" placeholder="URL" required hidden>
                             <button type="submit" id="scrape_link" formaction="" hidden>読み込む</button>
                         </div>
                     </form>

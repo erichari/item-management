@@ -166,10 +166,10 @@
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action="/inquiry">
+                        <form method="POST" action="/notice">
                             @csrf
-                            <input class="form-control" type="text" name="title" placeholder="タイトル">
-                            <textarea class="form-control" name="content" placeholder="内容"></textarea>
+                            <input class="form-control" type="text" name="title" placeholder="タイトル" required maxlength="40">
+                            <textarea class="form-control" name="content" placeholder="内容" required maxlength="400"></textarea>
                             <button type="submit" class="btn btn-primary info-btn">送信</button>
                         </form>
                     </div>

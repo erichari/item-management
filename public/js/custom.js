@@ -107,10 +107,12 @@ $(function(){
         // クックパッドの場合
         if($('[id=cookpad]').prop('checked')){
             $('#scrape_link').attr('formaction', '/items/add/scrape/cookpad');
+            $('#scrape_input').attr('placeholder', 'クックパッドのURL');
 
         // 楽天レシピの場合
         }else if($('[id=rakuten]').prop('checked')){
             $('#scrape_link').attr('formaction', '/items/add/scrape/rakuten');
+            $('#scrape_input').attr('placeholder', '楽天レシピのURL');
         }
 
         $('#scrape_input').prop('hidden', false);
@@ -149,8 +151,8 @@ $(function(){
         if(status == 'unread'){
             $.ajax({
                 headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                url: '/status',
-                type: 'POST',
+                url: '/notice',
+                type: 'PATCH',
                 data: {
                     'notice_id': notice_id
                 },

@@ -212,11 +212,10 @@ class ItemController extends Controller
 
 
     /**
-     * 商品一覧
+     * 商品詳細
      */
-    public function show(Request $request)
+    public function show(Item $item)
     {
-        $item = Item::find($request->id);
         $ingredients = $item->ingredients()->get();
         $processes = $item->processes()->get();
         $item_tags = $item->tags()->orderby('id', 'asc')->get();
@@ -227,9 +226,8 @@ class ItemController extends Controller
     /**
      * 商品編集画面を表示
      */
-    public function editView(Request $request)
+    public function editView(Item $item)
     {
-        $item = Item::find($request->id);
         $ingredients = $item->ingredients()->get();
         $processes = $item->processes()->get();
         $item_tags = $item->tags()->get();
@@ -356,8 +354,8 @@ class ItemController extends Controller
     /**
      * 商品削除
      */
-    public function destroy($id){
-        Item::find($id)->delete();
+    public function destroy(Item $item){
+        $item->delete();
 
         return redirect()->route('index');
     }

@@ -10,7 +10,7 @@
 
 @section('content')
     <div>
-        <p>{{ Carbon::parse($inquiry->created_at)->format("Y年m月d日H時i分") }}受信</p>
+        <p>{{ Carbon::parse($inquiry->created_at)->format("Y年m月d日 H時i分") }}受信</p>
         <p>ID:{{ $inquiry->user_id }} {{ $inquiry->name }}様より</p>
         <h7>タイトル：{{ $inquiry->title }}</h7>
         <p class="inquiry-content">内容：{{ $inquiry->content }}</p>
@@ -24,8 +24,8 @@
     
     <form method="POST" action="/admin/inquiry/{{ $inquiry->id }}">
         @csrf
-        <input class="form-control" type="text" name="title" placeholder="タイトル" value="Re:{{ $inquiry->title }}">
-        <textarea class="form-control" name="content" placeholder="内容"> &NewLine;------------------------------------------------------ &NewLine;\nお問い合わせ内容 ： {{ $inquiry->content }}</textarea>
+        <input class="form-control" type="text" name="title" placeholder="タイトル" value="Re:{{ $inquiry->title }}" required maxlength="40">
+        <textarea class="form-control" name="content" placeholder="内容" required maxlength="400"> &NewLine;------------------------------------------------------ &NewLine;お問い合わせ内容 ： {{ $inquiry->content }}</textarea>
         <input type="submit" class="btn btn-primary">
     </form>
     @if($inquiry->status !== 'replied')
@@ -40,7 +40,7 @@
     @if($replies)
     @foreach($replies as $reply)
         <div>
-            <p>{{ Carbon::parse($reply->created_at)->format("Y年m月d日H時i分") }}送信</p>
+            <p>{{ Carbon::parse($reply->created_at)->format("Y年m月d日 H時i分") }}送信</p>
             <h5>タイトル：{{ $reply->title }}</h5>
             <p class="inquiry-content">内容：{{ $reply->content }}</p>
         </div>

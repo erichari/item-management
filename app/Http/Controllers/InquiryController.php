@@ -23,63 +23,57 @@ class InquiryController extends Controller
     /**
      * お知らせ一覧
      */
-    public function notice(Request $request){
-        // $info = Inquiry::where('reply_id', 0)
-        //     ->orderby('created_at', 'desc')
-        //     ->paginate(10);
+    public function notice(Request $request)
+    {
+        // GETの場合 運営からのお知らせ(reply_id == 0)と自分宛てのお知らせ取得
+        if($request->isMethod("GET")){
+            $notices = Inquiry::leftjoin('inquiries as replied_inquiry', 'replied_inquiry.id', 'inquiries.reply_id')
+                ->where('inquiries.reply_id', 0)
+                ->orWhere('replied_inquiry.user_id', Auth::user()->id)
+                ->select('inquiries.*')
+                ->orderby('created_at', 'desc')
+                ->paginate(10);
 
-        //運営からのお知らせ(reply_id == 0)と自分宛てのお知らせ取得
-        $notices = Inquiry::leftjoin('inquiries as replied_inquiry', 'replied_inquiry.id', 'inquiries.reply_id')
-            ->where('inquiries.reply_id', 0)
-            ->orWhere('replied_inquiry.user_id', Auth::user()->id)
-            ->select('inquiries.*')
-            ->orderby('created_at', 'desc')
-            ->paginate(10);
+            return view('item.notice', compact('notices'));
+        }
 
-        return view('item.notice', compact('notices'));
+        // PATCHの場合 お知らせを既読にする
+        if($request->isMethod("PATCH")){
+            $notice_id = $request->notice_id;
+    
+            Inquiry::find($notice_id)->update([
+                'status' => 'read',
+            ]);
+    
+            $param = [
+                'notice_id' => $notice_id,
+            ];
+            
+            return response()->json($param);
+        }
     }
 
     /**
      * 問い合わせ
      */
-    public function inquiry(Request $request){
-        // GETの場合
-        if($request->isMethod("GET")){
+    public function inquiry(Request $request)
+    {
+        $this->validate($request, [
+            'title' => 'required|max:40',
+            'content' => 'required|max:400',
+        ]);
 
-        }
+        Inquiry::create([
+            'user_id' => Auth::user()->id,
+            'title' => $request->title,
+            'content' => $request->content,
+        ]);
 
-        // POSTの場合
-        if($request->isMethod("POST")){
-            $this->validate($request, [
-                'title' => 'required|max:20',
-                'content' => 'required|max:200',
-            ]);
-
-            Inquiry::create([
-                'user_id' => Auth::user()->id,
-                'title' => $request->title,
-                'content' => $request->content,
-            ]);
-
-            return redirect('/inquiry');
-        }
+        return redirect('/notice');
     }
 
     /**
-     * お知らせ詳細
+     * お知らせを既読にする
      */
-    public function change_status(Request $request)
-    {
-        $notice_id = $request->notice_id;
 
-        Inquiry::find($notice_id)->update([
-            'status' => 'read',
-        ]);
-
-        $param = [
-            'notice_id' => $notice_id,
-        ];
-        
-        return response()->json($param);
-    }
 }
