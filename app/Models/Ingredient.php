@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Ingredient extends Model
 {
     use HasFactory;
-    protected $dateFormat = 'U';
 
     protected $fillable = [
         'item_id',

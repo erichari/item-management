@@ -7,6 +7,11 @@
 @stop
 
 @section('content')
+@if (session()->has('success'))
+    <div class="success">
+        {{ session()->get('success') }}
+    </div>
+@endif
 
 <caption>総ユーザー数：{{ $user_count }}</caption>
 <div class="table-responsive">

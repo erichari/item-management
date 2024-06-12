@@ -4,6 +4,25 @@
     --tag-color: #0dcaf0;
 }
 
+.success{
+border : 1px solid var(--tag-color);
+    border-radius:20px;
+    background: var(--tag-color);
+    color: white;
+    padding:1rem;
+    text-align:center;
+    position: fixed;
+    left:50%;
+      transform: translate(-50%);
+z-index: 100;
+    animation: fadeOut 3s;
+}
+
+@keyframes fadeOut {
+    0% {opacity: 1;}
+    100% {opacity: 0;}
+}
+
 main {
     display: flex;
     justify-content: center;

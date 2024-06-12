@@ -63,17 +63,14 @@ class InquiryController extends Controller
             'content' => 'required|max:400',
         ]);
 
+        session()->flash('success', 'お問い合わせが送信されました。');
+
         Inquiry::create([
             'user_id' => Auth::user()->id,
             'title' => $request->title,
             'content' => $request->content,
         ]);
 
-        return redirect('/notice');
+        return back();
     }
-
-    /**
-     * お知らせを既読にする
-     */
-
 }

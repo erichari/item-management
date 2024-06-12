@@ -9,6 +9,12 @@
 @stop
 
 @section('content')
+@if (session()->has('success'))
+    <div class="success">
+        {{ session()->get('success') }}
+    </div>
+@endif
+
 <div class="row main">
     <div class="col-md-10">
         <button class="info-button" data-bs-toggle="modal" data-bs-target="#js-modal-info">新規配信</button>

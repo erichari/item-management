@@ -5,7 +5,6 @@
 @section('title', 'お知らせ')
 
 @section('content')
-@include('layouts.sidebar')
 <div class="row main g-4">
     <h1>お知らせ</h1>
     <div class="col-11">

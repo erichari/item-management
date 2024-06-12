@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-    @include('layouts.sidebar')
     <div class="row main g-4">
         @if(!isset($items[0]))
             @section('title', 'ホーム画面')

@@ -8,7 +8,6 @@
 
 @section('content')
 
-    @include('layouts.sidebar')
     <div class="row main">
         @if(\Request::is('items/edit/*'))
             <div class="edit-title">

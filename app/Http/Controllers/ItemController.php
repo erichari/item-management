@@ -207,6 +207,12 @@ class ItemController extends Controller
             Item_tag::insert($tags);
         }
 
+        if($request->route()->getName() == 'addDraft'){
+            session()->flash('success', 'レシピを下書きに登録しました');
+            return redirect('items/drafts');
+        }
+
+        session()->flash('success', 'レシピを登録しました');
         return redirect('/items');
     }
 
@@ -267,7 +273,7 @@ class ItemController extends Controller
         //材料を登録
         $ingredients = [];
         foreach($request->ingredients as $ingredient){
-            if($ingredient['id'] && $ingredient['name'] == null && $ingredient['quantity'] == null){
+            if(array_key_exists('id', $ingredient) && $ingredient['name'] == null && $ingredient['quantity'] == null){
                 Ingredient::find($ingredient['id'])->delete();
             }
             if($ingredient['name'] == null && $ingredient['quantity'] == null){
@@ -310,7 +316,7 @@ class ItemController extends Controller
         //作り方を登録
         $processes = [];
         foreach($request->processes as $process){
-            if($process['id'] && Process::find($process['id'])->process_image == null && $process['name'] == null && !array_key_exists('image', $process)){
+            if(array_key_exists('id', $process) && Process::find($process['id'])->process_image == null && $process['name'] == null && !array_key_exists('image', $process)){
                 Process::find($process['id'])->delete();
             }
             if($process['name'] == null && !array_key_exists('image', $process) && Process::find($process['id'])->process_image == null){
@@ -346,8 +352,11 @@ class ItemController extends Controller
 
 
         if($request->route()->getName() == 'returnDraft'){
+            session()->flash('success', 'レシピを下書きに戻しました');
             return redirect('items/drafts');
         }
+        
+        session()->flash('success', 'レシピを編集しました');
         return redirect('items/show/'.$item->id);
     }
 
@@ -356,6 +365,8 @@ class ItemController extends Controller
      */
     public function destroy(Item $item){
         $item->delete();
+
+        session()->flash('success', 'レシピを削除しました');
 
         return redirect()->route('index');
     }

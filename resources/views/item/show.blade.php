@@ -3,7 +3,6 @@
 @section('title', '詳細画面')
 
 @section('content')
-    @include('layouts.sidebar')
     <div class="row main g-4">
         <div class="col-12">
             <div class="card card-primary">

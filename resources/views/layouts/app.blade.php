@@ -177,8 +177,17 @@
             </div>
         </div>
         @endauth
+
+        @if (session()->has('success'))
+            <div class="success">
+                {{ session()->get('success') }}
+            </div>
+        @endif
         
         <main class="py-4">
+            @can('general')
+                @include('layouts.sidebar')
+            @endcan
             @yield('content')
         </main>
     </div>

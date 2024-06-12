@@ -3,7 +3,6 @@
 @section('title', 'タグ編集')
 
 @section('content')
-@include('layouts.sidebar')
 <div class="row main">
     <h1>タグ編集</h1>
     <div class="col-11">

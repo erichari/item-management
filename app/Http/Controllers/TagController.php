@@ -48,6 +48,8 @@ class TagController extends Controller
             ];
         }
         Tag::upsert($tags, ['id']);
+        
+        session()->flash('success', 'タグを編集しました');
         return redirect('/items');
     
     }

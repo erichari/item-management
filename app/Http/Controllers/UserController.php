@@ -73,6 +73,8 @@ class UserController extends Controller
             $inquiry->update([
                 'status' => 'replied'
             ]);
+            
+            session()->flash('success', '正常に送信されました');
 
             return redirect('/admin');
         }
@@ -83,6 +85,7 @@ class UserController extends Controller
                 'status' => 'replied'
             ]);
 
+            session()->flash('success', 'お問い合わせを対応済みにしました');
             return redirect('/admin');
         }
     }
@@ -105,6 +108,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->delete();
+        session()->flash('success', $user->name.'さんを削除しました');
         return redirect('admin/users');
         
     }
@@ -135,7 +139,8 @@ class UserController extends Controller
                 'content' => $request->content,
                 'reply_id' => 0,
             ]);
-            
+
+            session()->flash('success', '正常に送信されました');
             return redirect('/admin/info');
         }
     }

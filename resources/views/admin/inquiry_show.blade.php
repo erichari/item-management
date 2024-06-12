@@ -9,6 +9,12 @@
 @stop
 
 @section('content')
+    @if (session()->has('success'))
+        <div class="success">
+            {{ session()->get('success') }}
+        </div>
+    @endif
+    
     <div>
         <p>{{ Carbon::parse($inquiry->created_at)->format("Y年m月d日 H時i分") }}受信</p>
         <p>ID:{{ $inquiry->user_id }} {{ $inquiry->name }}様より</p>
