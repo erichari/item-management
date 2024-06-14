@@ -260,6 +260,8 @@ class ItemController extends Controller
             $base64Image = base64_encode(file_get_contents($request->image->getRealPath()));
             $mimeType = $request->image->getMimeType();
             $item->image = 'data:' . $mimeType . ';base64,' . $base64Image;
+        }else{
+            $item->image = '/img/no_image.jpg';
         }
 
         $item->user_id = Auth::user()->id;
