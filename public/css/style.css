@@ -129,6 +129,7 @@ input[type=checkbox] {
     height: 30px;
     position: relative;
     cursor: pointer;
+    text-align: center;
 }
 
 .genre {
@@ -245,6 +246,8 @@ input[type=checkbox] {
     width: 30px;
     height: 30px;
     font-weight: bold;
+    display: inline-block;
+    text-align: center;
 }
 
 .genre-icon {
@@ -383,10 +386,6 @@ resize:none;}
 .drawDiv {
     height : 200px;
     overflow-Y : scroll;
-}
-
-.view_icon {
-    width: 20px;
 }
 
 .clear-icon {
@@ -589,4 +588,19 @@ resize:none;}
         opacity: 1;
         transform: translate(0px, -250px) rotateZ(0deg)
     }
+}
+
+
+/*
+レスポンシブ
+*************************/
+
+@media screen and (max-width: 480px) {
+  .main {
+    width: 100%;
+  }  
+    .side {
+    width: 80%;
+  }
+    
 }

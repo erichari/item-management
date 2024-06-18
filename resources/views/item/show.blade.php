@@ -30,7 +30,7 @@
                                 <span class="category-icon icon checkbox-label">{{$tag->icon}}<span class="tooltip">{{$tag->tag}}</span></span>
                             @endif
                             @if($tag->type == 3)
-                                <span class="tag-icon icon checkbox-label"><i class="view_icon">{{$tag->icon}}</i><span class="tooltip">{{$tag->tag}}</span></span>
+                                <span class="tag-icon icon checkbox-label"><span class="view_icon">{{$tag->icon}}</span><span class="tooltip">{{$tag->tag}}</span></span>
                             @endif
                         @endforeach
                     </div>

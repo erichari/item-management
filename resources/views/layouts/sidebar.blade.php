@@ -41,7 +41,7 @@
                         <a href="{{url('items/editTag')}}">タグを追加する</a>
                     @else
                         @foreach($tags as $tag)
-                            <input type="checkbox" name="tag[]" value="{{$tag->id}}" id="tag{{$tag->id}}" class="tag" {{ !empty($search_parameters['tags']) && in_array((string)$tag->id, $search_parameters['tags'], true) ? 'checked' : ''}}><label for="tag{{$tag->id}}" class="tag checkbox-label"><i class="view_icon">{{$tag->icon}}</i><span class="tooltip">{{$tag->tag}}</span></label>
+                            <input type="checkbox" name="tag[]" value="{{$tag->id}}" id="tag{{$tag->id}}" class="tag" {{ !empty($search_parameters['tags']) && in_array((string)$tag->id, $search_parameters['tags'], true) ? 'checked' : ''}}><label for="tag{{$tag->id}}" class="tag checkbox-label"><span class="view_icon">{{$tag->icon}}</span><span class="tooltip">{{$tag->tag}}</span></label>
                         @endforeach
                     @endif
                 </div>

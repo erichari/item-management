@@ -43,11 +43,13 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     ホーム
                 </a>
-                @if($browser == 'sp')
-                    <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-                        <i class="fa-solid fa-magnifying-glass"></i>
-                    </button>
-                @endif
+                @auth
+                    @if($browser == 'sp')
+                        <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    @endif
+                @endauth
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -206,13 +208,5 @@
         </main>
     </div>
 
-    <script>
-        //タグアイコンをhtmlテキストとして表示
-        view_icon = document.getElementsByClassName('view_icon');
-        for(i=0; i<view_icon.length ; i++){
-            icon_text = view_icon[i].innerText;
-            view_icon[i].innerHTML = icon_text;
-        }
-    </script>
 </body>
 </html>

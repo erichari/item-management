@@ -1,5 +1,11 @@
 $(function(){
     
+    // タグアイコンをhtmlテキストとして表示
+    $('.view_icon').each(function(){
+        $(this).html($(this).text());
+    });
+
+    // 材料を追加するボタン
     var id = 10;
     $('.add-button').on('click', function(){
         var maxCount = 10;
@@ -54,7 +60,7 @@ $(function(){
             /* キャンセルの時の処理 */
             return false;
         }else{
-            /*　OKの時の処理 */            
+            /* OKの時の処理 */            
         }
     })
     
@@ -139,7 +145,7 @@ $(function(){
             /* キャンセルの時の処理 */
             return false;
         }else{
-            /*　OKの時の処理 */            
+            /* OKの時の処理 */            
         }
     })
 

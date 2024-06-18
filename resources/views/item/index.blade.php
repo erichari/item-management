@@ -33,7 +33,7 @@
                                 @elseif($tag->type == 2)
                                     <span class="category-icon icon">{{$tag->icon}}</span>
                                 @elseif($tag->type == 3)
-                                    <span class="tag-icon icon"><i class="view_icon">{{$tag->icon}}</i></span>
+                                    <span class="tag-icon icon view_icon">{{$tag->icon}}</span>
                                 @endif
                             @endforeach
                         </div>
@@ -63,10 +63,4 @@
             {{ $items->links() }}
         @endif
     </p>
-@stop
-
-@section('css')
-@stop
-
-@section('js')
 @stop
