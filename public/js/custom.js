@@ -1,9 +1,5 @@
 $(function(){
     
-    // タグアイコンをhtmlテキストとして表示
-    $('.view_icon').each(function(){
-        $(this).html($(this).text());
-    });
 
     // 材料を追加するボタン
     var id = 10;

@@ -208,5 +208,12 @@
         </main>
     </div>
 
+<script>
+    // タグアイコンをhtmlテキストとして表示
+    $('.view_icon').each(function(){
+        $(this).html($(this).text());
+    });
+</script>
+
 </body>
 </html>
