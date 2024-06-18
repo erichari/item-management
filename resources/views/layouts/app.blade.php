@@ -1,3 +1,11 @@
+@php
+    $ua = $_SERVER['HTTP_USER_AGENT'];
+    $browser = ((strpos($ua,'iPhone')!==false)||(strpos($ua,'iPod')!==false)||(strpos($ua,'Android')!==false));
+    if ($browser == true){
+        $browser = 'sp';
+    }
+@endphp
+
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -35,6 +43,11 @@
                 <a class="navbar-brand" href="{{ url('/') }}">
                     ホーム
                 </a>
+                @if($browser == 'sp')
+                    <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                @endif
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -121,8 +134,8 @@
             </div>
         </nav>
 
-        @auth
         <!-- きょうのごはんアニメーション -->
+        @auth
         <div class="modal fade" id="js-modal-today" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -157,18 +170,19 @@
         </div>
         @endauth
 
+        <!-- 問い合わせモーダル -->
         @auth
         <div class="modal fade" id="js-modal-inquiry" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <span>新規送信</span>
+                        <span>お問い合わせ送信</span>
                         <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <form method="POST" action="/notice">
                             @csrf
-                            <input class="form-control" type="text" name="title" placeholder="タイトル" required maxlength="40">
+                            <input class="form-control mb-1" type="text" name="title" placeholder="タイトル" required maxlength="40">
                             <textarea class="form-control" name="content" placeholder="内容" required maxlength="400"></textarea>
                             <button type="submit" class="btn btn-primary info-btn">送信</button>
                         </form>

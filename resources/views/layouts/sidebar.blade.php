@@ -1,5 +1,15 @@
+@if($browser == 'sp')
+<div class="side offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+@else
 <div class="side">
+@endif
     <div class="side-inner">
+        @if($browser == 'sp')
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasExampleLabel">レシピを検索</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        @endif
         <form action="/items/search" method="get">
             @csrf
             <div class="form-group mb-3">

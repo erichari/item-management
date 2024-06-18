@@ -100,7 +100,7 @@ main {
 *************************/
 .side {
     width: 180px;
-    border-right: 1px solid #eef;
+    border-right: 1px solid #dde;
 }
 
 .side .side-inner {
@@ -261,6 +261,10 @@ input[type=checkbox] {
     background: var(--tag-color);
     color: #fff;
 }
+
+.modal-body textarea{
+height: 150px;
+resize:none;}
 
 /*
 詳細ページ
