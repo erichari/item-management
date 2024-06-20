@@ -4,9 +4,9 @@
 
 @section('content')
     <div class="row main g-4">
-        <div class="col-12">
+        <div class="col-sm-12 col-md-11">
             <div class="card card-primary">
-                <h1 class="mb-2 p-3">{{$item->title}}</h1>
+                <h1 class="mb-2 p-3 col-11">{{$item->title}}</h1>
                 <div class="score">{{$item->score}}点</div>
                 <div class="show-image mb-2 col-12" data-bs-toggle="modal" data-bs-target="#js-modal-top-image">
                     <img src="{{ $item->image }}" alt="{{ $item->title }}">
@@ -37,12 +37,12 @@
 
                     <div class="mb-4">
                         <h5>材料</h5>
-                        <div class="ingredients-container">
+                        <div class="ingredients-container col-sm-12 col-md-9">
                             <div>{{$item->serving}}</div>
                             @foreach($ingredients as $ingredient)
                                 <div class="ingredients-list">
-                                    <div class="ingredient">{{$ingredient->ingredient}}</div>
-                                    <div class="quantity">{{$ingredient->quantity}}</div>
+                                    <div class="col-8">{{$ingredient->ingredient}}</div>
+                                    <div class="col-4">{{$ingredient->quantity}}</div>
                                 </div>
                             @endforeach
                         </div>
@@ -50,10 +50,10 @@
 
                     <div class="mb-4">
                         <h5>作り方</h5>
-                        <div class="ingredients-container col-11">
+                        <div class="ingredients-container col-12">
                             @foreach($processes as $process)
                                 <div class="processes-list">
-                                    <div class="process col-8">
+                                    <div class="process col-9">
                                         {{$process->process}}
                                     </div>
                                     <div class="col-3" data-bs-toggle="modal" data-bs-target="#js-modal-image{{ $process->id }}">

@@ -22,7 +22,7 @@
             <h1>レシピ新規登録</h1>
         @endif
         
-        <div class="col-md-10">
+        <div class="col-sm-12 col-md-10">
             <div class="card card-primary">
                 
                 @if(\Request::is('items/add'))
@@ -52,7 +52,7 @@
                     <div class="card-body">
                         <div class="form-group mb-4">
                             <div class="img-container">
-                                <label for="imageUpload" class="col-10">
+                                <label for="imageUpload" class="col-sm-12 col-md-10 d-block">
                                     <input type="file" class="imageUpload" id="imageUpload" name="image" value="{{ old('image') }}">
                                     <img class="preview top-image @if($errors->has('image')) is-invalid @endif" src="@if($item->title) {{$item->image}} @else {{asset('/img/no_image.jpg')}} @endif">
                                     @if(\Request::is('items/add/scrape/*'))
@@ -119,7 +119,7 @@
 
                         <div class="form-group mb-4 input-list">
                             <h4>材料・分量</h4>
-                            <div class="col-3">
+                            <div class="col-4">
                                 <input type="text" class="form-control mb-3 @if($errors->has('serving')) is-invalid @endif" id="serving" name="serving" placeholder="〇人分" value="{{ old('serving', $item->serving) }}">
                             </div>
 

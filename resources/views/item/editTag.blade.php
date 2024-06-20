@@ -5,22 +5,24 @@
 @section('content')
 <div class="row main">
     <h1>タグ編集</h1>
-    <div class="col-11">
+    <div class="col-sm-12 col-md-11">
         <div class="card card-primary">
             <form method="POST">
                 @csrf
                 <div class="card-body">
                     @for($i=0; $i<=3; $i++)
-                        <div class="form-group mb-3 d-flex">
-                            <input type="text" class="form-control" name="tags[{{$i}}][id]" value="{{$tags[$i]->id ?? ''}}" hidden>
-                            <div class="col-7">
-                                <input type="text" class="form-control @if($errors->has('tags.'.$i.'.name')) is-invalid @endif" name="tags[{{$i}}][name]" placeholder="タグ名{{$i+1}}" value="{{ old('tags.'.$i.'.name', $tags[$i]->tag ?? '') }}">
+                        <div class="mb-3">
+                            <div class="form-group mb-1 d-flex">
+                                <input type="text" class="form-control" name="tags[{{$i}}][id]" value="{{$tags[$i]->id ?? ''}}" hidden>
+                                <p tabindex="0" class="icon-btn tag-icon icon preview @if($errors->has('tags.'.$i.'.icon')) is-invalid @endif" data-btn-id="{{$i}}" data-toggle="popover" title="タグ名{{$i+1}}のアイコンを選択">
+                                    <input type="text" class="form-control icon-input" id="input-id{{$i}}" name="tags[{{$i}}][icon]" value="{{ old('tags.'.$i.'.icon', $tags[$i]->icon ?? '') }}" hidden>
+                                    <span id="view_icon{{$i}}" class="view_icon">{{ old('tags.'.$i.'.icon', $tags[$i]->icon ?? "") }}</span>
+                                </p>
+                                <div class="col-1"></div>
+                                <div class="col-sm-10 col-md-7">
+                                    <input type="text" class="form-control @if($errors->has('tags.'.$i.'.name')) is-invalid @endif" name="tags[{{$i}}][name]" placeholder="タグ名{{$i+1}}" value="{{ old('tags.'.$i.'.name', $tags[$i]->tag ?? '') }}">
+                                </div>
                             </div>
-                            <div class="col-1"></div>
-                            <p tabindex="0" class="icon-btn tag-icon icon preview @if($errors->has('tags.'.$i.'.icon')) is-invalid @endif" data-btn-id="{{$i}}" data-toggle="popover" title="タグ名{{$i+1}}のアイコンを選択">
-                                <input type="text" class="form-control icon-input" id="input-id{{$i}}" name="tags[{{$i}}][icon]" value="{{ old('tags.'.$i.'.icon', $tags[$i]->icon ?? '') }}" hidden>
-                                <span id="view_icon{{$i}}" class="view_icon">{{ old('tags.'.$i.'.icon', $tags[$i]->icon ?? "") }}</span>
-                            </p>
                             <p class="clear-icon" id="clear-icon{{$i}}" @if(!isset($tags[$i]->icon)) style="display:none" @endif>×アイコンをクリア</p>
                             @foreach($errors->get('tags.'.$i.'.*') as $messages)
                                 @foreach ($messages as $message)

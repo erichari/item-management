@@ -7,7 +7,7 @@
 @section('content')
 <div class="row main g-4">
     <h1>お知らせ</h1>
-    <div class="col-11">
+    <div class="col-sm-12 col-md-11">
         <div class="card card-primary">
             <div class="card-body">
                 <div class="table-responsive">
