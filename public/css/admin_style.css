@@ -1,5 +1,6 @@
 :root {
     --color: #0dcaf0;
+    --border-color: #09a8d0
 }
 
 .success{
@@ -42,7 +43,7 @@ background-color:var(--color);
     border-radius: 10px;
     padding:5px;
     margin: 10px;
-    border: 1px solid #09a8d0;
+    border: 1px solid var(--border-color);
     font-weight: bold;
     
     transition: 0.1s ease-in;

@@ -28,8 +28,8 @@
                     <div class="modal-body">
                         <form method="POST" action="/admin/info">
                             @csrf
-                            <input class="form-control" type="text" name="title" placeholder="タイトル" required maxlength="40">
-                            <textarea class="form-control" name="content" placeholder="内容" required maxlength="400"></textarea>
+                            <input class="form-control mb-1" type="text" name="title" placeholder="タイトル" required maxlength="40">
+                            <textarea class="form-control mb-2" name="content" placeholder="内容" required maxlength="400"></textarea>
                             <button type="submit" class="btn btn-primary info-btn">送信</button>
                         </form>
                     </div>

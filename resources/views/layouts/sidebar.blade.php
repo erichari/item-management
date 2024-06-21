@@ -72,7 +72,7 @@
                 </select>
             </div>
 
-            <input type="submit" value="検索">
+            <input class="search-btn" type="submit" value="検索">
         </form>
     </div>
 </div>
