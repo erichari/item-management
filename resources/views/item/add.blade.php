@@ -57,6 +57,8 @@
                                     <img class="preview top-image @if($errors->has('image')) is-invalid @endif" src="@if($item->title) {{$item->image}} @else {{asset('/img/no_image.jpg')}} @endif">
                                     @if(\Request::is('items/add/scrape/*'))
                                         <input type="text" class="scraped_image" name="scraped_image" hidden>
+                                    @elseif(\Request::is('items/edit/*'))
+                                        <input type="text" class="scraped_image" name="image_text" hidden>
                                     @endif
                                 </label>
                                 <p class="clear-image" style="display:none">×画像をクリア</p>

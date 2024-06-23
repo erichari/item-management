@@ -182,5 +182,5 @@ $(window).on('submit',function () { //Submitし処理中に実行（イメージ
 
 // ページのロードが終わった後の処理
 $(window).on('load', function(){
-    $('#js-loader').delay(300).fadeOut(400); //ローディング画面をフェードアウトさせることでメインコンテンツを表示
+    $('#js-loader').delay(300).fadeOut(400);
 });

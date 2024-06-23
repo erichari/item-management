@@ -260,6 +260,8 @@ class ItemController extends Controller
             $base64Image = base64_encode(file_get_contents($request->image->getRealPath()));
             $mimeType = $request->image->getMimeType();
             $item->image = 'data:' . $mimeType . ';base64,' . $base64Image;
+        }elseif($request->image_text){
+            $item->image = $request->image_text;
         }else{
             $item->image = '/img/no_image.jpg';
         }
@@ -277,8 +279,7 @@ class ItemController extends Controller
         foreach($request->ingredients as $ingredient){
             if(array_key_exists('id', $ingredient) && $ingredient['name'] == null && $ingredient['quantity'] == null){
                 Ingredient::find($ingredient['id'])->delete();
-            }
-            if($ingredient['name'] == null && $ingredient['quantity'] == null){
+            }elseif($ingredient['name'] == null && $ingredient['quantity'] == null){
                 continue;
             }
 
@@ -321,9 +322,10 @@ class ItemController extends Controller
             if(array_key_exists('id', $process) && Process::find($process['id'])->process_image == null && $process['name'] == null && !array_key_exists('image', $process)){
                 Process::find($process['id'])->delete();
             }
-            if($process['name'] == null && !array_key_exists('image', $process) && Process::find($process['id'])->process_image == null){
+            // elseif($process['name'] == null && !array_key_exists('image', $process) && Process::find($process['id'])->process_image == null){
 // todo:すでに画像があるが、何も選択されてない＆＆nameが空の場合の処理
-            }elseif($process['name'] == null && !array_key_exists('image', $process)){
+            // }
+            elseif($process['name'] == null && !array_key_exists('image', $process)){
                 continue;
             }
 

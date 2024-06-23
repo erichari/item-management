@@ -22,17 +22,24 @@ class ScrapingController extends Controller
             return [
                 'image' => $node->filter('#main-photo > img')->attr('src'),
                 'title' => $node->filter('.recipe-title')->text(),
-                'serving' => $node->filter('.servings_for')->text(),
+                'serving' => $node->filter('.content')->text(),
             ];
         });
 
 
         $ingredients = $crawler->filter('#ingredients')->each(function (Crawler $node, $i) {
             return $node->filter('.ingredient_row')->each(function (Crawler $node, $i) {
-                return[
-                    'ingredient' => $node->filter('.name')->text(),
-                    'quantity' => $node->filter('.ingredient_quantity')->text(),
-                ];
+                if($node->filter('.name')->count()){
+                    return[
+                        'ingredient' => $node->filter('.name')->text(),
+                        'quantity' => $node->filter('.ingredient_quantity')->text(),
+                    ];
+                }else{
+                    return[
+                        'ingredient' => $node->filter('.ingredient_category')->text(),
+                        'quantity' => null,
+                    ];
+                }
             });
         });
 
@@ -44,8 +51,9 @@ class ScrapingController extends Controller
                 ];
             });
         });
-        
-        $header[0]['serving'] = str_replace('（', '', $header[0]['serving']);
+
+        $header[0]['serving'] = str_replace('材料', '', $header[0]['serving']);
+        $header[0]['serving'] = str_replace(' （', '', $header[0]['serving']);
         $header[0]['serving'] = str_replace('）', '', $header[0]['serving']);
 
         $item = new Item($header[0]);
