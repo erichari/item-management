@@ -5,6 +5,60 @@
     --border-color: #09a8d0
 }
 
+.loader {
+    background: var(--tag-color);
+    display: none;
+    opacity: 0.6;
+    left: 0;
+    top: 0;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+}
+
+.loader-animation {
+    font-size: 40px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    line-height: 50%;
+    text-align: center;
+    color: var(--tag-color);
+    z-index: 11;
+    animation: load1 2.5s linear infinite;
+}
+
+.loader p {
+    color: white;
+    font-weight: bold;
+}
+
+@-webkit-keyframes load1 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes load1 {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .success {
     border : 1px solid var(--tag-color);
     border-radius: 20px;
@@ -190,13 +244,13 @@ input[type=checkbox] {
     visibility: visible;
 }
 
-.search-btn{
+.search-btn {
     background: var(--tag-color);
     color: #fff;
     border: 1px solid var(--border-color);
     padding: 5px 10px;
     border-radius: 10px;
-    margin-top:30px;
+    margin-top: 30px;
 }
 
 /*************************************
@@ -275,9 +329,10 @@ input[type=checkbox] {
     color: #fff;
 }
 
-.modal-body textarea{
-height: 150px;
-resize:none;}
+.modal-body textarea {
+    height: 150px;
+    resize: none;
+}
 
 /*
 詳細ページ
@@ -285,7 +340,7 @@ resize:none;}
 .show-image img {
     width: 100%;
     height: 350px;
-    object-fit:cover ;
+    object-fit: cover ;
 }
 
 .icon-list .checkbox-label {
@@ -414,8 +469,8 @@ resize:none;}
 #js-modal-today .nabe-close {
     position: absolute;
     top: 60vh;
-  left: 50%;
-  transform: translate(-50%,0%);
+    left: 50%;
+    transform: translate(-50%,0%);
     width: 200px;
     animation: gutugutu 1s 1s ease-out 2, fadeOut 1s 3s forwards;
 }
@@ -423,8 +478,8 @@ resize:none;}
 #js-modal-today .nabe-open {
     position: absolute;
     top: 60vh;
-  left: 50%;
-  transform: translate(-50%,0%);
+    left: 50%;
+    transform: translate(-50%,0%);
     width: 200px;
     opacity: 0;
     animation: fadeIn 2s 3s forwards;
@@ -436,7 +491,7 @@ resize:none;}
     }
 
     15% {
-        transform:translate(-53%,3%) rotateZ(1deg)
+        transform: translate(-53%,3%) rotateZ(1deg)
     }
 
     30% {
@@ -480,8 +535,8 @@ resize:none;}
     position: absolute;
     opacity: 0;
     top: 70vh;
-  left: 50%;
-  transform: translate(-50%,0%);
+    left: 50%;
+    transform: translate(-50%,0%);
     color: white;
     text-align: center;
     text-decoration: none;
@@ -492,8 +547,9 @@ resize:none;}
     object-fit: cover;
     transition: box-shadow 0.3s, transform 0.3s;
 }
-#js-modal-today .today-label{
-    width:9rem;
+
+#js-modal-today .today-label {
+    width: 9rem;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
@@ -600,55 +656,55 @@ resize:none;}
     }
 }
 
-
 /*****************************************
 レスポンシブ
 *****************************************/
-
 @media screen and (max-width: 480px) {
-  .main {
-    width: 100%;
-  }  
-.side {
-    width: 100%;
-}
+    .main {
+        width: 100%;
+    }
 
-.side .side-inner {
-    height: 100vh;
-    padding: 20px;
-    width: 100%;
-}
+    .side {
+        width: 100%;
+    }
+
+    .side .side-inner {
+        height: 100vh;
+        padding: 20px;
+        width: 100%;
+    }
+
     .keyword {
-    width: 80%;
-}
+        width: 80%;
+    }
 
     .top-image {
-    height: 150px;
-}
+        height: 150px;
+    }
 
-.show-image img {
-    height: 200px;
-}
+    .show-image img {
+        height: 200px;
+    }
 
     #js-modal-today .nabe-close {
-    width: 120px;
-}
-        #js-modal-today .nabe-open {
-    width: 120px;
-}
-    
-#js-modal-today .today-side img {
-    width: 70px;
-    height: 70px;
-}
+        width: 120px;
+    }
 
-#js-modal-today .today-main img {
-    width: 100px;
-    height: 90px;
-}
-    
-#js-modal-today .today-label{
-    width:8rem;
-}
-    
+    #js-modal-today .nabe-open {
+        width: 120px;
+    }
+
+    #js-modal-today .today-side img {
+        width: 70px;
+        height: 70px;
+    }
+
+    #js-modal-today .today-main img {
+        width: 100px;
+        height: 90px;
+    }
+
+    #js-modal-today .today-label {
+        width: 8rem;
+    }
 }

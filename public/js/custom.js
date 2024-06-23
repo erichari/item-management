@@ -174,3 +174,13 @@ $(function(){
     })
 
 });
+
+$(window).on('submit',function () { //Submitし処理中に実行（イメージ表示）
+    var h = $(window).height();
+    $('#js-loader') .height(h).css('display','flex');
+});
+
+// ページのロードが終わった後の処理
+$(window).on('load', function(){
+    $('#js-loader').delay(300).fadeOut(400); //ローディング画面をフェードアウトさせることでメインコンテンツを表示
+});

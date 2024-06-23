@@ -37,6 +37,13 @@
 </head>
 
 <body>
+    <div id="js-loader" class="loader">
+        <div class="loader-animation">
+            <i class="fa-solid fa-utensils"></i>
+        </div>
+        <p>お待ちください…</p>
+    </div>
+
     <div id="app">
         <nav class="navbar navbar-expand-md bg-white shadow-sm fixed-top">
             <div class="container">
