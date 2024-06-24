@@ -61,10 +61,10 @@
         transform: rotate(360deg);
     }
 }
+
 /**************************************
 全体
 **************************************/
-
 .success {
     border : 1px solid var(--tag-color);
     border-radius: 20px;
@@ -104,9 +104,27 @@ main {
 /*
 ヘッダー
 *************************/
-.header-menu:hover {
+#app nav {
     background: var(--tag-color);
-    color: #fff;
+    color: white;
+    font-weight: bold;
+}
+
+.header-menu {
+    color: white;
+    font-weight: bold;
+}
+
+.header-menu:hover {
+    border-radius: 10px;
+    background: white;
+    color: var(--tag-color);
+    list-style: none;
+}
+
+.header-menu a {
+    color: white;
+    font-weight: bold;
 }
 
 .menu {
@@ -121,12 +139,10 @@ main {
     min-width: 100px;
     margin-left: 1px;
     padding: 5px;
-    background: white;
+    background: var(--tag-color);
 }
 
 .menuSub {
-    border: 1px solid black;
-    border-radius: 7px;
     position: absolute;
     margin-left: -6px;
     list-style: none;
@@ -135,25 +151,39 @@ main {
 }
 
 .menuSub li a {
+    border: 1px solid var(--tag-color);
     padding: 5px;
     margin-left: -5px;
     margin-right: -5px;
     margin-bottom: -5px;
     display: block;
     min-width: 100px;
-    color: black;
+    color: white;
     text-decoration: none;
     transition: 0.1s;
 }
 
 .menuSub li a:hover {
-    background: var(--tag-color);
-    color: #fff;
+    background: white;
+    color: var(--tag-color);
 }
 
 .header-selected {
-    background: var(--tag-color);
-    color: #fff;
+    border-radius: 10px;
+    background: white;
+}
+
+.header-selected a {
+    color: var(--tag-color);
+}
+
+.search-toggler {
+    border: 2px solid white;
+    border-radius: 10px;
+    padding: 5px;
+    width: 35px;
+    height: 35px;
+    text-align: center
 }
 
 /**************************************

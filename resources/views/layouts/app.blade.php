@@ -45,16 +45,16 @@
     </div>
 
     <div id="app">
-        <nav class="navbar navbar-expand-md bg-white shadow-sm fixed-top">
+        <nav class="navbar navbar-expand-md shadow-sm fixed-top">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     ホーム
                 </a>
                 @auth
                     @if($browser == 'sp')
-                        <button class="btn btn-info" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+                        <li class="header-menu search-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
                             <i class="fa-solid fa-magnifying-glass"></i>
-                        </button>
+                        </li>
                     @endif
                 @endauth
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
@@ -74,13 +74,13 @@
                         <!-- Authentication Links -->
                         @guest
                             @if (Route::has('login'))
-                                <li class="nav-item">
+                                <li class="nav-item header-menu">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('ログイン') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
-                                <li class="nav-item">
+                                <li class="nav-item header-menu">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('会員登録') }}</a>
                                 </li>
                             @endif
