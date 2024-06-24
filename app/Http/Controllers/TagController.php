@@ -31,10 +31,12 @@ class TagController extends Controller
     {
         // タグ編集
         foreach($request->tags as $tag){
-            if($tag['name'] == null){
+            if($tag['id'] !== null && $tag['name'] == null && $tag['icon'] == null){
+                Tag::find($tag['id'])->delete();
                 continue;
-            }
-            if($tag['icon'] == null){
+            }elseif($tag['name'] == null){
+                continue;
+            }elseif($tag['icon'] == null){
                 $tag_icon = mb_substr($tag['name'], 0, 1);
             }else{
                 $tag_icon = $tag['icon'];

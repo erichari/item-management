@@ -279,7 +279,8 @@ class ItemController extends Controller
         foreach($request->ingredients as $ingredient){
             if(array_key_exists('id', $ingredient) && $ingredient['name'] == null && $ingredient['quantity'] == null){
                 Ingredient::find($ingredient['id'])->delete();
-            }elseif($ingredient['name'] == null && $ingredient['quantity'] == null){
+            }
+            if($ingredient['name'] == null && $ingredient['quantity'] == null){
                 continue;
             }
 
