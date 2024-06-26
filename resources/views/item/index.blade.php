@@ -54,13 +54,12 @@
                 </div>
             </div>
         @endforeach
-    </div>
-    
-    <p class="pagination">
+        <p class="pagination">
         @if(isset($search_parameters))
             {{ $items->appends(request()->query())->links() }}
         @else
             {{ $items->links() }}
         @endif
-    </p>
+        </p>
+    </div>
 @stop

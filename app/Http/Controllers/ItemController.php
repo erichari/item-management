@@ -33,7 +33,7 @@ class ItemController extends Controller
         $items = Item::where('draft', null)
             ->select('id', 'title', 'score', 'image', 'draft')
             ->orderby('created_at', 'desc')
-            ->paginate(20);
+            ->paginate(6);
 
         $ingredients = Item::where('draft', null)
             ->join('ingredients', 'ingredients.item_id', 'items.id')
