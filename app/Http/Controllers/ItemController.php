@@ -33,7 +33,7 @@ class ItemController extends Controller
         $items = Item::where('draft', null)
             ->select('id', 'title', 'score', 'image', 'draft')
             ->orderby('created_at', 'desc')
-            ->paginate(6);
+            ->paginate(20);
 
         $ingredients = Item::where('draft', null)
             ->join('ingredients', 'ingredients.item_id', 'items.id')
@@ -104,6 +104,10 @@ class ItemController extends Controller
             $base64Image = base64_encode(file_get_contents($request->image->getRealPath()));
             $mimeType = $request->image->getMimeType();
             $item->image = 'data:' . $mimeType . ';base64,' . $base64Image;
+
+        // 画像がない場合
+        }else{
+            $item->image = '/img/no_image.jpg';
         }
 
         //下書きボタンが押された場合 
