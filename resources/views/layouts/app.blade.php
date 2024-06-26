@@ -45,7 +45,7 @@
     </div>
 
     <div id="app">
-        <nav class="navbar navbar-expand-md shadow-sm fixed-top">
+        <nav class="navbar navbar-expand-md shadow-sm fixed-top header">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     ホーム
@@ -193,7 +193,7 @@
                             @csrf
                             <input class="form-control mb-1" type="text" name="title" placeholder="タイトル" required maxlength="40">
                             <textarea class="form-control mb-2" name="content" placeholder="内容" required maxlength="400"></textarea>
-                            <button type="submit" class="btn btn-primary info-btn">送信</button>
+                            <button type="submit" class="info-button">送信</button>
                         </form>
                     </div>
                 </div>

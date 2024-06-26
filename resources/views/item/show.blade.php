@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="card-footer">
-                    <a href="/items/edit/{{$item->id}}" class="show-link">編集する</a>
+                    <a href="/items/edit/{{$item->id}}" class="show-link info-button">編集する</a>
                 </div>
             </div>
         </div>

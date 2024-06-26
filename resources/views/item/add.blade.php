@@ -42,7 +42,7 @@
                             </div>
                             
                             <input type="text" id="scrape_input" class="form-control col-10 mt-2" name="url" placeholder="URL" required hidden>
-                            <button type="submit" id="scrape_link" formaction="" hidden>読み込む</button>
+                            <button type="submit" class="info-button" id="scrape_link" formaction="" hidden>読み込む</button>
                         </div>
                     </form>
                 @endif
@@ -159,7 +159,7 @@
                                     </div>
                                 @endfor
                             @endif
-                            <p class="add-button" role="button">＋材料を追加する</p>
+                            <p class="add-button" role="button"><span class="info-button">＋</span>　材料を追加する</p>
 
                             @foreach ($errors->get('ingredients.*') as $messages)
                                 @foreach ($messages as $message)
@@ -212,7 +212,7 @@
                                 </div>
                                 @endfor
                             @endif
-                            <p class="add-button" role="button">＋作り方を追加する</p>
+                            <p class="add-button" role="button"><span class="info-button">＋</span>　作り方を追加する</p>
 
                             @foreach ($errors->get('processes.*') as $messages)
                                 @foreach ($messages as $message)
@@ -240,10 +240,10 @@
                     <div class="card-footer">
                     @if(\Request::is('items/edit/*'))
                         <button type="submit" class="btn btn-secondary" id="draft-button" formaction="{{ route('returnDraft', ['id' => $item->id]) }}">下書きに戻す</button>
-                        <button type="submit" class="btn btn-primary" id="register-button" formaction="{{ route('edit', ['id' => $item->id]) }}">登録</button>
+                        <button type="submit" class="info-button" id="register-button" formaction="{{ route('edit', ['id' => $item->id]) }}">登録</button>
                     @else
                         <button type="submit" class="btn btn-secondary" id="draft-button" formaction="{{ route('addDraft') }}">下書き</button>
-                        <button type="submit" class="btn btn-primary" id="register-button" formaction="{{ route('add') }}">登録</button>
+                        <button type="submit" class="info-button" id="register-button" formaction="{{ route('add') }}">登録</button>
                     @endif
                     </div>
                 </form>
