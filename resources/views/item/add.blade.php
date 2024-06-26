@@ -147,11 +147,11 @@
                                             <input type="text" class="form-control ingredient-id" name="ingredients[{{$i}}][id]" value="{{$ingredients[$i]->id}}" hidden>
                                         @endif
                                             <div class="col-6">
-                                            <input type="text" class="form-control @if($errors->has('ingredients.'.$i.'.name')) is-invalid @endif" name="ingredients[{{$i}}][name]" placeholder="材料" value="{{ old('ingredients.'.$i.'.name', $ingredients[$i]->ingredient) }}">
+                                            <input type="text" class="form-control ingredient @if($errors->has('ingredients.'.$i.'.name')) is-invalid @endif" name="ingredients[{{$i}}][name]" placeholder="材料" value="{{ old('ingredients.'.$i.'.name', $ingredients[$i]->ingredient) }}">
                                         </div>
                                         <div class="col-1">　：　</div>
                                         <div class="col-4">
-                                            <input type="text" class="form-control @if($errors->has('ingredients.'.$i.'.quantity')) is-invalid @endif" name="ingredients[{{$i}}][quantity]" placeholder="分量" value="{{ old('ingredients.'.$i.'.quantity', $ingredients[$i]->quantity) }}">
+                                            <input type="text" class="form-control quantity @if($errors->has('ingredients.'.$i.'.quantity')) is-invalid @endif" name="ingredients[{{$i}}][quantity]" placeholder="分量" value="{{ old('ingredients.'.$i.'.quantity', $ingredients[$i]->quantity) }}">
                                         </div>
                                         <div class="remove-button input-group-append col-1" style="display:none">
                                             <span class="btn btn-danger">-</span>

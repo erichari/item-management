@@ -324,7 +324,7 @@ class ItemController extends Controller
         //作り方を登録
         $processes = [];
         foreach($request->processes as $process){
-            if(array_key_exists('id', $process) && Process::find($process['id'])->process_image == null && $process['name'] == null && !array_key_exists('image', $process)){
+            if(array_key_exists('id', $process) && !isset(Process::find($process['id'])->process_image) && $process['name'] == null && !array_key_exists('image', $process)){
                 Process::find($process['id'])->delete();
             }
             // elseif($process['name'] == null && !array_key_exists('image', $process) && Process::find($process['id'])->process_image == null){
