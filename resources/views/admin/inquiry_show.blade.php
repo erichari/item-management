@@ -55,7 +55,7 @@
             <form method="POST" action="/admin/inquiry/{{ $inquiry->id }}">
                 @csrf
                 @method('PATCH')
-                <input type="submit" id="reply-btn" value="対応済みにする">
+                <input type="submit" id="reply-btn" class="btn info-button" value="返信せずに対応済みにする">
             </form>
             @endif
 
