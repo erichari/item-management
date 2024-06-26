@@ -476,7 +476,7 @@ input[type=checkbox] {
 *************************/
 .drawDiv {
     height : 200px;
-    overflow-Y : scroltooll;
+    overflow-Y : scroll;
 }
 
 .clear-icon {

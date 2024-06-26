@@ -3,55 +3,71 @@
     --border-color: #09a8d0
 }
 
-.success{
-border : 1px solid var(--color);
-    border-radius:20px;
+.success {
+    border : 1px solid var(--color);
+    border-radius: 20px;
     background: var(--color);
     color: white;
-    padding:1rem;
-    text-align:center;
+    padding: 1rem;
+    text-align: center;
     position: fixed;
-    left:50%;
-      transform: translate(-50%);
-z-index: 100;
+    left: 50%;
+    transform: translate(-50%);
+    z-index: 100;
     animation: fadeOut 2s 3s forwards;
 }
 
 @keyframes fadeOut {
-    0% {opacity: 1;}
-    100% {opacity: 0;}
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
-textarea{
-    resize:none;
-   height: 200px;
+.card textarea {
+    resize: none;
+    height: 200px;
 }
-table{
+
+table {
     border: 1px solid #dde;
 }
-.status{
-color: white;
-padding: 5px;
-border-radius: 10px;}
 
-.inquiry-content{
-    white-space: pre-wrap;}
-
-.info-button{
-background-color:var(--color);
-    color:white;
+.status {
+    color: white;
+    padding: 5px;
     border-radius: 10px;
-    padding:5px;
+    height: 100%;
+}
+
+.inquiry-content {
+    white-space: pre-wrap;
+}
+
+.info-button {
+    background-color: var(--color);
+    color: white;
+    border-radius: 10px;
+    padding: 5px;
     margin: 10px;
     border: 1px solid var(--border-color);
     font-weight: bold;
-    
     transition: 0.1s ease-in;
 }
-.info-button:hover{
-filter: brightness(1.1);
+
+.info-button:hover {
+    filter: brightness(1.1);
 }
 
-.modal-body textarea{
-height: 150px;
-resize:none;}
+.modal-body textarea {
+    height: 150px;
+    resize: none;
+}
+
+.reply-border{
+border-top: 2px dotted var(--border-color); 
+    padding: 20px 0;
+}
