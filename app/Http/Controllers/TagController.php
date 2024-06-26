@@ -49,7 +49,10 @@ class TagController extends Controller
                 'icon' => $tag_icon,
             ];
         }
-        Tag::upsert($tags, ['id']);
+
+        if(isset($tags)){
+            Tag::upsert($tags, ['id']);
+        }
         
         session()->flash('success', 'タグを編集しました');
         return redirect('/items');

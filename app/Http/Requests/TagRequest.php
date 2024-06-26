@@ -24,7 +24,6 @@ class TagRequest extends FormRequest
         $rules = [
             'tags' => 'required|array|min:1',
             'tags.*.name' => 'max:20|required_with:tags.*.icon',
-            'tags.0.name' => 'required',
         ];
         return $rules;
     }
