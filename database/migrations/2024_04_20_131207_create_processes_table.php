@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('processes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
-            $table->string('process', 200)->nullable();
+            $table->string('process', 400)->nullable();
             $table->longText('process_image')->nullable();
             $table->timestamps();
         });

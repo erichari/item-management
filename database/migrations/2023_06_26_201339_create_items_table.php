@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->string('title', 20);
-            $table->string('serving', 20)->nullable();
+            $table->string('title', 40);
+            $table->string('serving', 40)->nullable();
             $table->integer('score')->nullable();
-            $table->string('memo', 200)->nullable();
+            $table->string('memo', 400)->nullable();
             $table->longText('image');
-            $table->string('draft', 20)->nullable();
+            $table->string('draft', 40)->nullable();
             $table->timestamps();
         });
     }
