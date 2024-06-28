@@ -138,7 +138,7 @@ return [
         'numeric' => ':Attributeには、:sizeを指定してください。',
         'string'  => ':Attributeの文字数は、:size文字にしてください。',
     ],
-    'starts_with'          => ':Attributeは、次のいずれかで始まる必要があります。:values',
+    'starts_with'          => ':Attributeは、次の形式で始まる必要があります。:values',
     'string'               => ':Attributeには、文字列を指定してください。',
     'timezone'             => ':Attributeには、有効なタイムゾーンを指定してください。',
     'ulid'                 => ':Attributeは、有効なULIDである必要があります。',
@@ -276,6 +276,7 @@ return [
                     'processes.*.image' => '工程写真',
                     'memo' => 'メモ',
                     'tags.*.name' => 'タグ名',
-                    'tags.*.icon' => 'アイコン'
+                    'tags.*.icon' => 'アイコン',
+                    'url' => 'URL'
 ],
 ];
