@@ -25,27 +25,27 @@ class ItemRequest extends FormRequest
 
         $rules = [
             'image' => 'file|image|mimes:jpeg,png,jpg',
-            'title' => 'required|max:20',
-            'serving' => 'max:20',
+            'title' => 'required|max:40',
+            'serving' => 'max:40',
             'ingredients' => 'array|min:1',
             'ingredients.*' => 'array|min:1',
-            'ingredients.*.name' => 'max:20',
-            'ingredients.*.quantity' => 'max:20',
+            'ingredients.*.name' => 'max:40',
+            'ingredients.*.quantity' => 'max:40',
             'processes' => 'array|min:1',
             'processes.name' => 'array|min:1',
-            'processes.*.name' => 'max:200|required_with:processes.image.*',
+            'processes.*.name' => 'max:400|required_with:processes.image.*',
             'processes.*.image' => 'file|image|mimes:jpeg,png,jpg|max:1024',
-            'memo' => 'max:200',
+            'memo' => 'max:400',
         ];
 
         switch ($route) {
             case 'add':
             case 'edit':
-                $rules['ingredients.*.name'] = 'max:20|required_with:ingredients.*.quantity';
-                $rules['ingredients.*.quantity'] = 'max:20|required_with:ingredients.*.name';
-                $rules['ingredients.0.name'] = 'max:20|required';
-                $rules['processes.*.name'] = 'max:200|required_with:processes.*.image';
-                $rules['processes.0.name'] = 'required|max:200|required_with:processes.image.*';
+                $rules['ingredients.*.name'] = 'max:40|required_with:ingredients.*.quantity';
+                $rules['ingredients.*.quantity'] = 'max:40|required_with:ingredients.*.name';
+                $rules['ingredients.0.name'] = 'max:40|required';
+                $rules['processes.*.name'] = 'max:400|required_with:processes.*.image';
+                $rules['processes.0.name'] = 'required|max:400|required_with:processes.image.*';
                 break;
 
             // case 'user.update': // レコード編集のためのルールを追加

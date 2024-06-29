@@ -44,6 +44,13 @@
                             <input type="text" id="scrape_input" class="form-control col-10 mt-2" name="url" placeholder="URL" required hidden>
                             <button type="submit" class="info-button" id="scrape_link" formaction="" hidden>読み込む</button>
                         </div>
+
+                        @foreach($errors->get('url') as $message)
+                            <p class="alert-message">{{$message}}</p>
+                        @endforeach
+                        @if (Session::has('error'))
+                            <p class="alert-message">{{ session('error') }}</p>
+                        @endif
                     </form>
                 @endif
 
