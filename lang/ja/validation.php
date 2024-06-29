@@ -130,7 +130,7 @@ return [
     'required_with'        => ':attributeを入力してください。',
     'required_with_all'    => ':Valuesが全て指定されている場合、:attributeは必須項目です。',
     'required_without'     => ':Valuesが入力されていない場合、:attributeは必須項目です。',
-    'required_without_all' => ':Valuesが全て指定されていない場合、:attributeを指定してください。',
+    'required_without_all' => ':attributeを一つ以上入力して下さい。',
     'same'                 => ':Attributeと:otherが一致しません。',
     'size'                 => [
         'array'   => ':Attributeの項目数は、:size個にしてください。',
@@ -277,6 +277,8 @@ return [
                     'memo' => 'メモ',
                     'tags.*.name' => 'タグ名',
                     'tags.*.icon' => 'アイコン',
-                    'url' => 'URL'
+                    'url' => 'URL',
+                    'password'                 => 'パスワード',
+                    'password_confirmation'    => 'パスワード確認',
 ],
 ];
