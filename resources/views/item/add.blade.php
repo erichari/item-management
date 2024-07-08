@@ -26,10 +26,10 @@
             <div class="card card-primary">
                 
                 @if(\Request::is('items/add'))
-                    <form method="post" action="?">
+                    <form method="post" action="?" class="scraping-form">
                         @csrf
                         <div class="form-group m-2">
-                            <p>レシピサイトから読み込む</p>
+                            <h5>レシピサイトから読み込む</h5>
                             <div class="d-flex">
                                 <input type="radio" id="cookpad" class="scrape-radio" name="scrape" hidden>
                                 <label for="cookpad" class="scrape-logo">
@@ -41,7 +41,7 @@
                                 </label>
                             </div>
                             
-                            <input type="text" id="scrape_input" class="form-control col-10 mt-2" name="url" placeholder="URL" required hidden>
+                            <input type="text" id="scrape_input" class="form-control col-10 mt-2 mb-2" name="url" placeholder="URL" required hidden>
                             <button type="submit" class="info-button" id="scrape_link" formaction="" hidden>読み込む</button>
                         </div>
 
