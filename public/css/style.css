@@ -96,6 +96,11 @@ main {
     margin-top: 2rem;
 }
 
+select{
+border: 1px solid var(--border-color);
+    border-radius: 5px;
+}
+
 .main {
     width: calc(100% - 180px);
     padding: 20px;
@@ -191,6 +196,11 @@ main {
 **************************************/
 .side {
     width: 180px;
+}
+
+.side a{
+    color: var(--tag-color);
+    text-decoration: none;
 }
 
 .side .side-inner {
@@ -425,6 +435,7 @@ input[type=checkbox] {
 /*************************************
 登録・編集ページ
 *************************************/
+
 .edit-title {
     display: flex;
     justify-content: space-between;
@@ -433,6 +444,11 @@ input[type=checkbox] {
 
 .alert-message {
     color: red;
+}
+
+.scraping-form{
+    padding: 10px;
+    border-bottom: 1px dotted var(--border-color);
 }
 
 .scrape-logo {

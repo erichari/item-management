@@ -44,7 +44,7 @@ class ItemRequest extends FormRequest
                 $rules['ingredients.*.name'] = 'max:40|required_with:ingredients.*.quantity';
                 $rules['ingredients.*.quantity'] = 'max:40|required_with:ingredients.*.name';
                 $rules['ingredients.0.name'] = 'max:40|required';
-                $rules['processes.*.name'] = 'max:400|required_with:processes.*.image';
+                $rules['processes.*.name'] = 'max:400|required_with:processes.*.image|required_with:processes.*.process_image_text';
                 $rules['processes.0.name'] = 'required|max:400|required_with:processes.image.*';
                 break;
 
