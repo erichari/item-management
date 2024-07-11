@@ -68,9 +68,8 @@ $(function(){
         fileReader.readAsDataURL(elem.files[0]);                    //ファイルを読み取る
         fileReader.onload = (function () {                          //ファイル読み取りが完了したら
             $(elem).next(".preview").attr('src', `${fileReader.result}`)     //画像をプレビュー
-            $(elem).parent().find('.scraped_image').val('');        
-            // クリアするボタンを表示
-            $(elem).parent().parent().find('.clear-image').show();
+            $(elem).parent().find('.image_text').val('');
+            $(elem).parent().parent().find('.clear-image').show();  // クリアするボタンを表示
         });
     })
 
@@ -78,13 +77,13 @@ $(function(){
     $('.clear-image').click(function() {
         $(this).parent().find('.imageUpload').attr('type', 'text').attr('type', 'file');
         $(this).parent().find('img').attr('src', '/img/no_image.jpg');
-        $(this).parent().find('.scraped_image').val('');
+        $(this).parent().find('.image_text').val('');
         $(this).hide();
     });
 
-    //スクレイピング時の画像の処理
-    if($('.scraped_image').length){
-        $('.scraped_image').each(function() {
+    //スクレイピング時の画像の処理, 編集画面でimage_pathに画像名を入力
+    if($('.image_text').length){
+        $('.image_text').each(function() {
             let image_text = $(this).parent().find('.preview').attr('src');
             if(image_text !== ' http://127.0.0.1:8000/img/no_image.jpg '){
                 $(this).val(image_text);

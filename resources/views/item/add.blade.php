@@ -63,9 +63,9 @@
                                     <input type="file" class="imageUpload" id="imageUpload" name="image" value="{{ old('image') }}">
                                     <img class="preview top-image @if($errors->has('image')) is-invalid @endif" src="@if($item->title) {{$item->image}} @else {{asset('/img/no_image.jpg')}} @endif">
                                     @if(\Request::is('items/add/scrape/*'))
-                                        <input type="text" class="scraped_image" name="scraped_image" hidden>
+                                        <input type="text" class="image_text" name="image_text" hidden>
                                     @elseif(\Request::is('items/edit/*'))
-                                        <input type="text" class="scraped_image" name="image_text" hidden>
+                                        <input type="text" class="image_text" name="image_text">
                                     @endif
                                 </label>
                                 <p class="clear-image" style="display:none">×画像をクリア</p>
@@ -208,7 +208,9 @@
                                             <input type="file" class="imageUpload process_image" id="imageUpload{{$i}}" name="processes[{{$i}}][image]" value="{{ old('processes.$i.image') }}">
                                             <img class="preview process-image @if($errors->has('processes.'.$i.'.image')) is-invalid @endif" src="@if($processes[$i]->process_image == null ) {{ asset('/img/no_image.jpg') }} @else {{$processes[$i]->process_image}} @endif">
                                             @if(\Request::is('items/add/scrape/*'))
-                                                <input type="text" class="scraped_image" name="processes[{{$i}}][scraped_image]" hidden>
+                                                <input type="text" class="image_text" name="processes[{{$i}}][process_image_text]" hidden>
+                                            @elseif(\Request::is('items/edit/*'))
+                                                <input type="text" class="image_text" name="processes[{{$i}}][process_image_text]" hidden>
                                             @endif
                                         </label>
                                         <p class="clear-image" @if($processes[$i]->process_image == null) style="display:none" @endif>×画像をクリア</p>

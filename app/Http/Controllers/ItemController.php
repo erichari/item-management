@@ -96,8 +96,8 @@ class ItemController extends Controller
         $item = new Item();
 
         // スクレイピングした画像がある場合
-        if($request->scraped_image){
-            $item->image = $request->scraped_image;
+        if($request->image_text){
+            $item->image = $request->image_text;
 
         // 画像がアップロードされてる場合
         }elseif ($request->hasFile('image')) {
@@ -172,10 +172,10 @@ class ItemController extends Controller
             }
 
             // アップロードされた画像 または スクレイピングされた画像がある場合
-            if (array_key_exists('image', $process) || array_key_exists('scraped_image', $process)){
+            if (array_key_exists('image', $process) || array_key_exists('process_image_text', $process)){
                 //スクレイピングされた画像がある場合
-                if(array_key_exists('scraped_image', $process) && $process['scraped_image']){
-                    $process_image = $process['scraped_image'];
+                if(array_key_exists('process_image_text', $process) && $process['process_image_text']){
+                    $process_image = $process['process_image_text'];
 
                 //アップロードされた画像がある場合
                 }elseif(array_key_exists('image', $process) && $process['image']){
@@ -265,6 +265,7 @@ class ItemController extends Controller
             $mimeType = $request->image->getMimeType();
             $item->image = 'data:' . $mimeType . ';base64,' . $base64Image;
         }elseif($request->image_text){
+        // 画像がアップロードされてないが、元から登録されている画像がある
             $item->image = $request->image_text;
         }else{
             $item->image = '/img/no_image.jpg';
@@ -283,6 +284,7 @@ class ItemController extends Controller
         foreach($request->ingredients as $ingredient){
             if(array_key_exists('id', $ingredient) && $ingredient['name'] == null && $ingredient['quantity'] == null){
                 Ingredient::find($ingredient['id'])->delete();
+                continue;
             }
             if($ingredient['name'] == null && $ingredient['quantity'] == null){
                 continue;
@@ -324,27 +326,30 @@ class ItemController extends Controller
         //作り方を登録
         $processes = [];
         foreach($request->processes as $process){
-            if(array_key_exists('id', $process) && !isset(Process::find($process['id'])->process_image) && $process['name'] == null && !array_key_exists('image', $process)){
+            // IDは存在するが、nameが空で画像もアップロードされてない＆元画像もない⇒削除
+            if(array_key_exists('id', $process) && $process['name'] == null && !array_key_exists('image', $process) && $process['process_image_text'] == null){
                 Process::find($process['id'])->delete();
+                continue;
             }
-            // elseif($process['name'] == null && !array_key_exists('image', $process) && Process::find($process['id'])->process_image == null){
-// todo:すでに画像があるが、何も選択されてない＆＆nameが空の場合の処理
-            // }
+
+            // nameも画像も空⇒飛ばす
             elseif($process['name'] == null && !array_key_exists('image', $process)){
                 continue;
             }
 
-            if (array_key_exists('image', $process)) {
+            // 画像がアップロードされてる場合
+            elseif (array_key_exists('image', $process)) {
                 $image = $process['image'];
                 $base64Image = base64_encode(file_get_contents($image->getRealPath()));
                 $mimeType = $image->getMimeType();
                 $process_image = 'data:' . $mimeType . ';base64,' . $base64Image;
+                
+            // 画像がアップロードされてないが、元画像がある場合
+            }elseif($process['process_image_text']){
+                $process_image = $process['process_image_text'];
+            
             }else{
-                if(Process::where('id', $process['id'])->exists()){
-                    $process_image = Process::find($process['id'])->process_image;
-                }else{
-                    $process_image = null;
-                }
+                $process_image = null;
             }
             
             $processes[] = [
