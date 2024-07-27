@@ -65,7 +65,7 @@
                                     @if(\Request::is('items/add/scrape/*'))
                                         <input type="text" class="image_text" name="image_text" hidden>
                                     @elseif(\Request::is('items/edit/*'))
-                                        <input type="text" class="image_text" name="image_text">
+                                        <input type="text" class="image_text" name="image_text" hidden>
                                     @endif
                                 </label>
                                 <p class="clear-image" style="display:none">×画像をクリア</p>
