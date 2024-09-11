@@ -30,16 +30,21 @@ class ScrapingController extends Controller
 
         try {
             $header = $crawler->filter('#recipe')->each(function (Crawler $node) {
-                return [
-                    'image' => $node->filter('.tofu_image img')->attr('src'),
-                    'title' => $node->filter('h1')->text(),
-                    'serving' => $node->filter('#ingredients .mise-icon-text')->text(),
-                ];
+                if($node->filter('#ingredients .mise-icon-text')->count()){
+                    return [
+                        'image' => $node->filter('.tofu_image img')->attr('src'),
+                        'title' => $node->filter('h1')->text(),
+                        'serving' => $node->filter('#ingredients .mise-icon-text')->text(),
+                    ];
+                }else{
+                    return[
+                        'image' => $node->filter('.tofu_image img')->attr('src'),
+                        'title' => $node->filter('h1')->text(),
+                    ];
+                }
             });
         } catch (Exception $e) {
             \Log::error($e);  // 例外をログに記録
-            $error = $e->getMessage();
-            dd($error);
             return back()->with('error', '対応していないURLです。');
         }
 
@@ -54,7 +59,6 @@ class ScrapingController extends Controller
             });
         } catch (Exception $e) {
             \Log::error($e);  // 例外をログに記録
-            dd('材料名エラー');
         }
 
         try {
@@ -66,21 +70,15 @@ class ScrapingController extends Controller
                             'process_image' => $node->filter('img')->attr('src'),
                         ];
                     }else{
-                        try {
-                            return[
-                                'process' => $node->filter('p')->text(),
-                                'process_image' => null,
-                            ];
-                        } catch (Exception $e) {
-                            \Log::error($e);  // 例外をログに記録
-                            return back()->with('error', 'データの操作中にエラーが発生しました。');
-                        }
+                        return[
+                            'process' => $node->filter('p')->text(),
+                            'process_image' => null,
+                        ];
                     }
                 });
             });
         } catch (Exception $e) {
             \Log::error($e);  // 例外をログに記録
-            dd('作り方エラー');
         }
 
 
