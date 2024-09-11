@@ -16,7 +16,7 @@ class ScrapingController extends Controller
     public function cookpadScrape(Request $request)
     {
         $this->validate($request, [
-            'url' => 'required|url|starts_with:https://cookpad.com/recipe/',
+            'url' => 'required|url|starts_with:https://cookpad.com/jp/recipes/',
         ]);
 
         $client = new \GuzzleHttp\Client();
@@ -29,34 +29,47 @@ class ScrapingController extends Controller
         }
 
         try {
-            $header = $crawler->filter('.recipe_show_wrapper')->each(function (Crawler $node) {
+            $header = $crawler->filter('#recipe')->each(function (Crawler $node) {
                 return [
-                    'image' => $node->filter('#main-photo > img')->attr('src'),
-                    'title' => $node->filter('.recipe-title')->text(),
-                    'serving' => $node->filter('.content')->text(),
+                    'image' => $node->filter('.tofu_image img')->attr('src'),
+                    'title' => $node->filter('h1')->text(),
+                    'serving' => $node->filter('#ingredients .mise-icon-text')->text(),
                 ];
             });
         } catch (Exception $e) {
             \Log::error($e);  // 例外をログに記録
+            $error = $e->getMessage();
+            dd($error);
             return back()->with('error', '対応していないURLです。');
         }
 
         try {
             $ingredients = $crawler->filter('#ingredients')->each(function (Crawler $node, $i) {
-                return $node->filter('.ingredient_row')->each(function (Crawler $node, $i) {
-                    // if(!$node->filter('.name')->count() && !$node->filter('.ingredient_category')->count()){
-
-                    // }
-                    if($node->filter('.name')->count()){
+                return $node->filter('li')->each(function (Crawler $node, $i) {
                         return[
-                            'ingredient' => $node->filter('.name')->text(),
-                            'quantity' => $node->filter('.ingredient_quantity')->text(),
+                            'ingredient' => $node->filter('span')->text(),
+                            'quantity' => $node->filter('bdi')->text(),
+                        ];
+                });
+            });
+        } catch (Exception $e) {
+            \Log::error($e);  // 例外をログに記録
+            dd('材料名エラー');
+        }
+
+        try {
+            $processes = $crawler->filter('#steps')->each(function (Crawler $node, $i) {
+                return $node->filter('li')->each(function (Crawler $node, $i) {
+                    if($node->filter('img')->count()){
+                        return[
+                            'process' => $node->filter('p')->text(),
+                            'process_image' => $node->filter('img')->attr('src'),
                         ];
                     }else{
                         try {
                             return[
-                                'ingredient' => $node->filter('.ingredient_category')->text(),
-                                'quantity' => null,
+                                'process' => $node->filter('p')->text(),
+                                'process_image' => null,
                             ];
                         } catch (Exception $e) {
                             \Log::error($e);  // 例外をログに記録
@@ -67,33 +80,9 @@ class ScrapingController extends Controller
             });
         } catch (Exception $e) {
             \Log::error($e);  // 例外をログに記録
+            dd('作り方エラー');
         }
 
-        try {
-            $processes = $crawler->filter('#steps')->each(function (Crawler $node) {
-                return $node->filter('.step')->each(function (Crawler $node, $i) {
-                    try {
-                        return[
-                            'process' => $node->filter('.step_text')->text(),
-                            'process_image' => $node->filter('.large_photo_clickable')->attr('src'),
-                        ];
-                    } catch (Exception $e) {
-                        \Log::error($e);  // 例外をログに記録
-                    }
-                });
-            });
-        } catch (Exception $e) {
-            \Log::error($e);  // 例外をログに記録
-        }
-
-        try {
-            $header[0]['serving'] = str_replace('材料', '', $header[0]['serving']);
-            $header[0]['serving'] = str_replace(' （', '', $header[0]['serving']);
-            $header[0]['serving'] = str_replace('）', '', $header[0]['serving']);
-        } catch (Exception $e) {
-            \Log::error($e);  // 例外をログに記録
-            return back()->with('error', '対応していないURLです。');
-        }
 
         $item = new Item($header[0]);
         $ingredients = Ingredient::hydrate($ingredients[0]);
