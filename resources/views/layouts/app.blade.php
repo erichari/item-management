@@ -48,7 +48,7 @@
         <nav class="navbar navbar-expand-md shadow-sm fixed-top header">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    ホーム
+                    <i class="fa-solid fa-house"></i> ホーム
                 </a>
                 @auth
                     @if($browser == 'sp')
