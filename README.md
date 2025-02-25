@@ -1,43 +1,54 @@
-## 商品管理システム
+# レシピ管理アプリ
+## 概要
+このアプリケーションでは、レシピを一元化して管理することができます。
+レシピの新規登録から編集、削除を行うことができ、登録したレシピはキーワード・タグ・点数など様々な条件で検索することができます。レシピ登録の際は、手入力のほか外部のレシピサイト（クックパッド・楽天レシピ）から取り込むことも可能です。入力途中のレシピを下書き保存することも可能です。
+ユーザーは管理者へ問い合わせることができ、また、管理者はユーザーに返信することができます。
 
-### 環境構築手順
+## 主な機能
+```
+ユーザー
+- ログイン・ログアウト機能
+- レシピ一覧画面
+- レシピ新規登録、編集、削除機能
+- 外部サイトのレシピ取り込み機能
+- 下書き一覧画面
+- 下書き編集・削除機能
+- レシピ検索機能
+- レシピ並び替え機能
+- タグ編集機能
+- 献立提案機能
+- 管理者からのお知らせ閲覧機能
+- 管理者への問い合わせ機能
+```
+```
+管理者
+- ログイン・ログアウト機能
+- ユーザーからの問い合わせ閲覧・返信機能
+- ユーザー一覧画面
+- ユーザー削除機能
+- お知らせ配信機能
+```
 
-* Gitクローン
-* .env.example をコピーして .env を作成
-* MySQLのデータベース作成（名前：item_management）
-* Macの場合 .env の DB_PASSWORD を root に修正（Windowsは修正不要）
+## 開発環境
+```
+PHP 8.2
+MySQL 8.2
+Laravel 10.13
+```
 
-    ```INI
-    DB_PASSWORD=root
-    ```
+## 設計書
+[設計書ページへ](https://drive.google.com/drive/folders/1Kv6Nc_RrBrw9IJPlPRHtm5DntS-a7w2B?usp=drive_link)
 
-* APP_KEY生成
-
-    ```console
-    php artisan key:generate
-    ```
-
-* Composerインストール
-
-    ```console
-    composer install
-    ```
-
-* フロント環境構築
-
-    ```console
-    npm ci
-    npm run build
-    ```
-
-* マイグレーション
-
-    ```console
-    php artisan migrate
-    ```
-
-* 起動
-
-    ```console
-    php artisan serve
-    ```
+## アプリケーション閲覧
+[アプリケーションページへ](https://recipe-management-ae3508dd947b.herokuapp.com )
+### テストアカウント情報
+```
+ユーザー
+ID:test@example.com
+PW:password
+```
+```
+管理者
+ID:admin@example.com
+PW:admin
+```
